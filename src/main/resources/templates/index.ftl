@@ -4,5 +4,6 @@
 <@c.page>
     <h3>Hello, guest!</h3>
     <div>Welcome to Food Tracker</div>
+
     <@form.login "/login" false/>
 </@c.page>
