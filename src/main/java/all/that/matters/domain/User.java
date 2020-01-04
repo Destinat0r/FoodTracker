@@ -34,8 +34,8 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "fullName", nullable = false)
+    private String fullName;
 
     @Column(name = "national_name", nullable = false)
     private String nationalName;

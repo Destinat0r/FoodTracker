@@ -20,7 +20,7 @@ public class Food {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "fullName")
     private String name;
 
     @Column(name = "calories")
