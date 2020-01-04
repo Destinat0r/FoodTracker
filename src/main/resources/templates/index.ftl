@@ -1,6 +1,6 @@
-<#import "parts/common.ftl" as commons>
+<#import "parts/common.ftl" as c>
 
-<@commons.page>
+<@c.page>
 <h3>Hello, guest!</h3>
 <div>Welcome to Food Tracker</div>
-</@commons.page>
+</@c.page>
