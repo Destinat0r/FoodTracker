@@ -1,2 +1,9 @@
 server:
   port: 7777
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/food_tracker
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 321
