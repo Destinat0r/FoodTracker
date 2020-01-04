@@ -32,7 +32,9 @@ public class User {
     @Column(name = "national_name", nullable = false)
     private String nationalName;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Role> roles;
 }
