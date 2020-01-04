@@ -10,6 +10,10 @@
 </head>
 <body>
 
+<div class="container mt-5">
+    <#nested>
+</div>
+
 
 <script src="/static/js/bootstrap.bundle.min.js"></script>
 <script src="/static/js/jquery-3.4.1.min.js"></script>
