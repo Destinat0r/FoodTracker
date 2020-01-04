@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 
 @Entity
-@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"login"})})
+@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class User {
 
     @Id
@@ -19,8 +19,8 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "login", nullable = false, unique = true)
-    private String login;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
