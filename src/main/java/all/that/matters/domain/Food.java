@@ -1,11 +1,28 @@
 package all.that.matters.domain;
 
-import javax.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
+
+@Table(name = "food")
 public class Food {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
-    private double calories;
+
+    @Column(name = "calories")
+    private Double calories;
 }

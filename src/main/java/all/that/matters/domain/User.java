@@ -1,5 +1,6 @@
 package all.that.matters.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,10 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-@NoArgsConstructor
-@Builder
-@Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Data
 
 @Entity
 @Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
