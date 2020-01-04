@@ -50,7 +50,7 @@ public class User implements UserDetails {
     @Override public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-    
+
     @Override public boolean isAccountNonExpired() {
         return true;
     }
