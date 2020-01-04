@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
@@ -25,18 +27,24 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank(message = "Username cannot be empty")
     @Column(name = "username", nullable = false)
     private String username;
 
+    @NotBlank(message = "Password cannot be empty")
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Email(message = "Email is not correct")
+    @NotBlank(message = "Email cannot be empty")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @NotBlank(message = "Name cannot be empty")
     @Column(name = "fullName", nullable = false)
     private String fullName;
 
+    @NotBlank(message = "National name cannot be empty")
     @Column(name = "national_name", nullable = false)
     private String nationalName;
 
