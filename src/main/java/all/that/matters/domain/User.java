@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 
 @Entity
-@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
+@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
 public class User implements UserDetails {
 
     @Id
@@ -23,11 +23,14 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -47,24 +50,20 @@ public class User implements UserDetails {
     @Override public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-
-    @Override public String getUsername() {
-        return null;
-    }
-
+    
     @Override public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override public boolean isEnabled() {
-        return false;
+        return isActive();
     }
 }
