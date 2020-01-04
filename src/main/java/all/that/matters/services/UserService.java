@@ -23,4 +23,8 @@ public class UserService implements UserDetailsService {
         user.orElseThrow(() -> new UsernameNotFoundException("user not found"));
         return user.get();
     }
+
+    public void addUser(User user) {
+        userRepo.save(user);
+    }
 }
