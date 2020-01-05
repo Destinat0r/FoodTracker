@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="/login" method="post" th:object="${user}" novalidate>
+        <form th:action="@{/login}" method="post" th:object="${user}" novalidate>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
