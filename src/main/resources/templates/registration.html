@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Registration</title>
+</head>
+<body>
+<a href="?lang=en">en</a>
+<a href="?lang=uk">ua</a>
+
+<div class="container container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Registration</h1>
+        </div>
+    </div>
+
+    <form th:action="@{/registration}" method="post" th:object="${user}" novalidate>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
+            <div class="col-sm-6">
+                <input type="text" name="username" placeholder="Username" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Email: </label>
+            <div class="col-sm-6">
+                <input type="email" name="email" value="" class="form-control" placeholder="Email" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Full name:</label>
+            <div class="col-sm-6">
+                <input type="text" name="fullName" value="" class="form-control" placeholder="Full name" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">National name:</label>
+            <div class="col-sm-6">
+                <input type="text" name="nationalName" value="" class="form-control" placeholder="National name" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
+            <div class="col-sm-6">
+                <input type="password" name="password" class="form-control" placeholder="Password" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Confirm password</label>
+            <div class="col-sm-6">
+                <input type="password" name="passwordConfirm" class="form-control" placeholder="Retype Password" required/>
+            </div>
+        </div>
+
+
+        <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{user.loging}"></button>
+    </form>
+
+</div>
+</body>
+</html>

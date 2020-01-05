@@ -34,6 +34,7 @@ public class RegistrationController {
     public String addUser(
             @RequestParam("passwordConfirm") String passwordConfirm,
             @Valid User user,
+//            @RequestParam User user,
             BindingResult bindingResult,
             Model model) {
 
