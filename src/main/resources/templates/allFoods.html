@@ -11,6 +11,25 @@
 <a href="?lang=uk">ua</a>
 
 <div class="container">
+
+    <form th:action="@{/allFoods}" method="post" th:object="${food}" novalidate>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{food.name}"></label>
+            <div class="col-sm-6">
+                <input type="text" name="name" placeholder="Name" required/>
+            </div>
+
+            <label class="col-sm-2 col-form-label" th:text="#{food.calories}"></label>
+            <div class="col-sm-6">
+                <input type="number" name="calories" placeholder="calories" required/>
+            </div>
+
+            <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+            <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+        </div>
+
+    </form>
+
     <table class="table-striped">
         <thead class="border-dark">
         <tr>
