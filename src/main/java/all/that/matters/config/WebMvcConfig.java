@@ -14,11 +14,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return new WebJarsResourceResolver();
     }
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("/webjars/");
     }
-
 }
