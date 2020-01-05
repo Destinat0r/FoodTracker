@@ -25,4 +25,8 @@ public class Food {
 
     @Column(name = "calories")
     private Double calories;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User owner;
 }
