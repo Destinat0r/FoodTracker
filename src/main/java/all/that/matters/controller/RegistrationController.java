@@ -1,6 +1,8 @@
 package all.that.matters.controller;
 
 import all.that.matters.domain.User;
+import all.that.matters.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,6 +17,13 @@ import java.util.Map;
 
 @Controller
 public class RegistrationController {
+
+    private UserService userService;
+
+    @Autowired
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/registration")
     public String registration(@ModelAttribute("message") String message) {
@@ -43,8 +52,15 @@ public class RegistrationController {
 
             return "registration";
         }
+        try {
 
+            userService.addUser(user);
+        } catch (Exception e) {
+            model.addAttribute("usernameError", "Username or email already exists!");
+            model.addAttribute("emailError", "Username or email already exists!");
+            return "registration";
+        }
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 }
