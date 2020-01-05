@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
-    <title>All Foods</title>
+    <title>All Food</title>
 </head>
 <body>
 <a href="?lang=en">en</a>
@@ -12,7 +12,7 @@
 
 <div class="container">
 
-    <form th:action="@{/allFoods}" method="post" th:object="${food}" novalidate>
+    <form th:action="@{/allFood}" method="post" th:object="${food}" novalidate>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{food.name}"></label>
             <div class="col-sm-6">
@@ -38,7 +38,7 @@
             <th>Calories</th>
         </tr>
         </thead>
-        <tr th:each="food : ${foods}">
+        <tr th:each="food : ${allFood}">
             <td th:text="${food.id}" />
             <td><a href="#" th:href="@{/food(id=${food.id})}"><span th:text="${food.name}" ></span></a></td>
             <td th:text="${food.calories}"></td>

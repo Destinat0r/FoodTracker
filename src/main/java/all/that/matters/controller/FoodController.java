@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/all_foods")
+@RequestMapping("/all_food")
 public class FoodController {
 
     private FoodService foodService;
@@ -29,6 +29,6 @@ public class FoodController {
         List<Food> allFood = foodService.findAll();
         model.addAttribute("allFood", allFood);
 
-        return "all_foods";
+        return "all_food";
     }
 }
