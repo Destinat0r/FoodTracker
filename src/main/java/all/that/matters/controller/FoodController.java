@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/all_food")
+@RequestMapping("/food")
 public class FoodController {
 
     private FoodService foodService;
@@ -22,7 +22,7 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
 
