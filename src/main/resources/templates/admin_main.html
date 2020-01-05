@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Admin page</title>
 </head>
 <body>
-$END$
+<a href="?lang=en">en</a>
+<a href="?lang=uk">ua</a>
+
+    <h2 align="center"><a href="/food/all" th:text="#{user.admin.food}"></a></h2>
+    <h2 align="center"><a href="/users" th:text="#{user.admin.users}"></a></h2>
+
 </body>
 </html>
