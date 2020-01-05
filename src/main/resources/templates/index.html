@@ -10,6 +10,10 @@
     <a href="?lang=en">en</a>
     <a href="?lang=uk">ua</a>
 
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+
     <div class="container container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -17,27 +21,22 @@
             </div>
         </div>
 
-        <form th:action="@{/login}" method="post" th:object="${user}" novalidate>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
-                <div class="col-sm-6">
-                    <input type="text" name="username" th:field="*{username}" placeholder="Username" required/>
-                </div>
+        <div class="container container mt-5">
+            <div th:if="${param.error}">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
-                <div class="col-sm-6">
-                    <input type="password" name="password" th:field="*{password}" class="form-control" placeholder="Password" />
-                </div>
-            </div>
-
-            <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
-            <button type="submit" class="btn btn-primary mb-2" th:text="#{user.log_in}"></button>
-
-        <a href="/registration" th:text="#{user.registration}"></a>
-        </form>
+            <form th:action="@{/login}" method="post">
+                <div><label> User Name : <input type="text" name="username"/> </label></div>
+                <div><label> Password: <input type="password" name="password"/> </label></div>
+                <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+                <div><input type="submit" value="Sign In"/></div>
+            </form>
+            <a href="/registration">Registration</a>
+        </div>
     </div>
 </body>
 </html>
