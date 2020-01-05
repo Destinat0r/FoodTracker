@@ -33,7 +33,7 @@ public class MainController {
         User userFromDb = (User) userService.loadUserByUsername(user.getUsername());
 
         if (userFromDb.getRoles().contains(Role.ADMIN)) {
-            return "redirect:/users";
+            return "admin_main";
         }
 
         return "main";
