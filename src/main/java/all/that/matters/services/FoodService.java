@@ -20,4 +20,8 @@ public class FoodService {
     public List<Food> findAll() {
         return foodRepository.findAll();
     }
+
+    public void add(Food food) {
+        foodRepository.save(food);
+    }
 }
