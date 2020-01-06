@@ -22,8 +22,9 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
             <div class="col-sm-6">
-                <input type="text" name="username" placeholder="Username"
-                       class="form-control" th:class="${usernameError != null}? 'is-invalid'" required/>
+                <input type="text" name="username" placeholder="Username" th:value="${user != null} ? ${user.username}"
+                       class="form-control"
+                       th:class="${usernameError != null}? 'is-invalid'" required/>
 
                 <div th:if="${usernameError}">
                     <div class="invalid-feedback">
@@ -79,5 +80,7 @@
     </form>
 
 </div>
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
