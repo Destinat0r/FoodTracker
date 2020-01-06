@@ -29,13 +29,16 @@
                 You have been logged out.
             </div>
 
-            <form th:action="@{/login}" method="post">
-                <div><label> User Name : <input type="text" name="username"/> </label></div>
-                <div><label> Password: <input type="password" name="password"/> </label></div>
-                <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
-                <div><input type="submit" value="Sign In"/></div>
-            </form>
-            <a href="/registration">Registration</a>
+            <div th:if="${#httpServletRequest.remoteUser}" class="container mt-4"></div>
+            <div th:unless="${#httpServletRequest.remoteUser}" class="container mt-4">
+                <form th:action="@{/login}" method="post">
+                    <div><label> User Name : <input type="text" name="username"/> </label></div>
+                    <div><label> Password: <input type="password" name="password"/> </label></div>
+                    <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+                    <div><input type="submit" value="Sign In"/></div>
+                </form>
+                <a href="/registration">Registration</a>
+            </div>
         </div>
     </div>
 </body>
