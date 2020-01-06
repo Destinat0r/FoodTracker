@@ -2,6 +2,7 @@ package all.that.matters.services;
 
 import all.that.matters.dao.FoodRepository;
 import all.that.matters.domain.Food;
+import all.that.matters.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,9 @@ public class FoodService {
 
     public void add(Food food) {
         foodRepository.save(food);
+    }
+
+    public List<Food> findAllByOwner(User user) {
+        return foodRepository.findByOwner(user);
     }
 }
