@@ -20,11 +20,10 @@
 
         <div class="form-group row">
             <label for="calories" th:text="#{food.calories}"></label>
-            <input type="number" name="calories" id="calories" placeholder="calories" required/>
+            <input type="number" step="100" min="100" th:required="Number" name="calories" id="calories" placeholder="calories" pattern="\d+" required/>
         </div>
 
         <div class="form-group row">
-            <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
             <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
         </div>
     </form>
@@ -44,6 +43,14 @@
         </tr>
     </table>
 </div>
-
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script>
+    document.querySelector("input").addEventListener("keypress", function (evt) {
+        if (evt.which < 48 || evt.which > 57)
+        {
+            evt.preventDefault();
+        }
+    });
+</script>
 </body>
 </html>
