@@ -46,7 +46,7 @@ public class MainController {
             return "admin_main";
         }
 
-        List<Food> usersFood = foodService.findAllFoodByOwner(user);
+        List<Food> usersFood = foodService.findAllByOwner(user);
 
         model.addAttribute("user", user);
         model.addAttribute("usersFood", usersFood);
