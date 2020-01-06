@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Data
 
 @Entity
-@Table(name = "food")
+@Table(name = "food", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Food {
 
     @Id
@@ -21,13 +22,15 @@ public class Food {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "fullName")
+    @NotBlank(message = "Name should not be empty")
+    @Column(name = "name")
     private String name;
 
+    @NotBlank(message = "Calories should not be empty")
     @Column(name = "calories")
     private Double calories;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;
 }
