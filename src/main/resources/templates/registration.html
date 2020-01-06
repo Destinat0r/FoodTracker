@@ -22,7 +22,19 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
             <div class="col-sm-6">
-                <input type="text" name="username" placeholder="Username" required/>
+                <input type="text" name="username" placeholder="Username"
+                       class="form-control" th:class="${usernameError != null}? 'is-invalid'" required/>
+
+                <div th:if="${usernameError}">
+                    <div class="invalid-feedback">
+                        [[${#usernameError}]]
+                    </div>
+                </div>
+                <div th:unless="${usernameError}">
+                    <div class="invalid-feedback">
+                        [[${#usernameError}]]
+                    </div>
+                </div>
             </div>
         </div>
 
