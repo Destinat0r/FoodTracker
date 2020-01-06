@@ -17,7 +17,7 @@
             <input type="submit" value="Sign Out"/>
         </form>
 
-        <form th:action="@{/food/add_to_all}" method="post" th:object="${food}" novalidate>
+        <form th:action="@{/food/add}" method="post" th:object="${food}" novalidate>
             <div class="form-group row">
                 <label for="name" th:text="#{food.name}"></label>
                 <input type="text" id="name" name="name" placeholder="Name" required/>
