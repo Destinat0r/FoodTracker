@@ -1,9 +1,14 @@
 package all.that.matters.controller;
 
 import all.that.matters.domain.Food;
+import all.that.matters.domain.Role;
+import all.that.matters.domain.User;
 import all.that.matters.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,8 +42,8 @@ public class FoodController {
         return "all_food";
     }
 
-    @PostMapping("/add_to_all")
-    public String addToAll(
+    @PostMapping("/add")
+    public String add(
             @Valid Food food,
             BindingResult bindingResult,
             Model model) {
@@ -48,8 +53,18 @@ public class FoodController {
             model.mergeAttributes(errors);
         }
 
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (user.getAuthorities().contains(Role.USER)) {
+            food.setOwner(user);
+            foodService.add(food);
+            return "redirect:/main";
+        }
+
         foodService.add(food);
 
         return "redirect:/food/all";
     }
+
+
 }
