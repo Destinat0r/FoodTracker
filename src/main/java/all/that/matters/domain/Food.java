@@ -26,11 +26,10 @@ public class Food {
     @Column(name = "name")
     private String name;
 
-    @NotBlank(message = "Calories should not be empty")
-    @Column(name = "calories")
+    @Column(name = "calories", nullable = false)
     private Double calories;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User owner;
 }
