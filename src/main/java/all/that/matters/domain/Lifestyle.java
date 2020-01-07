@@ -5,9 +5,16 @@ public enum Lifestyle {
     MODERATE(1.76),
     VIGOROUS(2.25);
 
+    /**
+     * used in total energy expenditure calculation
+     */
     private Double coefficient;
 
     Lifestyle(Double coefficient) {
         this.coefficient = coefficient;
+    }
+
+    public Double getCoefficient() {
+        return coefficient;
     }
 }
