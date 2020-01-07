@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
     @NoArgsConstructor
@@ -60,6 +61,10 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Role> roles;
+
+//    @ElementCollection(targetClass = Food.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "food_owners", joinColumns = @JoinColumn(name = "owners_id"))
+//    private List<Food> foods;
 
     @Override public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
