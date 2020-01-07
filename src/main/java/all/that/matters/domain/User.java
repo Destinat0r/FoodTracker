@@ -48,6 +48,10 @@ public class User implements UserDetails {
     @Column(name = "national_name", nullable = false)
     private String nationalName;
 
+    @OneToOne
+    @JoinColumn(name = "biometrics_id")
+    private Biometrics biometrics;
+
     @Column(name = "active", nullable = false)
     private boolean active;
 
