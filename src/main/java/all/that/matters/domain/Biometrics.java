@@ -22,6 +22,7 @@ public class Biometrics {
     @Column(name = "age", nullable = false)
     private Double age;
 
+    @NotBlank(message = "Weight can't be blank")
     @Column(name = "sex", nullable = false)
     @Enumerated(EnumType.STRING)
     private Sex sex;
@@ -36,25 +37,21 @@ public class Biometrics {
 
     @NotBlank(message = "Lifestyle can't be blank")
     @Column(name = "lifestyle", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Lifestyle lifestyle;
-
-    @NotBlank(message = "Owner can't be blank")
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User owner;
 
     @Column(name = "norm", nullable = false)
     private Double dailyNorm;
 
     /**
-     * Using Harris–Benedict equation
+     * Total energy expenditure calculation using Harris–Benedict equation
      * @return daily norm of calories
      */
     public Double calculateDailyNorm() {
         if (this.sex == Sex.MALE) {
-            return 66.5 + 13.75*weight + 5.003*height - 6.755*age;
+            return (66.5 + 13.75*weight + 5.003*height - 6.755*age)*lifestyle.getCoefficient();
         } else {
-            return  655.1 + 9.563*weight + 1.850*height - 4.676*age;
+            return (655.1 + 9.563*weight + 1.850*height - 4.676*age)*lifestyle.getCoefficient();
         }
     }
 
@@ -84,9 +81,5 @@ public class Biometrics {
 
     public void setLifestyle(Lifestyle lifestyle) {
         this.lifestyle = lifestyle;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 }
