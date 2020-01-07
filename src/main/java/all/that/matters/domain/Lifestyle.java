@@ -1,5 +1,8 @@
 package all.that.matters.domain;
 
+/**
+ * Level of physical activity of a person.
+ */
 public enum Lifestyle {
     SEDENTARY(1.53),
     MODERATE(1.76),
