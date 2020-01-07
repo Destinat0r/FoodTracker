@@ -2,6 +2,7 @@ package all.that.matters.controller;
 
 import all.that.matters.domain.Food;
 import all.that.matters.domain.Role;
+import all.that.matters.domain.Statistic;
 import all.that.matters.domain.User;
 import all.that.matters.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,25 @@ public class FoodController {
 
         foodService.add(food);
 
-        return "redirect:/food/all";
+        return "redirect:/main";
     }
 
+    @PostMapping("/consume")
+    public String consume(
+            @Valid Food food,
+            BindingResult bindingResult,
+            Model model) {
 
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errors);
+        }
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Statistic stat = Statistic.builder().user(user).food(food).build();
+
+        return "redirect:/main";
+    }
 }
+
