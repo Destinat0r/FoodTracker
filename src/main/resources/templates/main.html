@@ -33,6 +33,9 @@
             </div>
         </form>
 
+    <hr>
+        <h2>My Food</h2>
+
         <table class="table-striped" th:object="${usersFood}">
             <thead class="border-dark">
             <tr>
@@ -41,10 +44,22 @@
             </tr>
             </thead>
             <tr th:each="food : ${usersFood}">
+
+
                 <td><a href="#" th:href="@{/food(id=${food.id})}"><span th:text="${food.name}" ></span></a></td>
                 <td th:text="${food.calories}"></td>
+                <td>
+                    <form action="#" th:action="@{/food/consume}" method="post">
+                        <input type="hidden" th:value="${food.id}">
+                        <button type="submit" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
+                    </form>
+                </td>
+
             </tr>
         </table>
+        <hr>
+        <h2>Consumed today</h2>
+
 </div>
 </body>
 </html>
