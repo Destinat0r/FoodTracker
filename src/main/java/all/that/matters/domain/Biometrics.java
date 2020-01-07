@@ -11,12 +11,16 @@ import javax.validation.constraints.NotBlank;
 @Builder
 
 @Entity
-@Table(name = "biometrics", uniqueConstraints={@UniqueConstraint(columnNames={"owner"})})
+@Table(name = "biometrics")
 public class Biometrics {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
 
     @NotBlank(message = "Age can't be blank")
     @Column(name = "age", nullable = false)
@@ -42,9 +46,6 @@ public class Biometrics {
 
     @Column(name = "norm", nullable = false)
     private Double dailyNorm;
-
-    @Column(name = "consumed_today")
-    private Double consumedToday;
 
     /**
      * Total energy expenditure calculation using Harris–Benedict equation
