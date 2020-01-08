@@ -66,6 +66,10 @@ public class User implements UserDetails {
 //    @CollectionTable(name = "food_owners", joinColumns = @JoinColumn(name = "owners_id"))
 //    private List<Food> foods;
 
+    public void consume(Food food) {
+        biometrics.addToConsumed(food);
+    }
+
     @Override public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
