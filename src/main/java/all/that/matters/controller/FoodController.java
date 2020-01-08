@@ -39,11 +39,7 @@ public class FoodController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         User user = (User) userDetails;
-
-        if (user.getRoles().contains(Role.ADMIN)) {
-            return "admin_main";
-        }
-
+        
         List<Food> usersFood = foodService.findAllByOwner(user);
         List<Statistic> todayStats = statisticService.findForToday();
         Double consumedToday = todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
