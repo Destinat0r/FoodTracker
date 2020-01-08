@@ -34,4 +34,8 @@ public class FoodService {
     public Optional<Food> findById(Long id) {
         return foodRepository.findById(id);
     }
+
+    public List<Food> findAllCommon() {
+        return foodRepository.findByOwner(null);
+    }
 }
