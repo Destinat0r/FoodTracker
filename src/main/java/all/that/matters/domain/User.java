@@ -49,7 +49,7 @@ public class User implements UserDetails {
     @Column(name = "national_name", nullable = false)
     private String nationalName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     @JoinColumn(name = "biometrics_id")
     private Biometrics biometrics;
 
