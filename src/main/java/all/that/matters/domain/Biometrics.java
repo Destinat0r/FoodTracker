@@ -43,7 +43,7 @@ public class Biometrics {
     private Double dailyNorm;
 
     @Column(name = "consumed_today")
-    private Double consumedToday = 0.0;
+    private Double consumedToday;
 
     /**
      * Total energy expenditure calculation using Harris–Benedict equation
