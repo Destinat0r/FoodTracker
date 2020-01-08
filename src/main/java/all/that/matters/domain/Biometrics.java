@@ -89,4 +89,12 @@ public class Biometrics {
     public void setLifestyle(Lifestyle lifestyle) {
         this.lifestyle = lifestyle;
     }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setConsumedToday(Double consumedToday) {
+        this.consumedToday = consumedToday;
+    }
 }
