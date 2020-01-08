@@ -27,6 +27,6 @@ public class FoodService {
     }
 
     public List<Food> findAllByOwner(User user) {
-        return foodRepository.findByOwner(user);
+        return foodRepository.findByOwner(user.getId());
     }
 }
