@@ -42,32 +42,28 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
             <div class="col-sm-6">
-                <input type="email" name="email" value="" class="form-control" th:value="${user != null} ? ${user.email}"
-                       placeholder="Email" required/>
+                <input type="email" name="email" value="" class="form-control" placeholder="Email" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
             <div class="col-sm-6">
-                <input type="text" name="fullName" value="" class="form-control" th:value="${user != null} ? ${user.fullName}"
-                       placeholder="Full name" required/>
+                <input type="text" name="fullName" value="" class="form-control" placeholder="Full name" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
             <div class="col-sm-6">
-                <input type="text" name="nationalName" value="" class="form-control" th:value="${user != null} ? ${user.nationalName}"
-                       placeholder="National name" required/>
+                <input type="text" name="nationalName" value="" class="form-control" placeholder="National name" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.age}"></label>
             <div class="col-sm-6">
-                <input type="datetime-local" name="age" value="" class="form-control"
-                       th:value="${biometrics != null} ? ${biometrics.age}" placeholder="Age" required/>
+                <input type="datetime-local" name="age" value="" class="form-control" placeholder="Age" required/>
             </div>
         </div>
 
@@ -84,16 +80,14 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.weight}"></label>
             <div class="col-sm-6">
-                <input type="number" name="weight" value="50" class="form-control" step="10"
-                       th:value="${biometrics != null} ? ${biometrics.weight}" placeholder="Weight" required/>
+                <input type="number" name="weight" value="" class="form-control" placeholder="Weight" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.height}"></label>
             <div class="col-sm-6">
-                <input type="number" name="height" value="160" class="form-control" step="10"
-                       th:value="${biometrics != null} ? ${biometrics.age}" placeholder="Height" required/>
+                <input type="number" name="height" value="" class="form-control" placeholder="Height" required/>
             </div>
         </div>
 
