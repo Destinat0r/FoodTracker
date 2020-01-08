@@ -5,11 +5,10 @@ import all.that.matters.domain.Role;
 import all.that.matters.domain.Statistic;
 import all.that.matters.domain.User;
 import all.that.matters.services.FoodService;
+import all.that.matters.services.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +27,12 @@ import java.util.Map;
 public class FoodController {
 
     private FoodService foodService;
+    private StatisticService statisticService;
 
     @Autowired
-    public FoodController(FoodService foodService) {
+    public FoodController(FoodService foodService, StatisticService statisticService) {
         this.foodService = foodService;
+        this.statisticService = statisticService;
     }
 
     @GetMapping("/all")
@@ -70,6 +72,7 @@ public class FoodController {
     @PostMapping("/consume")
     public String consume(
             @Valid Food food,
+            @RequestParam("amount") Double amount,
             BindingResult bindingResult,
             Model model) {
 
@@ -80,7 +83,13 @@ public class FoodController {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Statistic stat = Statistic.builder().user(user).food(food).build();
+        Statistic stat = Statistic.builder()
+                                 .user(user)
+                                 .food(food)
+                                 .amount(amount)
+                                 .timestamp(LocalDateTime.now())
+                                 .build();
+        
 
         return "redirect:/main";
     }
