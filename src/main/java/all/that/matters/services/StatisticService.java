@@ -25,4 +25,8 @@ public class StatisticService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return statisticRepository.findAllFromTodayByUserId(user.getId());
     }
+
+    public void create(Statistic statistic) {
+        statisticRepository.save(statistic);
+    }
 }
