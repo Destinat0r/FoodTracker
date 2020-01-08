@@ -22,24 +22,19 @@ public class Biometrics {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    @NotBlank(message = "Age can't be blank")
     @Column(name = "age", nullable = false)
     private Double age;
 
-    @NotBlank(message = "Weight can't be blank")
     @Column(name = "sex", nullable = false)
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @NotBlank(message = "Weight can't be blank")
     @Column(name = "weight", nullable = false)
     private Double weight;
 
-    @NotBlank(message = "Height can't be blank")
     @Column(name = "height", nullable = false)
     private Double height;
 
-    @NotBlank(message = "Lifestyle can't be blank")
     @Column(name = "lifestyle", nullable = false)
     @Enumerated(EnumType.STRING)
     private Lifestyle lifestyle;
