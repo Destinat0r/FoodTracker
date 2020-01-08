@@ -2,7 +2,9 @@ package all.that.matters.services;
 
 import all.that.matters.dao.StatisticRepository;
 import all.that.matters.domain.Statistic;
+import all.that.matters.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ public class StatisticService {
 
     public List<Statistic> findForToday() {
         LocalDate today = LocalDate.now();
-        return statisticRepository.findAllFromToday();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return statisticRepository.findAllFromTodayByUserId(user.getId());
     }
 }
