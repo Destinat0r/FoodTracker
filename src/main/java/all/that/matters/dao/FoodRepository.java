@@ -14,4 +14,7 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     List<Food> findByOwner(Long userId);
 
     Optional<Food> findById(Long id);
+
+    @Query(value = "SELECT id, name, calories, user_id from food WHERE user_id IS NULL", nativeQuery = true)
+    List<Food> findAllCommon();
 }
