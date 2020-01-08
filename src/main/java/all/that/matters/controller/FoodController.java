@@ -39,7 +39,7 @@ public class FoodController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         User user = (User) userDetails;
-        
+
         List<Food> usersFood = foodService.findAllByOwner(user);
         List<Statistic> todayStats = statisticService.findForToday();
         Double consumedToday = todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
@@ -88,7 +88,7 @@ public class FoodController {
 
         foodService.add(food);
 
-        return "redirect:/food/main";
+        return "redirect:/food/all";
     }
 
     @PostMapping("/consume")
