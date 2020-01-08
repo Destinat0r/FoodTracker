@@ -1,5 +1,6 @@
 package all.that.matters.controller;
 
+import all.that.matters.domain.Biometrics;
 import all.that.matters.domain.User;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,16 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String registration(@ModelAttribute("message") String message) {
+    public String registration(@ModelAttribute("message") String message, Model model) {
+        model.addAttribute("biometrics", new Biometrics());
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(
             @RequestParam("passwordConfirm") String passwordConfirm,
-            @Valid User user,
+            @Valid @ModelAttribute("user") User user,
+            Biometrics biometrics,
             BindingResult bindingResult,
             Model model) {
 
