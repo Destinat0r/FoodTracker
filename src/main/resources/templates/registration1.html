@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Registration</title>
+</head>
+<body>
+<a href="?lang=en">en</a>
+<a href="?lang=uk">ua</a>
+
+<div class="container container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Registration</h1>
+        </div>
+    </div>
+
+    <form th:action="@{/registration}" method="post" th:object="${user}" novalidate>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
+            <div class="col-sm-6">
+                <input type="text" name="username" placeholder="Username" th:value="${user != null} ? ${user.username}"
+                       class="form-control"
+                       th:class="${usernameError != null}? 'is-invalid'" required/>
+
+                <div th:if="${usernameError}">
+                    <div class="invalid-feedback">
+                        [[${#usernameError}]]
+                    </div>
+                </div>
+                <div th:unless="${usernameError}">
+                    <div class="invalid-feedback">
+                        [[${#usernameError}]]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
+            <div class="col-sm-6">
+                <input type="email" name="email" th:value="${user != null} ? ${user.email}" class="form-control" placeholder="Email" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
+            <div class="col-sm-6">
+                <input type="text" name="fullName" th:value="${user != null} ? ${user.fullName}" class="form-control" placeholder="Full name" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
+            <div class="col-sm-6">
+                <input type="text" name="nationalName" th:value="${user != null} ? ${user.nationalName}" class="form-control" placeholder="National name" required/>
+            </div>
+        </div>
+
+    <div th:object="${biometrics}">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.age}"></label>
+            <div class="col-sm-6">
+                <input type="datetime-local" name="age" th:value="${biometrics != null} ? ${biometrics.age}" class="form-control" placeholder="Age" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.biometrics.sex}"></label>
+            <div class="col-sm-6">
+                <select id="sex" name="sex">
+                    <option th:each="sexOpt : ${T(all.that.matters.domain.Sex).values()}"
+                            th:value="${sexOpt}" th:text="${sexOpt}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.weight}"></label>
+            <div class="col-sm-6">
+                <input type="number" name="weight" th:value="${biometrics != null} ? ${biometrics.weight}" class="form-control" placeholder="Weight" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.height}"></label>
+            <div class="col-sm-6">
+                <input type="number" name="height" th:value="${biometrics != null} ? ${biometrics.height}" class="form-control" placeholder="Height" required/>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.biometrics.lifestyle}"></label>
+            <div class="col-sm-6">
+                <select id="lifestyle" name="lifestyle">
+                    <option th:each="lifestyleOpt : ${T(all.that.matters.domain.Lifestyle).values()}"
+                            th:value="${lifestyleOpt}" th:text="${lifestyleOpt}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
+            <div class="col-sm-6">
+                <input type="password" name="password" class="form-control" placeholder="Password" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.сonfirm_password}"></label>
+            <div class="col-sm-6">
+                <input type="password" name="passwordConfirm" class="form-control" placeholder="Retype Password" required/>
+            </div>
+        </div>
+
+        <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+    </form>
+
+</div>
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

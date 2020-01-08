@@ -56,7 +56,7 @@ public class RegistrationController {
             return "registration";
         }
         try {
-
+            user.setBiometrics(biometrics);
             userService.addUser(user);
         } catch (Exception e) {
             model.addAttribute("usernameError", "Username or email already exists!");
