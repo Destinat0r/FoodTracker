@@ -80,12 +80,12 @@ public class FoodController {
         if (user.getAuthorities().contains(Role.USER)) {
             food.setOwner(user);
             foodService.add(food);
-            return "redirect:/main";
+            return "redirect:/food/main";
         }
 
         foodService.add(food);
 
-        return "redirect:/main";
+        return "redirect:/food/main";
     }
 
     @PostMapping("/consume")
@@ -112,7 +112,7 @@ public class FoodController {
 
         statisticService.create(stat);
 
-        return "redirect:/main";
+        return "redirect:/food/main";
     }
 }
 
