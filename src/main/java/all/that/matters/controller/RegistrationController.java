@@ -2,6 +2,7 @@ package all.that.matters.controller;
 
 import all.that.matters.domain.Biometrics;
 import all.that.matters.domain.User;
+import all.that.matters.services.BiometricService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,12 @@ import java.util.Map;
 public class RegistrationController {
 
     private UserService userService;
+    private BiometricService biometricService;
 
     @Autowired
-    public RegistrationController(UserService userService) {
+    public RegistrationController(UserService userService, BiometricService biometricService) {
         this.userService = userService;
+        this.biometricService = biometricService;
     }
 
     @GetMapping("/registration")
@@ -55,8 +58,13 @@ public class RegistrationController {
 
             return "registration";
         }
+
+        biometrics.setDailyNorm();
+
         try {
+            biometricService.create(biometrics);
             user.setBiometrics(biometrics);
+            biometrics.setOwner(user);
             userService.addUser(user);
         } catch (Exception e) {
             model.addAttribute("usernameError", "Username or email already exists!");
