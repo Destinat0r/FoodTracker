@@ -22,6 +22,22 @@
             <input type="submit" value="Sign Out"/>
         </form>
 
+        <h3>All Food from DB</h3>
+        <table class="table-striped">
+            <thead class="border-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Calories</th>
+            </tr>
+            </thead>
+            <tr th:each="food : ${allFood}">
+                <td th:text="${food.id}" />
+                <td><a href="#" th:href="@{/food(id=${food.id})}"><span th:text="${food.name}" ></span></a></td>
+                <td th:text="${food.calories}"></td>
+            </tr>
+        </table>
+    <hr>
         <form th:action="@{/food/add}" method="post" th:object="${food}" novalidate>
             <div class="form-group row">
                 <label for="name" th:text="#{food.name}"></label>
