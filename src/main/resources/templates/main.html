@@ -62,6 +62,7 @@
         </table>
         <hr>
         <h2>Consumed today</h2>
+        <h3 th:text="${user.biometrics.consumedToday}"></h3>
 
         <table class="table-striped" th:object="${todayStats}">
             <thead class="border-dark">
