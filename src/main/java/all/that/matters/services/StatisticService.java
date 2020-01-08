@@ -20,6 +20,6 @@ public class StatisticService {
 
     public List<Statistic> findForToday() {
         LocalDate today = LocalDate.now();
-        return statisticRepository.findAllByDateTime_DayOfYear(today.getDayOfYear());
+        return statisticRepository.findAllFromToday();
     }
 }
