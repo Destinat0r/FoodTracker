@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/food")
@@ -101,6 +102,10 @@ public class FoodController {
         }
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        //TODO remade using session
+        Optional<Food> optionalFood = foodService.findById(food.getId());
+        optionalFood.ifPresent(user::consume);
 
         Statistic stat = Statistic.builder()
                                  .user(user)
