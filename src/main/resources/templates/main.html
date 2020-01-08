@@ -63,7 +63,20 @@
         <hr>
         <h2>Consumed today</h2>
 
-
+        <table class="table-striped" th:object="${todayStats}">
+            <thead class="border-dark">
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Total calories</th>
+            </tr>
+            </thead>
+            <tr th:each="stat : ${todayStats}">
+                <td><span th:text="${stat.food.name}"></span></td>
+                <td><span th:text="${stat.amount}"></span></td>
+                <td><span th:text="${stat.amount} * ${stat.food.calories}"></span></td>
+            </tr>
+        </table>
 </div>
 </body>
 </html>
