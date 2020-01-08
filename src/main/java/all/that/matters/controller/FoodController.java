@@ -1,9 +1,6 @@
 package all.that.matters.controller;
 
-import all.that.matters.domain.Food;
-import all.that.matters.domain.Role;
-import all.that.matters.domain.Statistic;
-import all.that.matters.domain.User;
+import all.that.matters.domain.*;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -71,7 +65,7 @@ public class FoodController {
 
     @PostMapping("/consume")
     public String consume(
-            @Valid Food food,
+            @ModelAttribute("food") Food food,
             @RequestParam("amount") Double amount,
             BindingResult bindingResult,
             Model model) {
@@ -86,10 +80,12 @@ public class FoodController {
         Statistic stat = Statistic.builder()
                                  .user(user)
                                  .food(food)
+                                 .action(Action.CONSUME)
                                  .amount(amount)
                                  .timestamp(LocalDateTime.now())
                                  .build();
-        
+
+        statisticService.create(stat);
 
         return "redirect:/main";
     }
