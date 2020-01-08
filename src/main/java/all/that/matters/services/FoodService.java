@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoodService {
@@ -28,5 +29,9 @@ public class FoodService {
 
     public List<Food> findAllByOwner(User user) {
         return foodRepository.findByOwner(user.getId());
+    }
+
+    public Optional<Food> findById(Long id) {
+        return foodRepository.findById(id);
     }
 }
