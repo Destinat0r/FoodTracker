@@ -36,6 +36,6 @@ public class FoodService {
     }
 
     public List<Food> findAllCommon() {
-        return foodRepository.findByOwner(null);
+        return foodRepository.findAllCommon();
     }
 }
