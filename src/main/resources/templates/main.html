@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
     <title>User [[${#httpServletRequest.remoteUser}]]</title>
+<style>
+    #exceeded {
+        color: red;
+    }
+</style>
 </head>
 <body>
 <a href="?lang=en">en</a>
@@ -61,8 +66,14 @@
             </tr>
         </table>
         <hr>
+
+        <h2>Daily norm</h2>
+        <h3 th:text="${user.biometrics.dailyNorm}"></h3>
+        <hr>
+
         <h2>Consumed today</h2>
-        <h3 th:text="${user.biometrics.consumedToday}"></h3>
+        <h3 th:text="${consumedToday}"></h3>
+        <h3 id="exceeded" th:if="${exceeded}" th:text="#{user.biometrics.exceeded}"></h3>
 
         <table class="table-striped" th:object="${todayStats}">
             <thead class="border-dark">
