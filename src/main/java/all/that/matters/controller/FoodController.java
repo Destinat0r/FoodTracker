@@ -47,15 +47,16 @@ public class FoodController {
         List<Food> usersFood = foodService.findAllByOwner(user);
         List<Statistic> todayStats = statisticService.findForToday();
         Double consumedToday = todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
+
         if (consumedToday > user.getBiometrics().getDailyNorm()) {
             model.addAttribute("exceeded", true);
         }
 
         model.addAttribute("consumedToday", consumedToday);
         model.addAttribute("user", user);
+        model.addAttribute("allAvailableFood", foodService.findAllCommon());
         model.addAttribute("usersFood", usersFood);
         model.addAttribute("todayStats", todayStats);
-
 
         return "main";
     }
@@ -110,7 +111,6 @@ public class FoodController {
 
         //TODO remade using session
         Optional<Food> optionalFood = foodService.findById(food.getId());
-        System.out.println("++++++++++++++++++++++++++" + user.getBiometrics());
 
         optionalFood.ifPresent(user::consume);
 
