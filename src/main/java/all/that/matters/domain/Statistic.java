@@ -36,6 +36,6 @@ public class Statistic {
     @Enumerated(EnumType.STRING)
     private Action action;
 
-    @Column(name = "data_time", nullable = false)
-    private LocalDateTime dateTime;
+    @Column(name = "timestamp", nullable = false)
+    private LocalDateTime timestamp;
 }
