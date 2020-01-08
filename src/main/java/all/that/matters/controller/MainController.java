@@ -32,13 +32,13 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String getIndex(Model model) {
         model.addAttribute("user", new User());
         return "index";
     }
 
     @GetMapping("/main")
-    public String login(Model model ) {
+    public String getMain(Model model ) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -61,7 +61,7 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String getLoginForm() {
         return "login";
     }
 
