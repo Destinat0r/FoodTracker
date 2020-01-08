@@ -61,6 +61,10 @@ public class Biometrics {
         this.dailyNorm = calculateDailyNorm();
     }
 
+    public void addToConsumed(Food food) {
+        consumedToday += food.getCalories();
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
