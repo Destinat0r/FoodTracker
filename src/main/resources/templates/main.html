@@ -31,10 +31,10 @@
                 <th>Calories</th>
             </tr>
             </thead>
-            <tr th:each="food : ${allFood}">
-                <td th:text="${food.id}" />
-                <td><a href="#" th:href="@{/food(id=${food.id})}"><span th:text="${food.name}" ></span></a></td>
-                <td th:text="${food.calories}"></td>
+            <tr th:each="nextFood : ${allAvailableFood}">
+                <td th:text="${nextFood.id}" />
+                <td><a href="#" th:href="@{/food(id=${nextFood.id})}"><span th:text="${nextFood.name}" ></span></a></td>
+                <td th:text="${nextFood.calories}"></td>
             </tr>
         </table>
     <hr>
