@@ -2,8 +2,10 @@ package all.that.matters.controller;
 
 import all.that.matters.domain.Food;
 import all.that.matters.domain.Role;
+import all.that.matters.domain.Statistic;
 import all.that.matters.domain.User;
 import all.that.matters.services.FoodService;
+import all.that.matters.services.StatisticService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,13 +21,14 @@ import java.util.List;
 public class MainController {
 
     private UserService userService;
-
     private FoodService foodService;
+    private StatisticService statisticService;
 
     @Autowired
-    public MainController(UserService userService, FoodService foodService) {
+    public MainController(UserService userService, FoodService foodService, StatisticService statisticService) {
         this.userService = userService;
         this.foodService = foodService;
+        this.statisticService = statisticService;
     }
 
     @GetMapping("/")
@@ -47,9 +50,12 @@ public class MainController {
         }
 
         List<Food> usersFood = foodService.findAllByOwner(user);
+        List<Statistic> todayStats = statisticService.findForToday();
 
         model.addAttribute("user", user);
         model.addAttribute("usersFood", usersFood);
+        model.addAttribute("todayStats", todayStats);
+
 
         return "main";
     }
