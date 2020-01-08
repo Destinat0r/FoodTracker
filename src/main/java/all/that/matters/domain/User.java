@@ -11,13 +11,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
 
 @Entity
 @Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"username"})})
