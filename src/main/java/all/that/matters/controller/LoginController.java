@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class MainController {
+public class LoginController {
 
     private UserService userService;
     private FoodService foodService;
     private StatisticService statisticService;
 
     @Autowired
-    public MainController(UserService userService, FoodService foodService, StatisticService statisticService) {
+    public LoginController(UserService userService, FoodService foodService, StatisticService statisticService) {
         this.userService = userService;
         this.foodService = foodService;
         this.statisticService = statisticService;
