@@ -109,17 +109,20 @@ public class FoodController {
 
         User user = getPrincipal();
 
-        List<Statistic> todayStats = statisticService.findForToday();
-        Double consumedToday = todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
-
         //TODO remade using session or something
-        Optional<Food> optionalFood = foodService.findById(food.getId());
-        Double currentFoodCalories = optionalFood.isPresent() ? optionalFood.get().getCalories() : 0;
+        Double caloriesConsumedToday = getCaloriesConsumedToday() + getCurrentFoodCalories(food);
 
-        user.getBiometrics().setConsumedToday(consumedToday + currentFoodCalories);
-
+        user.getBiometrics().setConsumedToday(caloriesConsumedToday);
         userService.save(user);
 
+        createConsumeStat(food, amount, user);
+        ifLimitExceededCreateStat(food, user, caloriesConsumedToday);
+
+        return "redirect:/food/main";
+    }
+
+    private void createConsumeStat(@ModelAttribute("food") Food food, @RequestParam("amount") Double amount,
+            User user) {
         Statistic stat = Statistic.builder()
                                  .user(user)
                                  .food(food)
@@ -129,8 +132,10 @@ public class FoodController {
                                  .build();
 
         statisticService.create(stat);
+    }
 
-        if (user.getBiometrics().getDailyNorm() > consumedToday) {
+    private void ifLimitExceededCreateStat(@ModelAttribute("food") Food food, User user, Double caloriesConsumedToday) {
+        if (user.getBiometrics().getDailyNorm() > caloriesConsumedToday) {
             Statistic exceed_stat = Statistic.builder()
                                      .user(user)
                                      .food(food)
@@ -140,8 +145,16 @@ public class FoodController {
 
             statisticService.create(exceed_stat);
         }
+    }
 
-        return "redirect:/food/main";
+    private Double getCurrentFoodCalories(@ModelAttribute("food") Food food) {
+        Optional<Food> optionalFood = foodService.findById(food.getId());
+        return optionalFood.isPresent() ? optionalFood.get().getCalories() : 0;
+    }
+
+    private Double getCaloriesConsumedToday() {
+        List<Statistic> todayStats = statisticService.findForToday();
+        return todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
     }
 }
 
