@@ -7,6 +7,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -39,5 +43,13 @@ public class LoginController {
     public String getUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/users/{id}")
+    public String getUserProfile(@PathVariable Long id, Model model) {
+        Optional<User> user = userService.findById(id);
+        user.ifPresent((user1) -> model.addAttribute("user", user1));
+        return "profile";
     }
 }
