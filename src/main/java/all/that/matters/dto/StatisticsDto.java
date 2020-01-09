@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 
-public class StatisticsByDayDto {
+public class StatisticsDto {
 
     private User user;
-    private Map<LocalDate, List<Statistic>> statisticsByDay;
+    private Map<LocalDate, List<Statistic>> dateToStatisticsMap;
 
-    public StatisticsByDayDto(List<Statistic> statsOfUser, User user) {
+    public StatisticsDto(List<Statistic> statsOfUser, User user) {
         this.user = user;
-        this.statisticsByDay = mapStatisticsToDay(statsOfUser);
+        this.dateToStatisticsMap = mapStatisticsToDay(statsOfUser);
     }
 
     private Map<LocalDate, List<Statistic>> mapStatisticsToDay(List<Statistic> statsOfUser) {
