@@ -3,6 +3,7 @@ package all.that.matters.controller;
 import all.that.matters.domain.*;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.StatisticService;
+import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -25,11 +26,13 @@ public class FoodController {
 
     private FoodService foodService;
     private StatisticService statisticService;
+    private UserService userService;
 
     @Autowired
-    public FoodController(FoodService foodService, StatisticService statisticService) {
+    public FoodController(FoodService foodService, StatisticService statisticService, UserService userService) {
         this.foodService = foodService;
         this.statisticService = statisticService;
+        this.userService = userService;
     }
 
     @GetMapping("/main")
@@ -105,10 +108,16 @@ public class FoodController {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        //TODO remade using session
-        Optional<Food> optionalFood = foodService.findById(food.getId());
+        List<Statistic> todayStats = statisticService.findForToday();
+        Double consumedToday = todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
 
-        optionalFood.ifPresent(user::consume);
+        //TODO remade using session or something
+        Optional<Food> optionalFood = foodService.findById(food.getId());
+        Double currentFoodCalories = optionalFood.isPresent() ? optionalFood.get().getCalories() : 0;
+
+        user.getBiometrics().setConsumedToday(consumedToday + currentFoodCalories);
+
+        userService.save(user);
 
         Statistic stat = Statistic.builder()
                                  .user(user)
@@ -119,6 +128,17 @@ public class FoodController {
                                  .build();
 
         statisticService.create(stat);
+
+        if (user.getBiometrics().getDailyNorm() > consumedToday) {
+            Statistic exceed_stat = Statistic.builder()
+                                     .user(user)
+                                     .food(food)
+                                     .action(Action.EXCEED_DAILY_LIMIT)
+                                     .timestamp(LocalDateTime.now())
+                                     .build();
+
+            statisticService.create(exceed_stat);
+        }
 
         return "redirect:/food/main";
     }
