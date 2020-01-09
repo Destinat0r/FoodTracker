@@ -12,15 +12,10 @@
 </style>
 </head>
 <body>
-<a href="?lang=en">en</a>
-<a href="?lang=uk">ua</a>
+<div th:insert="~{fragments/navbar :: nb}"></div>
 
 <div class="container">
-        <h1>Main</h1>
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
 
         <h3>All Food from DB</h3>
         <table class="table-striped">
@@ -54,7 +49,7 @@
             </div>
         </form>
 
-    <hr>
+        <hr>
         <h2>My Food</h2>
 
             <table class="table-striped" th:object="${usersFood}">
@@ -106,5 +101,6 @@
             </tr>
         </table>
 </div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
 </body>
 </html>
