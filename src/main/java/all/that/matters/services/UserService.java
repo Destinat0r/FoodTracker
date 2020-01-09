@@ -48,4 +48,8 @@ public class UserService implements UserDetailsService {
     public List<User> findAll() {
         return userRepo.findAll();
     }
+
+    public Optional<User> findById(Long id) {
+        return userRepo.findById(id);
+    }
 }
