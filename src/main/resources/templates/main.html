@@ -21,14 +21,12 @@
         <table class="table-striped">
             <thead class="border-dark">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Calories</th>
             </tr>
             </thead>
             <tr th:each="nextFood : ${allAvailableFood}">
-                <td th:text="${nextFood.id}" />
-                <td><a href="#" th:href="@{/food(id=${nextFood.id})}"><span th:text="${nextFood.name}" ></span></a></td>
+                <td><a href="#"><span th:text="${nextFood.name}" ></span></a></td>
                 <td th:text="${nextFood.calories}"></td>
                 <td>
                     <form th:action="@{/food/add}" method="post" th:object="${nextFood}" novalidate>
@@ -77,7 +75,7 @@
                     <form action="#" th:action="@{/food/consume}" th:object="${food}" method="post">
                         <input type="hidden" name="id" th:value="${food.id}">
                         <input type="hidden" name="name" th:value="${food.name}">
-                        <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5" th:text="#{food.amount}">
+                        <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5">
                         <button type="submit" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
                     </form>
                 </td>
