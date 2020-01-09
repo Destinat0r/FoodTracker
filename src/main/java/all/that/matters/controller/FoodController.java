@@ -38,10 +38,7 @@ public class FoodController {
     @GetMapping("/main")
     public String getMain(Model model ) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        User user = (User) userDetails;
+        User user = getPrincipal();
 
         List<Food> usersFood = foodService.findAllByOwner(user);
         List<Statistic> todayStats = statisticService.findForToday();
@@ -81,7 +78,7 @@ public class FoodController {
             model.mergeAttributes(errors);
         }
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = getPrincipal();
 
         if (user.getAuthorities().contains(Role.USER)) {
             food.setOwner(user);
@@ -92,6 +89,10 @@ public class FoodController {
         foodService.add(food);
 
         return "redirect:/food/all";
+    }
+
+    private User getPrincipal() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @PostMapping("/consume")
@@ -106,7 +107,7 @@ public class FoodController {
             model.mergeAttributes(errors);
         }
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = getPrincipal();
 
         List<Statistic> todayStats = statisticService.findForToday();
         Double consumedToday = todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
