@@ -52,4 +52,8 @@ public class UserService implements UserDetailsService {
     public Optional<User> findById(Long id) {
         return userRepo.findById(id);
     }
+
+    public void save(User user) {
+        userRepo.save(user);
+    }
 }
