@@ -7,18 +7,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
 @Controller
-public class LoginController {
+public class UserController {
 
     private UserService userService;
 
     @Autowired
-    public LoginController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -46,10 +47,16 @@ public class LoginController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/users/{id}")
-    public String getUserProfile(@PathVariable Long id, Model model) {
+    @GetMapping("/user")
+    public String getUserProfile(@RequestParam Long id, Model model) {
         Optional<User> user = userService.findById(id);
         user.ifPresent((user1) -> model.addAttribute("user", user1));
         return "profile";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/users";
     }
 }
