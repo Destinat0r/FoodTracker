@@ -38,4 +38,8 @@ public class FoodService {
     public List<Food> findAllCommon() {
         return foodRepository.findAllCommon();
     }
+
+    public void remove(Food food) {
+        foodRepository.delete(food);
+    }
 }
