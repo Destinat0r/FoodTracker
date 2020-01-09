@@ -61,7 +61,7 @@ public class FoodController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
 
-        List<Food> allFood = foodService.findAll();
+        List<Food> allFood = foodService.findAllCommon();
         model.addAttribute("allFood", allFood);
 
         return "all_food";
