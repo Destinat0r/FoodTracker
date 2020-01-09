@@ -30,6 +30,14 @@
                 <td th:text="${nextFood.id}" />
                 <td><a href="#" th:href="@{/food(id=${nextFood.id})}"><span th:text="${nextFood.name}" ></span></a></td>
                 <td th:text="${nextFood.calories}"></td>
+                <td>
+                    <form th:action="@{/food/add}" method="post" th:object="${nextFood}" novalidate>
+                        <input type="hidden" name="id" th:value="${nextFood.id}">
+                        <input type="hidden" name="name" th:value="${nextFood.name}">
+                        <input type="hidden" name="calories" th:value="${nextFood.calories}">
+                        <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+                    </form>
+                </td>
             </tr>
         </table>
     <hr>
