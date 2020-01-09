@@ -23,7 +23,7 @@ public class StatisticService {
     public List<Statistic> findForToday() {
         LocalDate today = LocalDate.now();
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return statisticRepository.findAllFromTodayByUserId(user.getId());
+        return statisticRepository.findAllConsumedFromTodayByUserId(user.getId());
     }
 
     public void create(Statistic statistic) {

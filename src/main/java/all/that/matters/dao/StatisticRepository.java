@@ -11,7 +11,7 @@ import java.util.List;
 public interface StatisticRepository extends JpaRepository<Statistic, Long> {
 
     @Query(value = "SELECT id, user_id, food_id, amount, action, timestamp FROM statistics WHERE user_id = ?1"
-                           + " AND date_trunc('day', timestamp) >= current_date",
+                           + " AND date_trunc('day', timestamp) >= current_date AND action = 'CONSUME'",
     nativeQuery = true)
-    List<Statistic> findAllFromTodayByUserId(Long userId);
+    List<Statistic> findAllConsumedFromTodayByUserId(Long userId);
 }
