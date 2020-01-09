@@ -1,5 +1,7 @@
 package all.that.matters.controller;
 
+import all.that.matters.domain.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -15,4 +17,9 @@ class ControllerUtils {
 
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
+
+    static User getPrincipal() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
 }

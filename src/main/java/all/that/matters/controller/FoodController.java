@@ -6,7 +6,6 @@ import all.that.matters.services.StatisticService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +35,7 @@ public class FoodController {
     @GetMapping("/main")
     public String getMain(Model model ) {
 
-        User user = getPrincipal();
+        User user = ControllerUtils.getPrincipal();
 
         List<Food> usersFood = foodService.findAllByOwner(user);
         List<Statistic> todayStats = statisticService.findForToday();
@@ -76,7 +75,7 @@ public class FoodController {
             model.mergeAttributes(errors);
         }
 
-        User user = getPrincipal();
+        User user = ControllerUtils.getPrincipal();
 
         if (user.getAuthorities().contains(Role.USER)) {
             food.setOwner(user);
@@ -87,10 +86,6 @@ public class FoodController {
         foodService.add(food);
 
         return "redirect:/food/all";
-    }
-
-    private User getPrincipal() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @PostMapping("/consume")
@@ -105,7 +100,7 @@ public class FoodController {
             model.mergeAttributes(errors);
         }
 
-        User user = getPrincipal();
+        User user = ControllerUtils.getPrincipal();
 
         //TODO remade using session or something
         Double caloriesConsumedToday = getCaloriesConsumedToday() + getCurrentFoodCalories(food);
@@ -155,4 +150,3 @@ public class FoodController {
         return todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
     }
 }
-
