@@ -1,6 +1,8 @@
 package all.that.matters.controller;
 
+import all.that.matters.dao.DayRepository;
 import all.that.matters.domain.*;
+import all.that.matters.services.DayService;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.EventService;
 import all.that.matters.services.UserService;
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +27,15 @@ public class FoodController {
     private FoodService foodService;
     private EventService eventService;
     private UserService userService;
+    private DayService dayService;
 
     @Autowired
-    public FoodController(FoodService foodService, EventService eventService, UserService userService) {
+    public FoodController(FoodService foodService, EventService eventService, UserService userService,
+            DayService dayService) {
         this.foodService = foodService;
         this.eventService = eventService;
         this.userService = userService;
+        this.dayService = dayService;
     }
 
     @GetMapping("/main")
@@ -38,19 +44,22 @@ public class FoodController {
         User user = ControllerUtils.getPrincipal();
 
         List<Food> usersFood = foodService.findAllByOwner(user);
-        List<Event> todayEvents = eventService.findForToday();
-        Double consumedToday = todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
+
+        Optional<Day> optionalToday = dayService.findDayByUserAndDate(user, LocalDate.now());
+        Day today = optionalToday.orElseGet(() -> Day.builder().date(LocalDate.now()).user(user).build());
+
+        Double consumedToday = today.getConsumed().stream().mapToDouble(Food::getCalories).sum();
+
         Double dailyNorm = user.getBiometrics().getDailyNorm();
 
         if (consumedToday > dailyNorm) {
-            model.addAttribute("exceeded", consumedToday - dailyNorm);
+            today.setAboveNormCalories(consumedToday - dailyNorm);
+            today.setNormExceeded(true);
         }
 
-        model.addAttribute("consumedToday", consumedToday);
-        model.addAttribute("user", user);
         model.addAttribute("allAvailableFood", foodService.findAllCommon());
         model.addAttribute("usersFood", usersFood);
-        model.addAttribute("todayEvents", todayEvents);
+        model.addAttribute("today", today);
 
         return "main";
     }
