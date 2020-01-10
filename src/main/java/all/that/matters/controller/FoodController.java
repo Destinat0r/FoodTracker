@@ -106,7 +106,6 @@ public class FoodController {
         //TODO remade using session or something
         Double caloriesConsumedToday = getCaloriesConsumedToday() + getCurrentFoodCalories(food);
 
-        user.getBiometrics().setConsumedToday(caloriesConsumedToday);
         userService.save(user);
 
         createConsumeEvent(food, amount, user);
