@@ -70,7 +70,7 @@ public class UserController {
         User user = ControllerUtils.getPrincipal();
         EventDto eventDto = new EventDto(eventRepository.findAllByUserId(user.getId()), user);
 
-        model.addAttribute("eventsDto", eventDto);
+        model.addAttribute("eventDto", eventDto);
         return "history";
     }
 }

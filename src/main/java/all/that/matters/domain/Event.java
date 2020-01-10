@@ -32,9 +32,9 @@ public class Event {
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "action", nullable = false)
+    @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Action action;
+    private Type type;
 
     @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;

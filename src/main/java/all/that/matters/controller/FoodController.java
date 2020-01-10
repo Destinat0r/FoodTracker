@@ -119,7 +119,7 @@ public class FoodController {
         Event consume = Event.builder()
                                  .user(user)
                                  .food(food)
-                                 .action(Action.CONSUME)
+                                 .type(Type.CONSUME)
                                  .amount(amount)
                                  .timestamp(LocalDateTime.now())
                                  .build();
@@ -132,7 +132,7 @@ public class FoodController {
             Event exceed = Event.builder()
                                      .user(user)
                                      .food(food)
-                                     .action(Action.EXCEED_DAILY_LIMIT)
+                                     .type(Type.EXCEED_DAILY_LIMIT)
                                      .timestamp(LocalDateTime.now())
                                      .build();
 

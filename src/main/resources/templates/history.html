@@ -20,12 +20,12 @@
                     <table class="table">
                         <thead class="border-dark">
                             <tr>
-                                <th>Time</th><th>Action</th><th>Food</th><th>Amount</th>
+                                <th>Time</th><th>Type</th><th>Food</th><th>Amount</th>
                             </tr>
                         </thead>
                         <tr th:each="event : ${day.value}">
                             <td th:text="${event.timestamp}"></td>
-                            <td th:text="${event.action}"></td>
+                            <td th:text="${event.type}"></td>
                             <td th:text="${event.food.name}"></td>
                             <td th:text="${event.amount}"></td>
                         </tr>
