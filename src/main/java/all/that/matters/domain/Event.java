@@ -32,8 +32,8 @@ public class Event {
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "calories")
-    private Double calories;
+    @Column(name = "exceeded_calories")
+    private Double exceededCalories;
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
