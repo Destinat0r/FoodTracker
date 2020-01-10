@@ -1,7 +1,7 @@
 package all.that.matters.services;
 
-import all.that.matters.dao.StatisticRepository;
-import all.that.matters.domain.Statistic;
+import all.that.matters.dao.EventRepository;
+import all.that.matters.domain.Event;
 import all.that.matters.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,22 +11,22 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class StatisticService {
+public class EventService {
 
-    private StatisticRepository statisticRepository;
+    private EventRepository eventRepository;
 
     @Autowired
-    public StatisticService(StatisticRepository statisticRepository) {
-        this.statisticRepository = statisticRepository;
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
     }
 
-    public List<Statistic> findForToday() {
+    public List<Event> findForToday() {
         LocalDate today = LocalDate.now();
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return statisticRepository.findAllConsumedFromTodayByUserId(user.getId());
+        return eventRepository.findAllConsumedFromTodayByUserId(user.getId());
     }
 
-    public void create(Statistic statistic) {
-        statisticRepository.save(statistic);
+    public void create(Event event) {
+        eventRepository.save(event);
     }
 }

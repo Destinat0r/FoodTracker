@@ -2,7 +2,7 @@ package all.that.matters.controller;
 
 import all.that.matters.domain.*;
 import all.that.matters.services.FoodService;
-import all.that.matters.services.StatisticService;
+import all.that.matters.services.EventService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,13 +22,13 @@ import java.util.Optional;
 public class FoodController {
 
     private FoodService foodService;
-    private StatisticService statisticService;
+    private EventService eventService;
     private UserService userService;
 
     @Autowired
-    public FoodController(FoodService foodService, StatisticService statisticService, UserService userService) {
+    public FoodController(FoodService foodService, EventService eventService, UserService userService) {
         this.foodService = foodService;
-        this.statisticService = statisticService;
+        this.eventService = eventService;
         this.userService = userService;
     }
 
@@ -38,8 +38,8 @@ public class FoodController {
         User user = ControllerUtils.getPrincipal();
 
         List<Food> usersFood = foodService.findAllByOwner(user);
-        List<Statistic> todayStats = statisticService.findForToday();
-        Double consumedToday = todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
+        List<Event> todayEvents = eventService.findForToday();
+        Double consumedToday = todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
 
         if (consumedToday > user.getBiometrics().getDailyNorm()) {
             model.addAttribute("exceeded", true);
@@ -49,7 +49,7 @@ public class FoodController {
         model.addAttribute("user", user);
         model.addAttribute("allAvailableFood", foodService.findAllCommon());
         model.addAttribute("usersFood", usersFood);
-        model.addAttribute("todayStats", todayStats);
+        model.addAttribute("todayEvents", todayEvents);
 
         return "main";
     }
@@ -108,15 +108,15 @@ public class FoodController {
         user.getBiometrics().setConsumedToday(caloriesConsumedToday);
         userService.save(user);
 
-        createConsumeStat(food, amount, user);
-        ifLimitExceededCreateStat(food, user, caloriesConsumedToday);
+        createConsumeEvent(food, amount, user);
+        ifLimitExceededCreateEvent(food, user, caloriesConsumedToday);
 
         return "redirect:/food/main";
     }
 
-    private void createConsumeStat(@ModelAttribute("food") Food food, @RequestParam("amount") Double amount,
+    private void createConsumeEvent(@ModelAttribute("food") Food food, @RequestParam("amount") Double amount,
             User user) {
-        Statistic stat = Statistic.builder()
+        Event consume = Event.builder()
                                  .user(user)
                                  .food(food)
                                  .action(Action.CONSUME)
@@ -124,19 +124,19 @@ public class FoodController {
                                  .timestamp(LocalDateTime.now())
                                  .build();
 
-        statisticService.create(stat);
+        eventService.create(consume);
     }
 
-    private void ifLimitExceededCreateStat(@ModelAttribute("food") Food food, User user, Double caloriesConsumedToday) {
+    private void ifLimitExceededCreateEvent(@ModelAttribute("food") Food food, User user, Double caloriesConsumedToday) {
         if (user.getBiometrics().getDailyNorm() > caloriesConsumedToday) {
-            Statistic exceed_stat = Statistic.builder()
+            Event exceed = Event.builder()
                                      .user(user)
                                      .food(food)
                                      .action(Action.EXCEED_DAILY_LIMIT)
                                      .timestamp(LocalDateTime.now())
                                      .build();
 
-            statisticService.create(exceed_stat);
+            eventService.create(exceed);
         }
     }
 
@@ -146,7 +146,7 @@ public class FoodController {
     }
 
     private Double getCaloriesConsumedToday() {
-        List<Statistic> todayStats = statisticService.findForToday();
-        return todayStats.stream().mapToDouble(statistic -> statistic.getFood().getCalories()).sum();
+        List<Event> todayEvents = eventService.findForToday();
+        return todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
     }
 }

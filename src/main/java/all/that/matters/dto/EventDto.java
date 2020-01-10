@@ -1,6 +1,6 @@
 package all.that.matters.dto;
 
-import all.that.matters.domain.Statistic;
+import all.that.matters.domain.Event;
 import all.that.matters.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,37 +14,37 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 
-public class StatisticsDto {
+public class EventDto {
 
     private User user;
-    private Map<LocalDate, List<Statistic>> dateToStatisticsMap;
+    private Map<LocalDate, List<Event>> dateToEvents;
 
-    public StatisticsDto(List<Statistic> statsOfUser, User user) {
+    public EventDto(List<Event> events, User user) {
         this.user = user;
-        this.dateToStatisticsMap = mapStatisticsToDay(statsOfUser);
+        this.dateToEvents = mapEventsToDay(events);
     }
 
-    private Map<LocalDate, List<Statistic>> mapStatisticsToDay(List<Statistic> statsOfUser) {
-        List<LocalDate> days = statsOfUser.stream()
-                                       .map(statistic -> statistic.getTimestamp().toLocalDate())
+    private Map<LocalDate, List<Event>> mapEventsToDay(List<Event> events) {
+        List<LocalDate> days = events.stream()
+                                       .map(event -> event.getTimestamp().toLocalDate())
                                        .collect(Collectors.toList());
 
-        Map<LocalDate, List<Statistic>> dateToStaticsMap = new TreeMap<>();
+        Map<LocalDate, List<Event>> dateToEvents = new TreeMap<>();
 
         days.forEach(day -> {
-            dateToStaticsMap.put(day, new ArrayList<Statistic>());
-            sortStatisticsByDay(statsOfUser, dateToStaticsMap, day);
+            dateToEvents.put(day, new ArrayList<Event>());
+            sortEventsByDay(events, dateToEvents, day);
         });
 
-        return dateToStaticsMap;
+        return dateToEvents;
     }
 
-    private void sortStatisticsByDay(List<Statistic> statsOfUser, Map<LocalDate, List<Statistic>> dateToStatics,
+    private void sortEventsByDay(List<Event> events, Map<LocalDate, List<Event>> dateToEvents,
             LocalDate day) {
-        for (Statistic stat : statsOfUser) {
-            if (stat.getTimestamp().toLocalDate().equals(day)) {
-                List<Statistic> list = dateToStatics.get(day);
-                list.add(stat);
+        for (Event event : events) {
+            if (event.getTimestamp().toLocalDate().equals(day)) {
+                List<Event> list = dateToEvents.get(day);
+                list.add(event);
             }
         }
     }

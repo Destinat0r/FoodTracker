@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,29 +10,29 @@
 <div th:insert="~{fragments/navbar :: nb}"></div>
 
 <div class="container">
-    <div th:if="${not #lists.isEmpty(statisticsDto)}">
+    <div th:if="${not #lists.isEmpty(eventDto)}">
 
-        <ul class="list-group">
-            <th:block th:each="day : ${stateToDistrictMap.dateToStatisticsMap}">
-                <li class="list-group-item" th:text="${day.key}">
+        <h1 align="center" th:text="${'History of ' + eventDto.user.username}"></h1>
+        <table>
+            <tr class="list-group" th:each="day : ${eventDto.dateToEvents}">
+
+                <span class="list-group-item" th:text="${day.key}"></span>
                     <table class="table">
-                        <tr>
-                            <th>Time</th><th>Action</th><th>Food</th><th>Amount</th>
-                        </tr>
-                        <tr>
-                            <th:block th:each="stat : ${day.value}">
-
-                                <td th:text="${stat.timestamp}"></td>
-                                <td th:text="${stat.action}"></td>
-                                <td th:text="${stat.food.name}"></td>
-                                <td th:text="${stat.amount}"></td>
-
-                            </th:block>
+                        <thead class="border-dark">
+                            <tr>
+                                <th>Time</th><th>Action</th><th>Food</th><th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tr th:each="event : ${day.value}">
+                            <td th:text="${event.timestamp}"></td>
+                            <td th:text="${event.action}"></td>
+                            <td th:text="${event.food.name}"></td>
+                            <td th:text="${event.amount}"></td>
                         </tr>
                     </table>
-                </li>
-            </th:block>
-        </ul>
+                <hr>
+            </tr>
+        </table>
     </div>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>

@@ -1,6 +1,8 @@
 package all.that.matters.controller;
 
+import all.that.matters.dao.EventRepository;
 import all.that.matters.domain.User;
+import all.that.matters.dto.EventDto;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +19,12 @@ import java.util.Optional;
 public class UserController {
 
     private UserService userService;
+    private EventRepository eventRepository;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, EventRepository eventRepository) {
         this.userService = userService;
+        this.eventRepository = eventRepository;
     }
 
     @GetMapping("/")
@@ -58,5 +62,15 @@ public class UserController {
     public String updateUser(@ModelAttribute("user") User user) {
         userService.save(user);
         return "redirect:/users";
+    }
+
+    @GetMapping("/user/history")
+    public String getHistory(Model model) {
+
+        User user = ControllerUtils.getPrincipal();
+        EventDto eventDto = new EventDto(eventRepository.findAllByUserId(user.getId()), user);
+
+        model.addAttribute("eventsDto", eventDto);
+        return "history";
     }
 }

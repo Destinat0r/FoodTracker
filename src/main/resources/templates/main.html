@@ -92,7 +92,7 @@
         <h3 th:text="${consumedToday}"></h3>
         <h3 id="exceeded" th:if="${exceeded}" th:text="#{user.biometrics.exceeded}"></h3>
 
-        <table class="table-striped" th:object="${todayStats}">
+        <table class="table-striped" th:object="${todayEvents}">
             <thead class="border-dark">
             <tr>
                 <th>Name</th>
@@ -100,10 +100,10 @@
                 <th>Total calories</th>
             </tr>
             </thead>
-            <tr th:each="stat : ${todayStats}">
-                <td><span th:text="${stat.food.name}"></span></td>
-                <td><span th:text="${stat.amount}"></span></td>
-                <td><span th:text="${stat.amount} * ${stat.food.calories}"></span></td>
+            <tr th:each="event : ${todayEvents}">
+                <td><span th:text="${event.food.name}"></span></td>
+                <td><span th:text="${event.amount}"></span></td>
+                <td><span th:text="${event.amount} * ${event.food.calories}"></span></td>
             </tr>
         </table>
 </div>
