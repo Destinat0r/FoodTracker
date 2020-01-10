@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,10 +31,10 @@ public class Day {
     private User user;
 
     @ManyToMany
-    private List<Food> consumed;
+    private List<Food> consumed = new ArrayList<>();
 
     @Column(name = "consumed_today")
-    private Double consumedCalories = 0.0;
+    private Double consumedCalories  = 0.0;
 
     @Column(name = "norm_exceeded")
     private boolean isNormExceeded;
