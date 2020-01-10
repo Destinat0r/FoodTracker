@@ -128,7 +128,7 @@ public class FoodController {
     }
 
     private void ifLimitExceededCreateEvent(@ModelAttribute("food") Food food, User user, Double caloriesConsumedToday) {
-        if (user.getBiometrics().getDailyNorm() > caloriesConsumedToday) {
+        if (user.getBiometrics().getDailyNorm() < caloriesConsumedToday) {
             Event exceed = Event.builder()
                                      .user(user)
                                      .food(food)
