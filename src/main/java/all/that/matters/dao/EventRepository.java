@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository public interface EventRepository extends JpaRepository<Event, Long> {
 
-    @Query(value = "SELECT id, user_id, food_id, amount, action, timestamp FROM events WHERE user_id = ?1"
-                           + " AND date_trunc('day', timestamp) >= current_date AND action = 'CONSUME'", nativeQuery = true)
+    @Query(value = "SELECT id, user_id, food_id, amount, type, timestamp FROM events WHERE user_id = ?1"
+                           + " AND date_trunc('day', timestamp) >= current_date AND type = 'CONSUME'", nativeQuery = true)
     List<Event> findAllConsumedFromTodayByUserId(Long userId);
 
     List<Event> findAllByUserId(Long userId);
