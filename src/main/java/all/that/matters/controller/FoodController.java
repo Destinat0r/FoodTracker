@@ -40,9 +40,10 @@ public class FoodController {
         List<Food> usersFood = foodService.findAllByOwner(user);
         List<Event> todayEvents = eventService.findForToday();
         Double consumedToday = todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
+        Double dailyNorm = user.getBiometrics().getDailyNorm();
 
-        if (consumedToday > user.getBiometrics().getDailyNorm()) {
-            model.addAttribute("exceeded", true);
+        if (consumedToday > dailyNorm) {
+            model.addAttribute("exceeded", consumedToday - dailyNorm);
         }
 
         model.addAttribute("consumedToday", consumedToday);

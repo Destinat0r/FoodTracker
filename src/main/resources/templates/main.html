@@ -90,7 +90,7 @@
 
         <h2>Consumed today</h2>
         <h3 th:text="${consumedToday}"></h3>
-        <h3 id="exceeded" th:if="${exceeded}" th:text="#{user.biometrics.exceeded}"></h3>
+        <h3 id="exceeded" th:if="${exceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${exceeded}"></h3>
 
         <table class="table-striped" th:object="${todayEvents}">
             <thead class="border-dark">
