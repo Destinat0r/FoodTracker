@@ -42,9 +42,6 @@ public class Biometrics {
     @Column(name = "norm", nullable = false)
     private Double dailyNorm;
 
-    @Column(name = "consumed_today")
-    private Double consumedToday = 0.0;
-
     /**
      * Total energy expenditure calculation using Harris–Benedict equation
      * @return daily norm of calories
@@ -52,17 +49,12 @@ public class Biometrics {
     public Double calculateDailyNorm() {
         if (this.sex == Sex.MALE) {
             return (66.5 + 13.75*weight + 5.003*height - 6.755*age)*lifestyle.getCoefficient();
-        } else {
-            return (655.1 + 9.563*weight + 1.850*height - 4.676*age)*lifestyle.getCoefficient();
         }
+        return (655.1 + 9.563*weight + 1.850*height - 4.676*age)*lifestyle.getCoefficient();
     }
 
     public void setDailyNorm() {
         this.dailyNorm = calculateDailyNorm();
-    }
-
-    public void addToConsumed(Food food) {
-        consumedToday += food.getCalories();
     }
 
     public void setId(Long id) {
@@ -91,10 +83,6 @@ public class Biometrics {
 
     public void setOwner(User owner) {
         this.owner = owner;
-    }
-
-    public void setConsumedToday(Double consumedToday) {
-        this.consumedToday = consumedToday;
     }
 
 }
