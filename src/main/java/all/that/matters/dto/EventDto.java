@@ -2,7 +2,7 @@ package all.that.matters.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,5 +14,5 @@ public class EventDto {
     private String foodName;
     private Double foodAmount;
     private Double totalCalories;
-    private LocalDate date;
+    private LocalDateTime timestamp;
 }
