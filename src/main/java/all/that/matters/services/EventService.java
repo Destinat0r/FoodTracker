@@ -3,8 +3,9 @@ package all.that.matters.services;
 import all.that.matters.dao.EventRepository;
 import all.that.matters.domain.Event;
 import all.that.matters.domain.User;
+import all.that.matters.dto.EventDtoOld;
+import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,10 +21,11 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public List<Event> findForToday() {
+    public List<EventDtoOld> findForToday() {
         LocalDate today = LocalDate.now();
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return eventRepository.findAllConsumedFromTodayByUserId(user.getId());
+        User user = ContextUtils.getPrincipal();
+        List<Event> events = eventRepository.findAllConsumedFromTodayByUserId(user.getId());
+
     }
 
     public void create(Event event) {

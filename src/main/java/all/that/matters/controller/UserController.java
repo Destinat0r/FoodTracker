@@ -2,7 +2,7 @@ package all.that.matters.controller;
 
 import all.that.matters.dao.EventRepository;
 import all.that.matters.domain.User;
-import all.that.matters.dto.EventDto;
+import all.that.matters.dto.EventDtoOld;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -68,7 +68,7 @@ public class UserController {
     public String getHistory(Model model) {
 
         User user = ControllerUtils.getPrincipal();
-        EventDto eventDto = new EventDto(eventRepository.findAllByUserId(user.getId()), user);
+        EventDtoOld eventDto = new EventDtoOld(eventRepository.findAllByUserId(user.getId()), user);
 
         model.addAttribute("eventDto", eventDto);
         return "history";

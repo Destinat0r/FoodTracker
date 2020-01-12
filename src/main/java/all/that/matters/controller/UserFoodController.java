@@ -40,6 +40,7 @@ public class UserFoodController {
 
         List<FoodDto> usersFood = foodService.findAllByOwner(user);
         List<Event> todayEvents = eventService.findForToday();
+
         Double consumedToday = todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
         Double dailyNorm = user.getBiometrics().getDailyNorm();
 

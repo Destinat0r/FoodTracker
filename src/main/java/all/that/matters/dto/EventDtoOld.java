@@ -14,15 +14,17 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 
-public class EventDto {
+public class EventDtoOld {
 
     private User user;
     private Map<LocalDate, List<Event>> dateToEvents;
 
-    public EventDto(List<Event> events, User user) {
+    public EventDtoOld(List<Event> events, User user) {
         this.user = user;
         this.dateToEvents = mapEventsToDay(events);
     }
+
+
 
     private Map<LocalDate, List<Event>> mapEventsToDay(List<Event> events) {
         List<LocalDate> days = events.stream()
