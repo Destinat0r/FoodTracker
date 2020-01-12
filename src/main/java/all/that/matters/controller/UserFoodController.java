@@ -1,6 +1,7 @@
 package all.that.matters.controller;
 
 import all.that.matters.domain.*;
+import all.that.matters.dto.FoodDto;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
@@ -37,7 +38,7 @@ public class UserFoodController {
 
         User user = ControllerUtils.getPrincipal();
 
-        List<Food> usersFood = foodService.findAllByOwner(user);
+        List<FoodDto> usersFood = foodService.findAllByOwner(user);
         List<Event> todayEvents = eventService.findForToday();
         Double consumedToday = todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
         Double dailyNorm = user.getBiometrics().getDailyNorm();

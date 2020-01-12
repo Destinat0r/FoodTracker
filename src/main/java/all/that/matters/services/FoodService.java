@@ -3,19 +3,19 @@ package all.that.matters.services;
 import all.that.matters.dao.FoodRepository;
 import all.that.matters.domain.Food;
 import all.that.matters.domain.User;
+import all.that.matters.dto.FoodDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class FoodService {
+@Service public class FoodService {
 
     private FoodRepository foodRepository;
 
-    @Autowired
-    public FoodService(FoodRepository foodRepository) {
+    @Autowired public FoodService(FoodRepository foodRepository) {
         this.foodRepository = foodRepository;
     }
 
@@ -27,8 +27,15 @@ public class FoodService {
         foodRepository.save(food);
     }
 
-    public List<Food> findAllByOwner(User user) {
-        return foodRepository.findByOwner(user.getId());
+    public List<FoodDto> findAllByOwner(User user) {
+        List<FoodDto> foodDtos = new ArrayList<>();
+        foodRepository.findByOwner(user.getId()).forEach(
+                food -> foodDtos.add(
+                            FoodDto.builder()
+                                    .name(food.getName())
+                                    .calories(food.getCalories())
+                                    .build()));
+        return foodDtos;
     }
 
     public Optional<Food> findById(Long id) {
