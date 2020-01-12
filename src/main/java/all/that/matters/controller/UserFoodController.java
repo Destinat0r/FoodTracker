@@ -1,6 +1,7 @@
 package all.that.matters.controller;
 
 import all.that.matters.domain.*;
+import all.that.matters.dto.EventDto;
 import all.that.matters.dto.FoodDto;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
@@ -38,21 +39,21 @@ public class UserFoodController {
 
         User user = ControllerUtils.getPrincipal();
 
-        List<FoodDto> usersFood = foodService.findAllByOwner(user);
-        List<Event> todayEvents = eventService.findForToday();
+        List<FoodDto> usersFoodDtos = foodService.findAllByOwner(user);
+        List<EventDto> todayEventsDtos = eventService.findForToday();
 
-        Double consumedToday = todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
+        Double caloriesConsumedToday = todayEventsDtos.stream().mapToDouble(EventDto::getTotalCalories).sum();
         Double dailyNorm = user.getBiometrics().getDailyNorm();
 
-        if (consumedToday > dailyNorm) {
-            model.addAttribute("exceeded", consumedToday - dailyNorm);
+        if (caloriesConsumedToday > dailyNorm) {
+            model.addAttribute("exceeded", caloriesConsumedToday - dailyNorm);
         }
 
-        model.addAttribute("consumedToday", consumedToday);
+        model.addAttribute("consumedToday", caloriesConsumedToday);
         model.addAttribute("user", user);
         model.addAttribute("allAvailableFood", foodService.findAllCommon());
-        model.addAttribute("usersFood", usersFood);
-        model.addAttribute("todayEvents", todayEvents);
+        model.addAttribute("usersFoodDtos", usersFoodDtos);
+        model.addAttribute("todayEventsDtos", todayEventsDtos);
 
         return "main";
     }
