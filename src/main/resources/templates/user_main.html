@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <title>User [[${#httpServletRequest.remoteUser}]]</title>
+<style>
+    #exceeded {
+        color: red;
+    }
+</style>
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: nb}"></div>
+
+<div class="container">
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+
+        <h3>All Food from DB</h3>
+        <table class="table-striped">
+            <thead class="border-dark">
+            <tr>
+                <th>Name</th>
+                <th>Calories</th>
+            </tr>
+            </thead>
+            <tr th:each="nextFood : ${allAvailableFood}">
+                <td><a href="#"><span th:text="${nextFood.name}" ></span></a></td>
+                <td th:text="${nextFood.calories}"></td>
+                <td>
+                    <form th:action="@{/food/add}" method="post" th:object="${nextFood}" novalidate>
+                        <input type="hidden" name="id" th:value="${nextFood.id}">
+                        <input type="hidden" name="name" th:value="${nextFood.name}">
+                        <input type="hidden" name="calories" th:value="${nextFood.calories}">
+                        <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    <hr>
+        <form th:action="@{/food/add}" method="post" th:object="${food}" novalidate>
+            <div class="form-group row">
+                <label for="name" th:text="#{food.name}"></label>
+                <input type="text" id="name" name="name" placeholder="Name" required/>
+            </div>
+
+            <div class="form-group row">
+                <label for="calories" th:text="#{food.calories}"></label>
+                <input type="number" step="100" min="100" th:required="Number" name="calories" id="calories" placeholder="calories" pattern="\d+" required/>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+            </div>
+        </form>
+
+        <hr>
+        <h2>My Food</h2>
+
+            <table class="table-striped" th:object="${usersFood}">
+            <thead class="border-dark">
+            <tr>
+                <th>Name</th>
+                <th>Calories</th>
+            </tr>
+            </thead>
+            <tr th:each="food : ${usersFood}">
+
+
+                <td><a href="#" th:href="@{/food(id=${food.id})}"><span th:text="${food.name}" ></span></a></td>
+                <td th:text="${food.calories}"></td>
+
+                <td>
+                    <form action="#" th:action="@{/food/consume}" th:object="${food}" method="post">
+                        <input type="hidden" name="id" th:value="${food.id}">
+                        <input type="hidden" name="name" th:value="${food.name}">
+                        <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5">
+                        <button type="submit" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
+                    </form>
+                </td>
+
+            </tr>
+        </table>
+        <hr>
+
+        <h2>Daily norm</h2>
+        <h3 th:text="${user.biometrics.dailyNorm}"></h3>
+        <hr>
+
+        <h2>Consumed today</h2>
+        <h3 th:text="${consumedToday}"></h3>
+        <h3 id="exceeded" th:if="${exceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${exceeded}"></h3>
+
+        <table class="table-striped" th:object="${todayEvents}">
+            <thead class="border-dark">
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Total calories</th>
+            </tr>
+            </thead>
+            <tr th:each="event : ${todayEvents}">
+                <td><span th:text="${event.food.name}"></span></td>
+                <td><span th:text="${event.amount}"></span></td>
+                <td><span th:text="${event.amount} * ${event.food.calories}"></span></td>
+            </tr>
+        </table>
+</div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+</body>
+</html>
