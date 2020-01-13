@@ -5,10 +5,12 @@ import all.that.matters.model.ExceededNormEvent;
 import all.that.matters.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
 @Service
+@Transactional
 public class ExceededNormEventService {
 
     private ExceededNormEventRepo exceededNormEventRepo;

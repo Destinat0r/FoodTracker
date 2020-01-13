@@ -1,13 +1,14 @@
 package all.that.matters.services;
 
-import all.that.matters.repo.EventRepo;
+import all.that.matters.dto.EventDto;
 import all.that.matters.model.Event;
 import all.that.matters.model.Food;
 import all.that.matters.model.User;
-import all.that.matters.dto.EventDto;
+import all.that.matters.repo.EventRepo;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class EventService {
 
     private EventRepo eventRepo;
