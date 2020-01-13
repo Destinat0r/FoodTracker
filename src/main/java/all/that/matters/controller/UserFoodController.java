@@ -76,9 +76,9 @@ public class UserFoodController {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
         }
-        
+
         foodService.add(userFoodDto);
-        return "redirect:/food/main";
+        return "redirect:/user/food/main";
     }
 
     @PostMapping("/consume")
