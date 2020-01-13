@@ -92,8 +92,10 @@ public class FoodService {
 
     public ConsumedStatsDto getConsumedStatsForUserAndDate(User user, LocalDate date) {
         BigDecimal caloriesConsumed = getConsumedCaloriesForToday(user.getId(), date);
-        boolean isDailyNormExceeded = getUserDailyNorm() < caloriesConsumed;
-        BigDecimal exceededCalories = isDailyNormExceeded ? caloriesConsumed - getUserDailyNorm() : 0.0;
+        boolean isDailyNormExceeded = getUserDailyNorm().compareTo(caloriesConsumed) < 0;
+        BigDecimal exceededCalories = isDailyNormExceeded ?
+                                              caloriesConsumed.subtract(getUserDailyNorm()) : new BigDecimal(0.0);
+
         return ConsumedStatsDto.builder()
                        .caloriesConsumed(caloriesConsumed)
                        .isDailyNormExceeded(isDailyNormExceeded)
