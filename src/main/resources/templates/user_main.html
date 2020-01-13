@@ -25,7 +25,7 @@
                 <th>Calories</th>
             </tr>
             </thead>
-            <tr th:each="nextFood : ${allAvailableFood}">
+            <tr th:each="nextFood : ${allCommonFood}">
                 <td><a href="#"><span th:text="${nextFood.name}" ></span></a></td>
                 <td th:text="${nextFood.calories}"></td>
                 <td>
@@ -58,23 +58,23 @@
         <hr>
         <h2>My Food</h2>
 
-            <table class="table-striped" th:object="${usersFood}">
+            <table class="table-striped" th:object="${usersFoodDtos}">
             <thead class="border-dark">
             <tr>
                 <th>Name</th>
                 <th>Calories</th>
             </tr>
             </thead>
-            <tr th:each="food : ${usersFood}">
+            <tr th:each="userFood : ${usersFoodDtos}">
 
 
-                <td><a href="#" th:href="@{/food(id=${food.id})}"><span th:text="${food.name}" ></span></a></td>
-                <td th:text="${food.calories}"></td>
+                <td><span th:text="${userFood.name}" ></span></td>
+                <td th:text="${userFood.calories}"></td>
 
                 <td>
-                    <form action="#" th:action="@{/food/consume}" th:object="${food}" method="post">
-                        <input type="hidden" name="id" th:value="${food.id}">
-                        <input type="hidden" name="name" th:value="${food.name}">
+                    <form action="#" th:action="@{/food/consume}" th:object="${userFood}" method="post">
+                        <input type="hidden" name="id" th:value="${userFood.id}">
+                        <input type="hidden" name="name" th:value="${userFood.name}">
                         <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5">
                         <button type="submit" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
                     </form>
@@ -85,14 +85,14 @@
         <hr>
 
         <h2>Daily norm</h2>
-        <h3 th:text="${user.biometrics.dailyNorm}"></h3>
+        <h3 th:text="${user.dailyNorm}"></h3>
         <hr>
 
         <h2>Consumed today</h2>
         <h3 th:text="${consumedToday}"></h3>
-        <h3 id="exceeded" th:if="${exceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${exceeded}"></h3>
+        <h3 id="exceeded" th:if="${isExceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${exceededCalories}"></h3>
 
-        <table class="table-striped" th:object="${todayEvents}">
+        <table class="table-striped" th:object="${todayEventsDtos}">
             <thead class="border-dark">
             <tr>
                 <th>Name</th>
@@ -100,10 +100,10 @@
                 <th>Total calories</th>
             </tr>
             </thead>
-            <tr th:each="event : ${todayEvents}">
-                <td><span th:text="${event.food.name}"></span></td>
-                <td><span th:text="${event.amount}"></span></td>
-                <td><span th:text="${event.amount} * ${event.food.calories}"></span></td>
+            <tr th:each="event : ${todayEventsDtos}">
+                <td><span th:text="${event.foodName}"></span></td>
+                <td><span th:text="${event.foodAmount}"></span></td>
+                <td><span th:text="${event.totalCalories}"></span></td>
             </tr>
         </table>
 </div>
