@@ -4,6 +4,7 @@ import all.that.matters.dao.FoodRepository;
 import all.that.matters.domain.Food;
 import all.that.matters.domain.User;
 import all.that.matters.dto.FoodDto;
+import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,8 @@ import java.util.Optional;
                             FoodDto.builder()
                                     .name(food.getName())
                                     .calories(food.getCalories())
-                                    .build()));
+                                    .build())
+        );
         return foodDtos;
     }
 
