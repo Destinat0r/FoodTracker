@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -26,7 +27,7 @@ public class ExceededNormEvent {
     private User user;
 
     @Column(name = "excessive_calories", nullable = false)
-    private Double excessive_calories;
+    private BigDecimal excessive_calories;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
