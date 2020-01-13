@@ -31,13 +31,14 @@ public class ExceededNormEventService {
                                                       .excessive_calories(caloriesConsumedToday - userNorm)
                                                       .date(LocalDate.now())
                                                       .build();
-        tryToCreateOrUpdateIfExist(exceededNormEvent, user);
+
+        createIfNotExistUpdateOtherwise(exceededNormEvent, user);
     }
 
-    private void tryToCreateOrUpdateIfExist(ExceededNormEvent exceededNormEvent, User user) {
-        try {
+    public void createIfNotExistUpdateOtherwise(ExceededNormEvent exceededNormEvent, User user) {
+        if (!exceededNormEventRepo.existsByUserAndDate(user, exceededNormEvent.getDate())) {
             create(exceededNormEvent);
-        } catch (Exception ex) {
+        } else {
             exceededNormEventRepo.updateExcessiveCaloriesByDateAndUserId(
                     exceededNormEvent.getExcessive_calories(),
                     exceededNormEvent.getDate(),
