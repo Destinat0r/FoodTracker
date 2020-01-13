@@ -29,6 +29,11 @@ public class LoginController {
         this.eventRepo = eventRepo;
     }
 
+    @GetMapping("/")
+    public String getIndex(Model model) {
+        return "index";
+    }
+
     @GetMapping("/redirect")
     public String getRedirect(Model model) {
         model.addAttribute("user", new User());
