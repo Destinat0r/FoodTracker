@@ -6,6 +6,7 @@ import all.that.matters.dto.UserDto;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
+import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -67,7 +68,7 @@ public class UserFoodController {
 
     @PostMapping("/add")
     public String add(
-            @Valid Food food,
+            @Valid FoodDto userFoodDto,
             BindingResult bindingResult,
             Model model) {
 
@@ -75,18 +76,9 @@ public class UserFoodController {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
         }
-
-        User user = ControllerUtils.getPrincipal();
-
-        if (user.getAuthorities().contains(Role.USER)) {
-            food.setOwner(user);
-            foodService.add(food);
-            return "redirect:/food/main";
-        }
-
-        foodService.add(food);
-
-        return "redirect:/food/all";
+        
+        foodService.add(userFoodDto);
+        return "redirect:/food/main";
     }
 
     @PostMapping("/consume")

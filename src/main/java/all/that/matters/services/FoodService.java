@@ -24,7 +24,13 @@ import java.util.Optional;
         return foodRepository.findAll();
     }
 
-    public void add(Food food) {
+    public void add(FoodDto foodDto) {
+        Food food = Food.builder()
+                        .name(foodDto.getName())
+                        .calories(foodDto.getCalories())
+                        .owner(ContextUtils.getPrincipal())
+                        .build();
+
         foodRepository.save(food);
     }
 
