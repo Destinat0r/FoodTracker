@@ -1,7 +1,6 @@
 package all.that.matters.controller;
 
 import all.that.matters.domain.*;
-import all.that.matters.dto.EventDto;
 import all.that.matters.dto.FoodDto;
 import all.that.matters.dto.UserDto;
 import all.that.matters.services.EventService;
@@ -48,7 +47,7 @@ public class UserFoodController {
         model.addAttribute("exceededCalories", eventService.getExceededCalories());
         model.addAttribute("consumedToday", eventService.getConsumedCaloriesForToday());
         model.addAttribute("userDto", userDto);
-        model.addAttribute("allAvailableFood", foodService.findAllCommon());
+        model.addAttribute("allCommonFood", foodService.findAllCommonFoodInDtos());
         model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
         model.addAttribute("todayEventsDtos", eventService.findForToday());
 
@@ -59,7 +58,7 @@ public class UserFoodController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
 
-        List<Food> allFood = foodService.findAllCommon();
+        List<FoodDto> allFood = foodService.findAllCommonFoodInDtos();
         model.addAttribute("allFood", allFood);
 
         return "all_food";
