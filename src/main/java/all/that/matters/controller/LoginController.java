@@ -29,7 +29,7 @@ public class LoginController {
         this.eventRepo = eventRepo;
     }
 
-    @GetMapping("/")
+    @GetMapping("/redirect")
     public String getIndex(Model model) {
         model.addAttribute("user", new User());
 
@@ -37,11 +37,8 @@ public class LoginController {
 
         if (user.getRoles().contains(Role.ADMIN)) {
             return "redirect:/admin/main";
-        } else if (user.getRoles().contains(Role.USER)) {
-            return "redirect:/user/main";
         }
-
-        return "index";
+            return "redirect:/user/main";
     }
 
     @GetMapping("/login")
