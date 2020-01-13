@@ -29,6 +29,6 @@ public class ExceededNormEvent {
     @Column(name = "excessive_calories", nullable = false)
     private Double excessive_calories;
 
-    @Column(name = "timestamp", nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 }

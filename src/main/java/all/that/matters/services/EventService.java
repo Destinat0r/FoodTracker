@@ -2,13 +2,20 @@ package all.that.matters.services;
 
 import all.that.matters.dao.EventRepository;
 import all.that.matters.domain.Event;
+import all.that.matters.domain.Food;
+import all.that.matters.domain.Type;
+import all.that.matters.domain.User;
 import all.that.matters.dto.EventDto;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -26,33 +33,31 @@ public class EventService {
 
         eventRepository.findAllConsumedFromTodayByUserId(ContextUtils.getPrincipal().getId())
                 .forEach(event -> eventDtos.add(
-                            EventDto.builder()
-                                    .foodName(event.getFood().getName())
-                                    .foodAmount(event.getAmount())
-                                    .totalCalories(event.getTotalCalories())
-                                    .timestamp(event.getTimestamp())
-                                    .build())
+                        EventDto.builder()
+                                .foodName(event.getFood().getName())
+                                .foodAmount(event.getAmount())
+                                .totalCalories(event.getTotalCalories())
+                                .timestamp(event.getTimestamp())
+                                .build())
                 );
         return eventDtos;
     }
 
-    public Double getUserDailyNorm() {
-        return ContextUtils.getPrincipal().getBiometrics().getDailyNorm();
-    }
-
-    public Double getConsumedCaloriesForToday() {
-        return findForToday().stream().mapToDouble(EventDto::getTotalCalories).sum();
-    }
-
-    public boolean isDailyNormExceeded() {
-        return getUserDailyNorm() < getConsumedCaloriesForToday();
-    }
-
-    public Double getExceededCalories() {
-        return isDailyNormExceeded() ? getConsumedCaloriesForToday() - getUserDailyNorm() : 0.0;
-    }
-
     public void create(Event event) {
         eventRepository.save(event);
+    }
+
+    public Double getTotalConsumedCaloriesByUserIdAndDate(Long userId, LocalDate date) {
+        return eventRepository.getTotalConsumedCaloriesByUserIdAndDate(userId, date).orElse(0.0);
+    }
+
+    public void createConsumeEvent(Food food, Double amount, User user) {
+        Event event = Event.builder()
+                              .user(user)
+                              .food(food)
+                              .amount(amount)
+                              .timestamp(LocalDateTime.now())
+                              .build();
+        create(event);
     }
 }

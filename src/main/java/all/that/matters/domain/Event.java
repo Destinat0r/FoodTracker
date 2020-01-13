@@ -35,10 +35,6 @@ public class Event {
     @Column(name = "total_calories")
     private Double totalCalories;
 
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type type;
-
     @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;
 }

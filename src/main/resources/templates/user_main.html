@@ -72,7 +72,7 @@
                 <td th:text="${userFood.calories}"></td>
 
                 <td>
-                    <form action="#" th:action="@{/food/consume}" th:object="${userFood}" method="post">
+                    <form action="#" th:action="@{/user/food/consume}" th:object="${userFood}" method="post">
                         <input type="hidden" name="name" th:value="${userFood.name}">
                         <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5">
                         <button type="submit" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
@@ -88,8 +88,8 @@
         <hr>
 
         <h2>Consumed today</h2>
-        <h3 th:text="${consumedToday}"></h3>
-        <h3 id="exceeded" th:if="${isExceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${exceededCalories}"></h3>
+        <h3 th:text="${consumedStatsDto.caloriesConsumed}"></h3>
+        <h3 id="exceeded" th:if="${consumedStatsDto.dailyNormExceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${consumedStatsDto.exceededCalories}"></h3>
 
         <table class="table-striped" th:object="${todayEventsDtos}">
             <thead class="border-dark">
