@@ -3,19 +3,16 @@ package all.that.matters.services;
 import all.that.matters.dao.EventRepository;
 import all.that.matters.domain.Event;
 import all.that.matters.domain.Food;
-import all.that.matters.domain.Type;
 import all.that.matters.domain.User;
 import all.that.matters.dto.EventDto;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventService {
