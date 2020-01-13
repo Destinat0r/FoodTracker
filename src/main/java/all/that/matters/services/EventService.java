@@ -56,6 +56,7 @@ public class EventService {
                               .user(user)
                               .food(food)
                               .amount(amount)
+                              .totalCalories(food.getCalories() * amount)
                               .timestamp(LocalDateTime.now())
                               .build();
         create(event);

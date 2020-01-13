@@ -3,6 +3,7 @@ package all.that.matters.services;
 import all.that.matters.dao.ExceededNormEventRepo;
 import all.that.matters.domain.ExceededNormEvent;
 import all.that.matters.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,6 +12,11 @@ import java.time.LocalDate;
 public class ExceededNormEventService {
 
     private ExceededNormEventRepo exceededNormEventRepo;
+
+    @Autowired
+    public ExceededNormEventService(ExceededNormEventRepo exceededNormEventRepo) {
+        this.exceededNormEventRepo = exceededNormEventRepo;
+    }
 
     public void create(ExceededNormEvent event) {
         exceededNormEventRepo.save(event);
@@ -24,7 +30,6 @@ public class ExceededNormEventService {
                                                       .date(LocalDate.now())
                                                       .build();
         exceededNormEventRepo.save(exceededNormEvent);
-
     }
 
 }
