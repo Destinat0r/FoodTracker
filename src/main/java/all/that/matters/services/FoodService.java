@@ -44,8 +44,16 @@ import java.util.Optional;
         return foodRepository.findById(id);
     }
 
-    public List<Food> findAllCommon() {
-        return foodRepository.findAllCommon();
+    public List<FoodDto> findAllCommonFoodInDtos() {
+        List<FoodDto> commonFoodDtos = new ArrayList<>();
+        foodRepository.findAllCommon().forEach(food -> commonFoodDtos.add(
+                FoodDto.builder()
+                        .name(food.getName())
+                        .calories(food.getCalories())
+                        .build()
+        ));
+
+        return commonFoodDtos;
     }
 
     public void remove(Food food) {
