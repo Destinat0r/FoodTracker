@@ -30,7 +30,7 @@ public class LoginController {
     }
 
     @GetMapping("/redirect")
-    public String getIndex(Model model) {
+    public String getRedirect(Model model) {
         model.addAttribute("user", new User());
 
         User user = ContextUtils.getPrincipal();
