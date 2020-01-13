@@ -29,7 +29,7 @@ public class ExceededNormEventService {
         BigDecimal userNorm = user.getBiometrics().getDailyNorm();
         ExceededNormEvent exceededNormEvent = ExceededNormEvent.builder()
                                                       .user(user)
-                                                      .excessive_calories(caloriesConsumedToday - userNorm)
+                                                      .excessive_calories(caloriesConsumedToday.subtract(userNorm))
                                                       .date(LocalDate.now())
                                                       .build();
 
