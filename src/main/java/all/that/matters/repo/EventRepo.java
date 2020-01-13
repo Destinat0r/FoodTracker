@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +20,5 @@ import java.util.Optional;
 
     @Query(value = "SELECT SUM(total_calories) FROM events WHERE user_id = ?1 AND date_trunc('day', timestamp) = ?2",
             nativeQuery = true)
-    Optional<Double> getTotalConsumedCaloriesByUserIdAndDate(Long userId, LocalDate date);
+    Optional<BigDecimal> getTotalConsumedCaloriesByUserIdAndDate(Long userId, LocalDate date);
 }
