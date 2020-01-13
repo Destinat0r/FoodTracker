@@ -1,11 +1,10 @@
 package all.that.matters.services;
 
-import all.that.matters.dao.UserRepository;
+import all.that.matters.dao.UserRepo;
 import all.that.matters.domain.Role;
 import all.that.matters.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +19,7 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
 
-    private UserRepository userRepo;
+    private UserRepo userRepo;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -28,7 +27,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Autowired
-    public UserService(UserRepository userRepo) {
+    public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 

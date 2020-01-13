@@ -1,7 +1,7 @@
 package all.that.matters.services;
 
 import all.that.matters.dao.FoodNotFoundException;
-import all.that.matters.dao.FoodRepository;
+import all.that.matters.dao.FoodRepo;
 import all.that.matters.domain.Food;
 import all.that.matters.domain.User;
 import all.that.matters.dto.ConsumedStatsDto;
@@ -17,22 +17,22 @@ import java.util.Optional;
 
 @Service public class FoodService {
 
-    private FoodRepository foodRepository;
+    private FoodRepo foodRepo;
     private EventService eventService;
     private UserService userService;
     private ExceededNormEventService exceededNormEventService;
 
     @Autowired
-    public FoodService(FoodRepository foodRepository, EventService eventService, UserService userService,
+    public FoodService(FoodRepo foodRepo, EventService eventService, UserService userService,
             ExceededNormEventService exceededNormEventService) {
-        this.foodRepository = foodRepository;
+        this.foodRepo = foodRepo;
         this.eventService = eventService;
         this.userService = userService;
         this.exceededNormEventService = exceededNormEventService;
     }
 
     public List<Food> findAll() {
-        return foodRepository.findAll();
+        return foodRepo.findAll();
     }
 
     public void add(FoodDto foodDto) {
@@ -42,12 +42,12 @@ import java.util.Optional;
                         .owner(ContextUtils.getPrincipal())
                         .build();
 
-        foodRepository.save(food);
+        foodRepo.save(food);
     }
 
     public List<FoodDto> findAllByOwner(User user) {
         List<FoodDto> foodDtos = new ArrayList<>();
-        foodRepository.findByOwner(user.getId()).forEach(
+        foodRepo.findByOwner(user.getId()).forEach(
                 food -> foodDtos.add(
                             FoodDto.builder()
                                     .name(food.getName())
@@ -58,12 +58,12 @@ import java.util.Optional;
     }
 
     public Optional<Food> findById(Long id) {
-        return foodRepository.findById(id);
+        return foodRepo.findById(id);
     }
 
     public List<FoodDto> findAllCommonFoodInDtos() {
         List<FoodDto> commonFoodDtos = new ArrayList<>();
-        foodRepository.findAllCommon().forEach(food -> commonFoodDtos.add(
+        foodRepo.findAllCommon().forEach(food -> commonFoodDtos.add(
                 FoodDto.builder()
                         .name(food.getName())
                         .calories(food.getCalories())
@@ -101,7 +101,7 @@ import java.util.Optional;
     }
 
     public void remove(Food food) {
-        foodRepository.delete(food);
+        foodRepo.delete(food);
     }
 
     private Double getUserDailyNorm() {
@@ -120,7 +120,7 @@ import java.util.Optional;
     }
 
     public Food foodDtoToFood(FoodDto foodDto) {
-        return foodRepository.findByName(foodDto.getName())
+        return foodRepo.findByName(foodDto.getName())
                        .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDto.getName() + " not found."));
     }
 }
