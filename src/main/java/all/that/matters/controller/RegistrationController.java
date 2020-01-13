@@ -1,7 +1,7 @@
 package all.that.matters.controller;
 
-import all.that.matters.domain.Biometrics;
-import all.that.matters.domain.User;
+import all.that.matters.model.Biometrics;
+import all.that.matters.model.User;
 import all.that.matters.services.BiometricService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,8 @@
-package all.that.matters.domain;
+package all.that.matters.model;
 
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor

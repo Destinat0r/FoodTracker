@@ -1,4 +1,4 @@
-package all.that.matters.domain;
+package all.that.matters.model;
 
 /**
  * Level of physical activity of a person.

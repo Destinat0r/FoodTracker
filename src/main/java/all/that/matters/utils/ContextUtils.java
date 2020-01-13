@@ -1,6 +1,6 @@
 package all.that.matters.utils;
 
-import all.that.matters.domain.User;
+import all.that.matters.model.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class ContextUtils {

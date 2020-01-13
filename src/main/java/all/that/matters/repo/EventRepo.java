@@ -1,6 +1,6 @@
 package all.that.matters.repo;
 
-import all.that.matters.domain.Event;
+import all.that.matters.model.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,8 @@
 package all.that.matters.services;
 
 import all.that.matters.repo.ExceededNormEventRepo;
-import all.that.matters.domain.ExceededNormEvent;
-import all.that.matters.domain.User;
+import all.that.matters.model.ExceededNormEvent;
+import all.that.matters.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

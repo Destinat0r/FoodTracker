@@ -1,7 +1,7 @@
 package all.that.matters.dto;
 
-import all.that.matters.domain.Event;
-import all.that.matters.domain.User;
+import all.that.matters.model.Event;
+import all.that.matters.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

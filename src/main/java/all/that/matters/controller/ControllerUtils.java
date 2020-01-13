@@ -1,6 +1,6 @@
 package all.that.matters.controller;
 
-import all.that.matters.domain.User;
+import all.that.matters.model.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

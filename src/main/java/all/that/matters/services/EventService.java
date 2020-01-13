@@ -1,9 +1,9 @@
 package all.that.matters.services;
 
 import all.that.matters.repo.EventRepo;
-import all.that.matters.domain.Event;
-import all.that.matters.domain.Food;
-import all.that.matters.domain.User;
+import all.that.matters.model.Event;
+import all.that.matters.model.Food;
+import all.that.matters.model.User;
 import all.that.matters.dto.EventDto;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;

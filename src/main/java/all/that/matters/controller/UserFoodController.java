@@ -1,12 +1,11 @@
 package all.that.matters.controller;
 
-import all.that.matters.domain.*;
+import all.that.matters.model.*;
 import all.that.matters.dto.ConsumedStatsDto;
 import all.that.matters.dto.FoodDto;
 import all.that.matters.dto.UserDto;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
-import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

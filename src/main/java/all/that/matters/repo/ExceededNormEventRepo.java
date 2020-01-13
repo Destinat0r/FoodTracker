@@ -1,6 +1,6 @@
 package all.that.matters.repo;
 
-import all.that.matters.domain.ExceededNormEvent;
+import all.that.matters.model.ExceededNormEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

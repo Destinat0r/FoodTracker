@@ -1,7 +1,7 @@
 package all.that.matters.controller;
 
 import all.that.matters.repo.EventRepo;
-import all.that.matters.domain.User;
+import all.that.matters.model.User;
 import all.that.matters.dto.EventDtoOld;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

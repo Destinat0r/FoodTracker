@@ -1,8 +1,8 @@
 package all.that.matters.services;
 
 import all.that.matters.repo.UserRepo;
-import all.that.matters.domain.Role;
-import all.that.matters.domain.User;
+import all.that.matters.model.Role;
+import all.that.matters.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -71,7 +71,7 @@
             <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.biometrics.sex}"></label>
             <div class="col-sm-6">
                 <select id="sex" name="sex">
-                    <option th:each="sexOpt : ${T(all.that.matters.domain.Sex).values()}"
+                    <option th:each="sexOpt : ${T(all.that.matters.model.Sex).values()}"
                             th:value="${sexOpt}" th:text="${sexOpt}"></option>
                 </select>
             </div>
@@ -96,7 +96,7 @@
             <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.biometrics.lifestyle}"></label>
             <div class="col-sm-6">
                 <select id="lifestyle" name="lifestyle">
-                    <option th:each="lifestyleOpt : ${T(all.that.matters.domain.Lifestyle).values()}"
+                    <option th:each="lifestyleOpt : ${T(all.that.matters.model.Lifestyle).values()}"
                             th:value="${lifestyleOpt}" th:text="${lifestyleOpt}"></option>
                 </select>
             </div>

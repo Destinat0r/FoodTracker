@@ -1,8 +1,8 @@
 package all.that.matters.dto;
 
-import all.that.matters.domain.Lifestyle;
-import all.that.matters.domain.Role;
-import all.that.matters.domain.Sex;
+import all.that.matters.model.Lifestyle;
+import all.that.matters.model.Role;
+import all.that.matters.model.Sex;
 import lombok.*;
 
 @Getter

@@ -2,8 +2,8 @@ package all.that.matters.services;
 
 import all.that.matters.repo.FoodNotFoundException;
 import all.that.matters.repo.FoodRepo;
-import all.that.matters.domain.Food;
-import all.that.matters.domain.User;
+import all.that.matters.model.Food;
+import all.that.matters.model.User;
 import all.that.matters.dto.ConsumedStatsDto;
 import all.that.matters.dto.FoodDto;
 import all.that.matters.utils.ContextUtils;

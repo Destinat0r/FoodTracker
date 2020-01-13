@@ -1,6 +1,6 @@
 package all.that.matters.repo;
 
-import all.that.matters.domain.User;
+import all.that.matters.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
