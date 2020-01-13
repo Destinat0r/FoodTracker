@@ -26,7 +26,7 @@ public class ExceededNormEvent {
     @ManyToOne
     private User user;
 
-    @Column(name = "excessive_calories")
+    @Column(name = "excessive_calories", nullable = false)
     private Double excessive_calories;
 
     @Column(name = "timestamp", nullable = false)
