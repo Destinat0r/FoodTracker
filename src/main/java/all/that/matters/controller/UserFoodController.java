@@ -3,6 +3,7 @@ package all.that.matters.controller;
 import all.that.matters.domain.*;
 import all.that.matters.dto.EventDto;
 import all.that.matters.dto.FoodDto;
+import all.that.matters.dto.UserDto;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
@@ -38,22 +39,18 @@ public class UserFoodController {
     public String getMain(Model model ) {
 
         User user = ControllerUtils.getPrincipal();
+        UserDto userDto = UserDto.builder()
+                                  .username(user.getUsername())
+                                  .dailyNorm(user.getBiometrics().getDailyNorm())
+                                  .build();
 
-        List<FoodDto> usersFoodDtos = foodService.findAllByOwner(user);
-        List<EventDto> todayEventsDtos = eventService.findForToday();
-
-        Double caloriesConsumedToday = todayEventsDtos.stream().mapToDouble(EventDto::getTotalCalories).sum();
-        Double dailyNorm = user.getBiometrics().getDailyNorm();
-
-        if (caloriesConsumedToday > dailyNorm) {
-            model.addAttribute("exceeded", caloriesConsumedToday - dailyNorm);
-        }
-
-        model.addAttribute("consumedToday", caloriesConsumedToday);
-        model.addAttribute("user", user);
+        model.addAttribute("isExceeded", eventService.isDailyNormExceeded());
+        model.addAttribute("exceededCalories", eventService.getExceededCalories());
+        model.addAttribute("consumedToday", eventService.getConsumedCaloriesForToday());
+        model.addAttribute("userDto", userDto);
         model.addAttribute("allAvailableFood", foodService.findAllCommon());
-        model.addAttribute("usersFoodDtos", usersFoodDtos);
-        model.addAttribute("todayEventsDtos", todayEventsDtos);
+        model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
+        model.addAttribute("todayEventsDtos", eventService.findForToday());
 
         return "main";
     }
@@ -107,7 +104,7 @@ public class UserFoodController {
         User user = ControllerUtils.getPrincipal();
 
         //TODO remade using session or something
-        Double caloriesConsumedToday = getCaloriesConsumedToday() + getCurrentFoodCalories(food);
+        Double caloriesConsumedToday = eventService.getConsumedCaloriesForToday() + getCurrentFoodCalories(food);
 
         user.getBiometrics().setConsumedToday(caloriesConsumedToday);
         userService.save(user);
@@ -149,8 +146,4 @@ public class UserFoodController {
         return optionalFood.isPresent() ? optionalFood.get().getCalories() : 0;
     }
 
-    private Double getCaloriesConsumedToday() {
-        List<Event> todayEvents = eventService.findForToday();
-        return todayEvents.stream().mapToDouble(event -> event.getFood().getCalories()).sum();
-    }
 }
