@@ -48,7 +48,7 @@ public class FoodController {
 
         model.addAttribute("consumedToday", consumedToday);
         model.addAttribute("user", user);
-        model.addAttribute("allAvailableFood", foodService.findAllCommon());
+        model.addAttribute("allAvailableFood", foodService.findAllCommonFoodInDtos());
         model.addAttribute("usersFood", usersFood);
         model.addAttribute("todayEvents", todayEvents);
 
@@ -59,7 +59,7 @@ public class FoodController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
 
-        List<Food> allFood = foodService.findAllCommon();
+        List<Food> allFood = foodService.findAllCommonFoodInDtos();
         model.addAttribute("allFood", allFood);
 
         return "all_food";
