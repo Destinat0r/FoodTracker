@@ -29,7 +29,18 @@ public class ExceededNormEventService {
                                                       .excessive_calories(caloriesConsumedToday - userNorm)
                                                       .date(LocalDate.now())
                                                       .build();
-        exceededNormEventRepo.save(exceededNormEvent);
+        tryToCreateOrUpdateIfExist(exceededNormEvent, user);
     }
 
+    private void tryToCreateOrUpdateIfExist(ExceededNormEvent exceededNormEvent, User user) {
+        try {
+            create(exceededNormEvent);
+        } catch (Exception ex) {
+            exceededNormEventRepo.updateExcessiveCaloriesByDateAndUserId(
+                    exceededNormEvent.getExcessive_calories(),
+                    exceededNormEvent.getDate(),
+                    user.getId()
+            );
+        }
+    }
 }
