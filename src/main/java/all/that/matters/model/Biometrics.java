@@ -3,6 +3,7 @@ package all.that.matters.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
 @NoArgsConstructor
@@ -22,37 +23,42 @@ public class Biometrics {
     private User owner;
 
     @Column(name = "age", nullable = false)
-    private Double age;
+    private BigDecimal age;
 
     @Column(name = "sex", nullable = false)
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
     @Column(name = "weight", nullable = false)
-    private Double weight;
+    private BigDecimal weight;
 
     @Column(name = "height", nullable = false)
-    private Double height;
+    private BigDecimal height;
 
     @Column(name = "lifestyle", nullable = false)
     @Enumerated(EnumType.STRING)
     private Lifestyle lifestyle;
 
     @Column(name = "norm", nullable = false)
-    private Double dailyNorm;
-
-    @Column(name = "consumed_today")
-    private Double consumedToday = 0.0;
+    private BigDecimal dailyNorm;
 
     /**
      * Total energy expenditure calculation using Harris–Benedict equation
      * @return daily norm of calories
      */
-    public Double calculateDailyNorm() {
+    public BigDecimal calculateDailyNorm() {
         if (this.sex == Sex.MALE) {
-            return (66.5 + 13.75*weight + 5.003*height - 6.755*age)*lifestyle.getCoefficient();
+            return (new BigDecimal(66.5)
+                            .add(new BigDecimal(13.75).multiply(weight))
+                            .add(new BigDecimal(5.003).multiply(height))
+                            .subtract(new BigDecimal(6.755).multiply(age)))
+                           .multiply(new BigDecimal(lifestyle.getCoefficient()));
         } else {
-            return (655.1 + 9.563*weight + 1.850*height - 4.676*age)*lifestyle.getCoefficient();
+            return (new BigDecimal(655.1)
+                            .add(new BigDecimal(9.563).multiply(weight))
+                            .add(new BigDecimal(1.850).multiply(height))
+                            .subtract(new BigDecimal(4.676).multiply(age)))
+                           .multiply(new BigDecimal(lifestyle.getCoefficient()));
         }
     }
 
@@ -60,15 +66,11 @@ public class Biometrics {
         this.dailyNorm = calculateDailyNorm();
     }
 
-    public void addToConsumed(Food food) {
-        consumedToday += food.getCalories();
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setAge(Double age) {
+    public void setAge(BigDecimal age) {
         this.age = age;
     }
 
@@ -76,11 +78,11 @@ public class Biometrics {
         this.sex = sex;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 
-    public void setHeight(Double height) {
+    public void setHeight(BigDecimal height) {
         this.height = height;
     }
 
@@ -91,9 +93,4 @@ public class Biometrics {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-
-    public void setConsumedToday(Double consumedToday) {
-        this.consumedToday = consumedToday;
-    }
-
 }
