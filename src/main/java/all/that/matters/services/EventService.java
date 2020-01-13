@@ -2,14 +2,11 @@ package all.that.matters.services;
 
 import all.that.matters.dao.EventRepository;
 import all.that.matters.domain.Event;
-import all.that.matters.domain.User;
 import all.that.matters.dto.EventDto;
-import all.that.matters.dto.EventDtoOld;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +36,7 @@ public class EventService {
         return eventDtos;
     }
 
-    public Double getDailyNorm() {
+    public Double getUserDailyNorm() {
         return ContextUtils.getPrincipal().getBiometrics().getDailyNorm();
     }
 
@@ -48,11 +45,11 @@ public class EventService {
     }
 
     public boolean isDailyNormExceeded() {
-        return getDailyNorm() < getConsumedCaloriesForToday();
+        return getUserDailyNorm() < getConsumedCaloriesForToday();
     }
 
     public Double getExceededCalories() {
-        return isDailyNormExceeded() ? getConsumedCaloriesForToday() - getDailyNorm() : 0.0;
+        return isDailyNormExceeded() ? getConsumedCaloriesForToday() - getUserDailyNorm() : 0.0;
     }
 
     public void create(Event event) {
