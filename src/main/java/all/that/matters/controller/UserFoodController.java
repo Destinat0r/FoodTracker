@@ -78,7 +78,7 @@ public class UserFoodController {
         }
 
         foodService.add(userFoodDto);
-        return "redirect:/user/food/user_main";
+        return "redirect:/user/food/main";
     }
 
     @PostMapping("/consume")
