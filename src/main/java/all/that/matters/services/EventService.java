@@ -39,6 +39,22 @@ public class EventService {
         return eventDtos;
     }
 
+    public Double getDailyNorm() {
+        return ContextUtils.getPrincipal().getBiometrics().getDailyNorm();
+    }
+
+    public Double getConsumedCaloriesForToday() {
+        return findForToday().stream().mapToDouble(EventDto::getTotalCalories).sum();
+    }
+
+    public boolean isDailyNormExceeded() {
+        return getDailyNorm() < getConsumedCaloriesForToday();
+    }
+
+    public Double getExceededCalories() {
+        return isDailyNormExceeded() ? getConsumedCaloriesForToday() - getDailyNorm() : 0.0;
+    }
+
     public void create(Event event) {
         eventRepository.save(event);
     }
