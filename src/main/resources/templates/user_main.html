@@ -73,7 +73,6 @@
 
                 <td>
                     <form action="#" th:action="@{/food/consume}" th:object="${userFood}" method="post">
-                        <input type="hidden" name="id" th:value="${userFood.id}">
                         <input type="hidden" name="name" th:value="${userFood.name}">
                         <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5">
                         <button type="submit" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
@@ -85,7 +84,7 @@
         <hr>
 
         <h2>Daily norm</h2>
-        <h3 th:text="${user.dailyNorm}"></h3>
+        <h3 th:text="${userDto.dailyNorm}"></h3>
         <hr>
 
         <h2>Consumed today</h2>
