@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -30,10 +31,10 @@ public class Event {
     private Food food;
 
     @Column(name = "amount")
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(name = "total_calories")
-    private Double totalCalories;
+    private BigDecimal totalCalories;
 
     @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;
