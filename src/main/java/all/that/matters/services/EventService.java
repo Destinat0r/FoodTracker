@@ -48,7 +48,7 @@ public class EventService {
     }
 
     public BigDecimal getTotalConsumedCaloriesByUserIdAndDate(Long userId, LocalDate date) {
-        return eventRepo.getTotalConsumedCaloriesByUserIdAndDate(userId, date).orElse(0.0);
+        return eventRepo.getTotalConsumedCaloriesByUserIdAndDate(userId, date).orElse(new BigDecimal(0.0));
     }
 
     public void createConsumeEvent(Food food, BigDecimal amount, User user) {
@@ -56,7 +56,7 @@ public class EventService {
                               .user(user)
                               .food(food)
                               .amount(amount)
-                              .totalCalories(food.getCalories() * amount)
+                              .totalCalories(food.getCalories().multiply(amount))
                               .timestamp(LocalDateTime.now())
                               .build();
         create(event);
