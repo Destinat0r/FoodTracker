@@ -1,6 +1,6 @@
 package all.that.matters.controller;
 
-import all.that.matters.dao.EventRepository;
+import all.that.matters.dao.EventRepo;
 import all.that.matters.domain.User;
 import all.that.matters.dto.EventDtoOld;
 import all.that.matters.services.UserService;
@@ -19,12 +19,12 @@ import java.util.Optional;
 public class UserController {
 
     private UserService userService;
-    private EventRepository eventRepository;
+    private EventRepo eventRepo;
 
     @Autowired
-    public UserController(UserService userService, EventRepository eventRepository) {
+    public UserController(UserService userService, EventRepo eventRepo) {
         this.userService = userService;
-        this.eventRepository = eventRepository;
+        this.eventRepo = eventRepo;
     }
 
     @GetMapping("/")
@@ -68,7 +68,7 @@ public class UserController {
     public String getHistory(Model model) {
 
         User user = ControllerUtils.getPrincipal();
-        EventDtoOld eventDto = new EventDtoOld(eventRepository.findAllByUserId(user.getId()), user);
+        EventDtoOld eventDto = new EventDtoOld(eventRepo.findAllByUserId(user.getId()), user);
 
         model.addAttribute("eventDto", eventDto);
         return "history";

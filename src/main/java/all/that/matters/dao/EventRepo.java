@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Repository public interface EventRepository extends JpaRepository<Event, Long> {
+@Repository public interface EventRepo extends JpaRepository<Event, Long> {
 
     @Query(value = "SELECT id, user_id, food_id, amount, total_calories, timestamp FROM events WHERE user_id = ?1"
                            + " AND date_trunc('day', timestamp) >= current_date", nativeQuery = true)
