@@ -1,6 +1,7 @@
 package all.that.matters.repo;
 
 import all.that.matters.model.ExceededNormEvent;
+import all.that.matters.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,5 @@ public interface ExceededNormEventRepo extends JpaRepository<ExceededNormEvent, 
     @Query(value = "UPDATE exceed_events SET excessive_calories = ?1 WHERE date = ?2 AND user_id = ?3", nativeQuery = true)
     void updateExcessiveCaloriesByDateAndUserId(Double calories, LocalDate date, Long userId);
 
+    boolean existsByUserAndDate(User user, LocalDate date);
 }
