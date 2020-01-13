@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/user/food")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -73,7 +73,7 @@ public class UserController {
         }
 
         foodService.add(userFoodDto);
-        return "redirect:/user/food/main";
+        return "redirect:/user/main";
     }
 
     @PostMapping("/consume")
@@ -90,7 +90,7 @@ public class UserController {
 
         foodService.registerConsumption(food);
 
-        return "redirect:/user/food/main";
+        return "redirect:/user/main";
     }
 
 
