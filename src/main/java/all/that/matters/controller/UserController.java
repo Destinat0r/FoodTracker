@@ -1,9 +1,11 @@
 package all.that.matters.controller;
 
+import all.that.matters.model.Role;
 import all.that.matters.repo.EventRepo;
 import all.that.matters.model.User;
 import all.that.matters.dto.EventDtoOld;
 import all.that.matters.services.UserService;
+import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,15 @@ public class UserController {
     @GetMapping("/")
     public String getIndex(Model model) {
         model.addAttribute("user", new User());
+
+        User user = ContextUtils.getPrincipal();
+
+        if (user.getRoles().contains(Role.ADMIN)) {
+            return "redirect:/admin/main";
+        } else if (user.getRoles().contains(Role.USER)) {
+            return "redirect:/user/main";
+        }
+
         return "index";
     }
 
