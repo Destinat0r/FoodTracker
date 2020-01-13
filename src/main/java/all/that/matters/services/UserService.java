@@ -1,6 +1,6 @@
 package all.that.matters.services;
 
-import all.that.matters.dao.UserRepo;
+import all.that.matters.repo.UserRepo;
 import all.that.matters.domain.Role;
 import all.that.matters.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;

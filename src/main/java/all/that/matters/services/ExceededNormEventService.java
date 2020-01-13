@@ -1,6 +1,6 @@
 package all.that.matters.services;
 
-import all.that.matters.dao.ExceededNormEventRepo;
+import all.that.matters.repo.ExceededNormEventRepo;
 import all.that.matters.domain.ExceededNormEvent;
 import all.that.matters.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package all.that.matters.dao;
+package all.that.matters.repo;
 
 public class FoodNotFoundException extends RepoException {
 

@@ -1,4 +1,4 @@
-package all.that.matters.dao;
+package all.that.matters.repo;
 
 import all.that.matters.domain.Food;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,7 @@
 package all.that.matters.services;
 
-import all.that.matters.dao.FoodNotFoundException;
-import all.that.matters.dao.FoodRepo;
+import all.that.matters.repo.FoodNotFoundException;
+import all.that.matters.repo.FoodRepo;
 import all.that.matters.domain.Food;
 import all.that.matters.domain.User;
 import all.that.matters.dto.ConsumedStatsDto;

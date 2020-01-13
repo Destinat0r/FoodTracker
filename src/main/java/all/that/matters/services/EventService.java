@@ -1,6 +1,6 @@
 package all.that.matters.services;
 
-import all.that.matters.dao.EventRepo;
+import all.that.matters.repo.EventRepo;
 import all.that.matters.domain.Event;
 import all.that.matters.domain.Food;
 import all.that.matters.domain.User;
