@@ -2,6 +2,8 @@ package all.that.matters.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -11,6 +13,6 @@ import lombok.*;
 
 public class FoodDto {
     private String name;
-    private Double calories;
-    private Double amount;
+    private BigDecimal calories;
+    private BigDecimal amount;
 }

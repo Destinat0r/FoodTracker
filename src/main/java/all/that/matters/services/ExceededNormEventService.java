@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -24,8 +25,8 @@ public class ExceededNormEventService {
         exceededNormEventRepo.save(event);
     }
 
-    public void createExceededNormEvent(User user, Double caloriesConsumedToday) {
-        Double userNorm = user.getBiometrics().getDailyNorm();
+    public void createExceededNormEvent(User user, BigDecimal caloriesConsumedToday) {
+        BigDecimal userNorm = user.getBiometrics().getDailyNorm();
         ExceededNormEvent exceededNormEvent = ExceededNormEvent.builder()
                                                       .user(user)
                                                       .excessive_calories(caloriesConsumedToday - userNorm)

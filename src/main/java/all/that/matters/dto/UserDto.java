@@ -5,6 +5,8 @@ import all.that.matters.model.Role;
 import all.that.matters.model.Sex;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,10 +19,10 @@ public class UserDto {
     private String nationalName;
     private String email;
     private Role role;
-    private Double age;
+    private BigDecimal age;
     private Sex sex;
-    private Double weight;
-    private Double height;
+    private BigDecimal weight;
+    private BigDecimal height;
     private Lifestyle lifestyle;
-    private Double dailyNorm;
+    private BigDecimal dailyNorm;
 }

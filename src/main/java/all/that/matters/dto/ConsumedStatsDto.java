@@ -2,6 +2,8 @@ package all.that.matters.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -9,7 +11,7 @@ import lombok.*;
 @Builder
 
 public class ConsumedStatsDto {
-    private Double caloriesConsumed;
-    private Double exceededCalories;
+    private BigDecimal caloriesConsumed;
+    private BigDecimal exceededCalories;
     private boolean isDailyNormExceeded;
 }

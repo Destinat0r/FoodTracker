@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,9 +91,9 @@ public class FoodService {
     }
 
     public ConsumedStatsDto getConsumedStatsForUserAndDate(User user, LocalDate date) {
-        Double caloriesConsumed = getConsumedCaloriesForToday(user.getId(), date);
+        BigDecimal caloriesConsumed = getConsumedCaloriesForToday(user.getId(), date);
         boolean isDailyNormExceeded = getUserDailyNorm() < caloriesConsumed;
-        Double exceededCalories = isDailyNormExceeded ? caloriesConsumed - getUserDailyNorm() : 0.0;
+        BigDecimal exceededCalories = isDailyNormExceeded ? caloriesConsumed - getUserDailyNorm() : 0.0;
         return ConsumedStatsDto.builder()
                        .caloriesConsumed(caloriesConsumed)
                        .isDailyNormExceeded(isDailyNormExceeded)
@@ -104,11 +105,11 @@ public class FoodService {
         foodRepo.delete(food);
     }
 
-    private Double getUserDailyNorm() {
+    private BigDecimal getUserDailyNorm() {
         return ContextUtils.getPrincipal().getBiometrics().getDailyNorm();
     }
 
-    public Double getConsumedCaloriesForToday(Long userId, LocalDate date) {
+    public BigDecimal getConsumedCaloriesForToday(Long userId, LocalDate date) {
         return eventService.getTotalConsumedCaloriesByUserIdAndDate(userId, date);
     }
 

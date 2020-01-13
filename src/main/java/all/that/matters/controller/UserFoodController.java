@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +79,7 @@ public class UserFoodController {
     @PostMapping("/consume")
     public String consume(
             @ModelAttribute("food") FoodDto food,
-            @RequestParam("amount") Double amount,
+            @RequestParam("amount") BigDecimal amount,
             BindingResult bindingResult,
             Model model) {
 

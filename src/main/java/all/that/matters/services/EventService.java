@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,11 +47,11 @@ public class EventService {
         eventRepo.save(event);
     }
 
-    public Double getTotalConsumedCaloriesByUserIdAndDate(Long userId, LocalDate date) {
+    public BigDecimal getTotalConsumedCaloriesByUserIdAndDate(Long userId, LocalDate date) {
         return eventRepo.getTotalConsumedCaloriesByUserIdAndDate(userId, date).orElse(0.0);
     }
 
-    public void createConsumeEvent(Food food, Double amount, User user) {
+    public void createConsumeEvent(Food food, BigDecimal amount, User user) {
         Event event = Event.builder()
                               .user(user)
                               .food(food)

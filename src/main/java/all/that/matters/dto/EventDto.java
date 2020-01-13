@@ -2,6 +2,7 @@ package all.that.matters.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 
 public class EventDto {
     private String foodName;
-    private Double foodAmount;
-    private Double totalCalories;
+    private BigDecimal foodAmount;
+    private BigDecimal totalCalories;
     private LocalDateTime timestamp;
 }
