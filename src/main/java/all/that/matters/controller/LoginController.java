@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 @Controller
-public class UserController {
+public class LoginController {
 
     private UserService userService;
     private EventRepo eventRepo;
 
     @Autowired
-    public UserController(UserService userService, EventRepo eventRepo) {
+    public LoginController(UserService userService, EventRepo eventRepo) {
         this.userService = userService;
         this.eventRepo = eventRepo;
     }
