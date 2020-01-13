@@ -1,23 +1,25 @@
 package all.that.matters.model;
 
+import java.math.BigDecimal;
+
 /**
  * Level of physical activity of a person.
  */
 public enum Lifestyle {
-    SEDENTARY(1.53),
-    MODERATE(1.76),
-    VIGOROUS(2.25);
+    SEDENTARY(new BigDecimal(1.53)),
+    MODERATE(new BigDecimal(1.76)),
+    VIGOROUS(new BigDecimal(2.25));
 
     /**
      * used in total energy expenditure calculation
      */
-    private Double coefficient;
+    private BigDecimal coefficient;
 
-    Lifestyle(Double coefficient) {
+    Lifestyle(BigDecimal coefficient) {
         this.coefficient = coefficient;
     }
 
-    public Double getCoefficient() {
+    public BigDecimal getCoefficient() {
         return coefficient;
     }
 }
