@@ -53,7 +53,7 @@ public class UserFoodController {
         model.addAttribute("exceededCalories", eventService.getExceededCalories());
         model.addAttribute("todayEventsDtos", eventService.findForToday());
 
-        return "main";
+        return "user_main";
     }
 
     @GetMapping("/all")
@@ -78,7 +78,7 @@ public class UserFoodController {
         }
 
         foodService.add(userFoodDto);
-        return "redirect:/user/food/main";
+        return "redirect:/user/food/user_main";
     }
 
     @PostMapping("/consume")
@@ -104,7 +104,7 @@ public class UserFoodController {
         createConsumeEvent(food, amount, user);
         ifLimitExceededCreateEvent(food, user, caloriesConsumedToday);
 
-        return "redirect:/food/main";
+        return "redirect:/food/user_main";
     }
 
     private void createConsumeEvent(@ModelAttribute("food") Food food, @RequestParam("amount") Double amount,
