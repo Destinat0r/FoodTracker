@@ -87,9 +87,6 @@ public class FoodService {
         if (stats.isDailyNormExceeded()) {
             exceededNormEventService.createExceededNormEvent(user, stats.getCaloriesConsumed());
         }
-
-        user.getBiometrics().setConsumedToday(stats.getCaloriesConsumed());
-        userService.save(user);
     }
 
     public ConsumedStatsDto getConsumedStatsForUserAndDate(User user, LocalDate date) {
