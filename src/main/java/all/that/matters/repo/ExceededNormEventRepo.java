@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Repository
@@ -16,7 +17,7 @@ public interface ExceededNormEventRepo extends JpaRepository<ExceededNormEvent, 
     @Transactional
     @Modifying
     @Query(value = "UPDATE exceed_events SET excessive_calories = ?1 WHERE date = ?2 AND user_id = ?3", nativeQuery = true)
-    void updateExcessiveCaloriesByDateAndUserId(Double calories, LocalDate date, Long userId);
+    void updateExcessiveCaloriesByDateAndUserId(BigDecimal calories, LocalDate date, Long userId);
 
     boolean existsByUserAndDate(User user, LocalDate date);
 }
