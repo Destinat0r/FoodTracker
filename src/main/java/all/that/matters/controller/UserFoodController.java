@@ -43,12 +43,13 @@ public class UserFoodController {
                                   .dailyNorm(user.getBiometrics().getDailyNorm())
                                   .build();
 
+        model.addAttribute("allCommonFood", foodService.findAllCommonFoodInDtos());
+        model.addAttribute("food", new FoodDto());
+        model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
         model.addAttribute("isExceeded", eventService.isDailyNormExceeded());
-        model.addAttribute("exceededCalories", eventService.getExceededCalories());
         model.addAttribute("consumedToday", eventService.getConsumedCaloriesForToday());
         model.addAttribute("userDto", userDto);
-        model.addAttribute("allCommonFood", foodService.findAllCommonFoodInDtos());
-        model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
+        model.addAttribute("exceededCalories", eventService.getExceededCalories());
         model.addAttribute("todayEventsDtos", eventService.findForToday());
 
         return "main";
