@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user/food")
-public class UserFoodController {
+public class UserController {
 
     @Autowired
     private FoodService foodService;
