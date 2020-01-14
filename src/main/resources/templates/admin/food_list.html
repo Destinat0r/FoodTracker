@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
-    <title>All Food</title>
+    <title th:text="#{food.title}"></title>
 </head>
 <body>
 <div th:insert="~{admin/navbar :: nb}"></div>
@@ -30,8 +30,8 @@
     <table class="table-striped">
         <thead class="border-dark">
         <tr>
-            <th>Name</th>
-            <th>Calories</th>
+            <th th:text="#{food.table.name}"></th>
+            <th th:text="#{food.table.calories}"></th>
         </tr>
         </thead>
         <tr th:each="food : ${allFood}">
@@ -41,13 +41,5 @@
     </table>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
-<script>
-    document.querySelector("input").addEventListener("keypress", function (evt) {
-        if (evt.which < 48 || evt.which > 57)
-        {
-            evt.preventDefault();
-        }
-    });
-</script>
 </body>
 </html>
