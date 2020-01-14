@@ -53,8 +53,8 @@ public class AdminController {
 
     @GetMapping("/user")
     public String getUserProfile(@RequestParam Long id, Model model) {
-        Optional<User> user = userService.findById(id);
-        user.ifPresent((user1) -> model.addAttribute("user", user1));
+        Optional<User> optionalUser = userService.findById(id);
+        optionalUser.ifPresent(user -> model.addAttribute("userDTO", user));
         return "profile";
     }
 }

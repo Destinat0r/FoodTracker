@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+<div th:insert="~{user/navbar :: nb}"></div>
+<div class="container container mt-5">
+    
+<form th method="post" th:object="${userDTO}" novalidate>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
+        <p th:text="${userDTO.username}"></p>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.email}" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.fullName}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.nationalName}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.age}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.sex}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.sex}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.weight}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.height}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.lifestyle}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.lifestyle}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.daily_norm}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.dailyNorm}"></p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.role}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.role}"></p>
+        </div>
+    </div>
+</form>
+</div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+</body>
+</html>
