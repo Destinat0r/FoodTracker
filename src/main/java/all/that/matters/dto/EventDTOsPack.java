@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 
-public class EventsDto {
+public class EventDTOsPack {
     private LocalDate date;
     private List<EventDto> eventsOfTheDay;
     private BigDecimal totalCalories;

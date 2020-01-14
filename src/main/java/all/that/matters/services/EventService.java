@@ -1,7 +1,7 @@
 package all.that.matters.services;
 
 import all.that.matters.dto.EventDto;
-import all.that.matters.dto.EventsDto;
+import all.that.matters.dto.EventDTOsPack;
 import all.that.matters.model.Event;
 import all.that.matters.model.ExceededEvent;
 import all.that.matters.model.Food;
@@ -92,15 +92,15 @@ public class EventService {
                         .timestamp(event.getTimestamp()).build();
     }
 
-    public List<EventsDto> packEventsToEventsDtos(List<Event> events) {
-        List<EventsDto> eventsDtos = new ArrayList<>();
+    public List<EventDTOsPack> packEventsToEventsDtos(List<Event> events) {
+        List<EventDTOsPack> eventDTOsPacks = new ArrayList<>();
         List<LocalDate> days = getDaysOfEvents(events);
 
         Map<LocalDate, ExceededEvent> dayToExceededEventMap = getAllExceededEventsByUser(ContextUtils.getPrincipal());
 
-        days.forEach(day -> generateEventsDtos(events, eventsDtos, dayToExceededEventMap, day));
+        days.forEach(day -> generateEventsDtos(events, eventDTOsPacks, dayToExceededEventMap, day));
 
-        return eventsDtos;
+        return eventDTOsPacks;
     }
 
     private List<LocalDate> getDaysOfEvents(List<Event> events) {
@@ -109,7 +109,7 @@ public class EventService {
                                        .collect(Collectors.toList());
     }
 
-    private void generateEventsDtos(List<Event> events, List<EventsDto> eventsDtos,
+    private void generateEventsDtos(List<Event> events, List<EventDTOsPack> eventDTOsPacks,
         Map<LocalDate, ExceededEvent> dayToExceededEventMap, LocalDate day) {
 
         List<Event> eventsOfTheDay = pickEventsOfTheDay(events, day);
@@ -118,8 +118,8 @@ public class EventService {
 
         BigDecimal exceededCalories = getExceededCaloriesIfAny(dayToExceededEventMap, day);
 
-        eventsDtos.add(
-                EventsDto.builder()
+        eventDTOsPacks.add(
+                EventDTOsPack.builder()
                 .eventsOfTheDay(eventsDtosOfTheDay)
                 .totalCalories(totalCalories).date(day)
                 .exceededCalories(exceededCalories)
