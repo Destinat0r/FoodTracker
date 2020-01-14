@@ -61,14 +61,14 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.age}"></label>
+            <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
             <div class="col-sm-6">
                 <input type="datetime-local" name="age" value="" class="form-control" placeholder="Age" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.biometrics.sex}"></label>
+            <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.sex}"></label>
             <div class="col-sm-6">
                 <select id="sex" name="sex">
                     <option th:each="sexOpt : ${T(all.that.matters.model.Sex).values()}"
@@ -78,14 +78,14 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.weight}"></label>
+            <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
             <div class="col-sm-6">
                 <input type="number" name="weight" value="" class="form-control" placeholder="Weight" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.height}"></label>
+            <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
             <div class="col-sm-6">
                 <input type="number" name="height" value="" class="form-control" placeholder="Height" required/>
             </div>
@@ -93,7 +93,7 @@
 
 
         <div class="form-group row">
-            <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.biometrics.lifestyle}"></label>
+            <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.lifestyle}"></label>
             <div class="col-sm-6">
                 <select id="lifestyle" name="lifestyle">
                     <option th:each="lifestyleOpt : ${T(all.that.matters.model.Lifestyle).values()}"
@@ -110,7 +110,7 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.сonfirm_password}"></label>
+            <label class="col-sm-2 col-form-label" th:text="#{user.сonfirm_password}"></label>
             <div class="col-sm-6">
                 <input type="password" name="passwordConfirm" class="form-control" placeholder="Retype Password" required/>
             </div>
