@@ -77,7 +77,9 @@ public class FoodService {
         return foodRepo.findById(id);
     }
 
-
+    public void removeByFoodIdAndUserId(Long foodId, Long userId) {
+        foodRepo.removeByFoodIdAndUserId(foodId, userId);
+    }
 
     public List<FoodDTO> findAllCommonFoodInDtos() {
         List<FoodDTO> commonFoodDTOS = new ArrayList<>();
