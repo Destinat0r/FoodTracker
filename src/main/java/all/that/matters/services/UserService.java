@@ -1,5 +1,8 @@
 package all.that.matters.services;
 
+import all.that.matters.dto.UserDTO;
+import all.that.matters.model.Biometrics;
+import all.that.matters.repo.UserNotFoundException;
 import all.that.matters.repo.UserRepo;
 import all.that.matters.model.Role;
 import all.that.matters.model.User;
@@ -52,6 +55,27 @@ public class UserService implements UserDetailsService {
 
     public Optional<User> findById(Long id) {
         return userRepo.findById(id);
+    }
+
+    public UserDTO getUserDTOById(Long id) {
+        Optional<User> optionalUser = findById(id);
+        return userToUserDTO(optionalUser.orElseThrow(UserNotFoundException::new));
+    }
+
+    private UserDTO userToUserDTO(User user) {
+        Biometrics biometrics = user.getBiometrics();
+        return UserDTO.builder()
+                .username(user.getUsername())
+                .fullName(user.getFullName())
+                .nationalName(user.getNationalName())
+                .email(user.getEmail())
+                .age(biometrics.getAge())
+                .sex(biometrics.getSex())
+                .weight(biometrics.getWeight())
+                .height(biometrics.getHeight())
+                .lifestyle(biometrics.getLifestyle())
+                .dailyNorm(biometrics.getDailyNorm())
+                .build();
     }
 
     public void save(User user) {
