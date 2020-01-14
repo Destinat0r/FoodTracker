@@ -72,7 +72,7 @@ public class UserController {
             model.mergeAttributes(errors);
         }
 
-        foodService.addPersonal(userFoodDto);
+        foodService.add(userFoodDto);
         return "redirect:/user/main";
     }
 
