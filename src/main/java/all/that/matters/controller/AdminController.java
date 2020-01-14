@@ -2,6 +2,7 @@ package all.that.matters.controller;
 
 import all.that.matters.dto.FoodDto;
 import all.that.matters.services.FoodService;
+import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +18,12 @@ import java.util.List;
 public class AdminController {
 
     private FoodService foodService;
+    private UserService userService;
 
     @Autowired
-    public AdminController(FoodService foodService) {
+    public AdminController(FoodService foodService, UserService userService) {
         this.foodService = foodService;
+        this.userService = userService;
     }
 
     @GetMapping("/main")
@@ -41,5 +44,11 @@ public class AdminController {
             Model model) {
         foodService.add(food);
         return "redirect:/admin/food_list";
+    }
+
+    @GetMapping("/users")
+    public String getUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "users";
     }
 }

@@ -57,12 +57,6 @@ public class LoginController {
         return "admin/admin_main";
     }
 
-    @GetMapping("/users")
-    public String getUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "users";
-    }
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user")
     public String getUserProfile(@RequestParam Long id, Model model) {
