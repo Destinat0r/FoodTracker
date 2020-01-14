@@ -8,7 +8,8 @@
 <body>
 <div th:insert="~{user/navbar :: nb}"></div>
 <div class="container container mt-5">
-<form th:action="@{/update}" method="post" th:object="${userDTO}" novalidate>
+    
+<form th method="post" th:object="${userDTO}" novalidate>
 
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
@@ -18,81 +19,72 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
         <div class="col-sm-6">
-            <input type="email" name="email" th:value="${userDTO.email}" class="form-control" placeholder="Email" required/>
+            <p th:text="${userDTO.email}" />
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
         <div class="col-sm-6">
-            <input type="text" name="fullName" value="" class="form-control" placeholder="Full name" required/>
+            <p th:text="${userDTO.fullName}"></p>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
         <div class="col-sm-6">
-            <input type="text" name="nationalName" value="" class="form-control" placeholder="National name" required/>
+            <p th:text="${userDTO.nationalName}"></p>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.age}"></label>
+        <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
         <div class="col-sm-6">
-            <input type="datetime-local" name="age" value="" class="form-control" placeholder="Age" required/>
+            <p th:text="${userDTO.age}"></p>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.biometrics.sex}"></label>
+        <label class="col-sm-2 col-form-label" th:text="#{user.sex}"></label>
         <div class="col-sm-6">
-            <select id="sex" name="sex">
-                <option th:each="sexOpt : ${T(all.that.matters.model.Sex).values()}"
-                        th:value="${sexOpt}" th:text="${sexOpt}"></option>
-            </select>
+            <p th:text="${userDTO.sex}"></p>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.weight}"></label>
+        <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
         <div class="col-sm-6">
-            <input type="number" name="weight" value="" class="form-control" placeholder="Weight" required/>
+            <p th:text="${userDTO.weight}"></p>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.height}"></label>
+        <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
         <div class="col-sm-6">
-            <input type="number" name="height" value="" class="form-control" placeholder="Height" required/>
+            <p th:text="${userDTO.height}"></p>
         </div>
     </div>
-
 
     <div class="form-group row">
-        <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.biometrics.lifestyle}"></label>
+        <label class="col-sm-2 col-form-label" th:text="#{user.lifestyle}"></label>
         <div class="col-sm-6">
-            <select id="lifestyle" name="lifestyle">
-                <option th:each="lifestyleOpt : ${T(all.that.matters.model.Lifestyle).values()}"
-                        th:value="${lifestyleOpt}" th:text="${lifestyleOpt}"></option>
-            </select>
+            <p th:text="${userDTO.lifestyle}"></p>
         </div>
     </div>
-    <div sec:au>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
-            <div class="col-sm-6">
-                <input type="password" name="password" class="form-control" placeholder="Password" required/>
-            </div>
-        </div>
 
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.сonfirm_password}"></label>
-            <div class="col-sm-6">
-                <input type="password" name="passwordConfirm" class="form-control" placeholder="Retype Password" required/>
-            </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.daily_norm}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.dailyNorm}"></p>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary mb-2" th:text="#{form.save}"></button>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.role}"></label>
+        <div class="col-sm-6">
+            <p th:text="${userDTO.role}"></p>
+        </div>
+    </div>
 </form>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
