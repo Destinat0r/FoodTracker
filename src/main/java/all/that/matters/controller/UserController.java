@@ -81,7 +81,7 @@ public class UserController {
         return "redirect:/user/main";
     }
 
-    @PostMapping("/consume")
+    @PostMapping(value = "/use", params = "consume")
     public String consume(
             @ModelAttribute("food") FoodDTO food,
             @RequestParam("amount") BigDecimal amount,
@@ -98,7 +98,7 @@ public class UserController {
         return "redirect:/user/main";
     }
 
-    @PostMapping("/delete")
+    @PostMapping(value = "/use", params = "delete")
     public String delete(@ModelAttribute("userFood") FoodDTO food) {
 
         foodService.removeByFoodNameAndUserId(food.getName(), ContextUtils.getPrincipal());
