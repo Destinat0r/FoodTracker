@@ -47,10 +47,10 @@ public class UserController {
 
         model.addAttribute("allCommonFood", foodService.findAllCommonFoodInDtos());
         model.addAttribute("food", new FoodDTO());
-        model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
-        model.addAttribute("consumedStatsDto", consumedStatsDTO);
-        model.addAttribute("userDto", userDTO);
-        model.addAttribute("todayEventsDtos", eventService.findForToday());
+        model.addAttribute("usersFoodDTOs", foodService.findAllByOwner(user));
+        model.addAttribute("consumedStatsDTO", consumedStatsDTO);
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("todayEventsDTOs", eventService.findForToday());
 
         return "user/main";
     }

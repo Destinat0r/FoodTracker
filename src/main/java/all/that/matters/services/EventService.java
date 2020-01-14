@@ -15,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,7 +51,7 @@ public class EventService {
 
     public List<EventDTOsPack> packEventsToEventsDTOsPacks(List<Event> events) {
         List<EventDTOsPack> eventDTOsPacks = new ArrayList<>();
-        List<LocalDate> days = getDaysOfEvents(events);
+        Set<LocalDate> days = getDaysOfEvents(events);
 
         Map<LocalDate, ExceededEvent> dayToExceededEventMap = getAllExceededEventsByUser(ContextUtils.getPrincipal());
 
@@ -63,10 +60,10 @@ public class EventService {
         return eventDTOsPacks;
     }
 
-    private List<LocalDate> getDaysOfEvents(List<Event> events) {
+    private Set<LocalDate> getDaysOfEvents(List<Event> events) {
         return events.stream()
                        .map(event -> event.getTimestamp().toLocalDate())
-                       .collect(Collectors.toList());
+                       .collect(Collectors.toSet());
     }
 
     public Map<LocalDate, ExceededEvent> getAllExceededEventsByUser(User user) {
@@ -154,7 +151,7 @@ public class EventService {
     }
 
     private Map<LocalDate, List<EventDTO>> mapEventDTOsToDay(List<Event> events) {
-        List<LocalDate> days = getDaysOfEvents(events);
+        Set<LocalDate> days = getDaysOfEvents(events);
 
         Map<LocalDate, List<EventDTO>> dateToEventDTOs = new TreeMap<>();
 

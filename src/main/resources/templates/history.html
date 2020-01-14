@@ -10,20 +10,20 @@
 <div th:insert="~{fragments/navbar :: nb}"></div>
 
 <div class="container">
-    <div th:if="${not #lists.isEmpty(dateToEventDtosMap)}">
+    <div th:if="${not #lists.isEmpty(eventDTOsPacks)}">
         <h1>History of</h1>
         <h1 align="center" th:text="${userName}"></h1>
         <table>
-            <tr class="list-group" th:each="day : ${dateToEventDtosMap}">
+            <tr class="list-group" th:each="eventDTOsPack : ${eventDTOsPacks}">
                 <div class="container">
-                <span class="list-group-item" th:text="${day.key}"></span>
+                <span class="list-group-item" th:text="${eventDTOsPack.date}"></span>
                     <table class="table">
                         <thead class="border-dark">
                             <tr>
                                 <th>Time</th><th>Food name</th><th>Amount</th><th>Total calories</th>
                             </tr>
                         </thead>
-                        <tr th:each="event : ${day.value}">
+                        <tr th:each="event : ${eventDTOsPack.eventsOfTheDay}">
                             <td th:text="${event.timestamp.toLocalTime()}"></td>
                             <td th:text="${event.foodName}"></td>
                             <td th:text="${event.foodAmount}"></td>

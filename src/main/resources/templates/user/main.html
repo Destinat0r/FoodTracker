@@ -57,14 +57,14 @@
         <hr>
         <h2>My Food</h2>
 
-            <table class="table-striped" th:object="${usersFoodDtos}">
+            <table class="table-striped" th:object="${usersFoodDTOs}">
             <thead class="border-dark">
             <tr>
                 <th>Name</th>
                 <th>Calories</th>
             </tr>
             </thead>
-            <tr th:each="userFood : ${usersFoodDtos}">
+            <tr th:each="userFood : ${usersFoodDTOs}">
 
 
                 <td><span th:text="${userFood.name}" ></span></td>
@@ -90,7 +90,7 @@
         <h3 th:text="${consumedStatsDTO.caloriesConsumed}"></h3>
         <h3 id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}"></h3>
 
-        <table class="table-striped" th:object="${todayEventsDtos}">
+        <table class="table-striped" th:object="${todayEventsDTOs}">
             <thead class="border-dark">
             <tr>
                 <th>Name</th>
@@ -98,7 +98,7 @@
                 <th>Total calories</th>
             </tr>
             </thead>
-            <tr th:each="event : ${todayEventsDtos}">
+            <tr th:each="event : ${todayEventsDTOs}">
                 <td><span th:text="${event.foodName}"></span></td>
                 <td><span th:text="${event.foodAmount}"></span></td>
                 <td><span th:text="${event.totalCalories}"></span></td>
