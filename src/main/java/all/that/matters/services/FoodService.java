@@ -129,7 +129,7 @@ public class FoodService {
     }
 
     public Food foodDtoToFood(FoodDto foodDto) {
-        return foodRepo.findByName(foodDto.getName())
+        return foodRepo.findByNameAndOwner(foodDto.getName(), ContextUtils.getPrincipal())
                        .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDto.getName() + " not found."));
     }
 }
