@@ -1,9 +1,13 @@
 package all.that.matters.controller;
 
-import all.that.matters.dto.*;
+import all.that.matters.dto.ConsumedStatsDTO;
+import all.that.matters.dto.EventDTOsPack;
+import all.that.matters.dto.FoodDTO;
+import all.that.matters.dto.UserDTO;
 import all.that.matters.model.User;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
+import all.that.matters.services.UserService;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +28,7 @@ public class UserController {
 
     private FoodService foodService;
     private EventService eventService;
+    private UserService userService;
 
     @Autowired
     public void setFoodService(FoodService foodService) {
@@ -33,6 +38,11 @@ public class UserController {
     @Autowired
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/main")
@@ -114,5 +124,11 @@ public class UserController {
         model.addAttribute("eventDTOsPacks", eventDTOsPacks);
         model.addAttribute("userName", user.getUsername());
         return "history";
+    }
+
+    @GetMapping("/profile")
+    public String getProfile(@RequestParam Long id, Model model) {
+        model.addAttribute("userDTO", userService.getUserDTOById(id));
+        return "profile";
     }
 }
