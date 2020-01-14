@@ -54,7 +54,7 @@ public class LoginController {
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAdminMain() {
-        return "admin_main";
+        return "admin/admin_main";
     }
 
     @GetMapping("/users")

@@ -25,14 +25,14 @@ public class AdminController {
 
     @GetMapping("/main")
     public String getMain(Model model) {
-        return "admin_main";
+        return "admin/admin_main";
     }
 
     @GetMapping("/food_list")
     public String getFoodList(Model model) {
         List<FoodDto> allFood = foodService.findAllCommonFoodInDtos();
         model.addAttribute("allFood", allFood);
-        return "food_list";
+        return "admin/food_list";
     }
 
     @PostMapping("/food/add")
