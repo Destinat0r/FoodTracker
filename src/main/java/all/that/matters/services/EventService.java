@@ -61,4 +61,19 @@ public class EventService {
                               .build();
         create(event);
     }
+
+    public List<Event> findAllByUserId(Long id) {
+        return eventRepo.findAllByUserId(id);
+    }
+
+    public List<EventDto> eventsToDtos(List<Event> events) {
+        List<EventDto> eventDtos = new ArrayList<>();
+        events.forEach(event -> eventDtos.add(EventDto.builder()
+                                        .foodName(event.getFood().getName())
+                                        .foodAmount(event.getAmount())
+                                        .totalCalories(event.getTotalCalories())
+                                        .timestamp(event.getTimestamp()).build())
+        );
+        return eventDtos;
+    }
 }
