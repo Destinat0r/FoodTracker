@@ -1,9 +1,6 @@
 package all.that.matters.controller;
 
-import all.that.matters.dto.ConsumedStatsDTO;
-import all.that.matters.dto.EventDTO;
-import all.that.matters.dto.FoodDTO;
-import all.that.matters.dto.UserDTO;
+import all.that.matters.dto.*;
 import all.that.matters.model.User;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;

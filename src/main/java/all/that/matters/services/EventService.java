@@ -127,12 +127,12 @@ public class EventService {
         create(event);
     }
 
-    public List<Event> findAllByUserId(Long id) {
+    public List<Event> findAllEventsByUserId(Long id) {
         return eventRepo.findAllByUserId(id);
     }
 
     public Map<LocalDate, List<EventDTO>> getDayToEventDTOsMapByUserId(Long userId) {
-        return mapEventDTOsToDay(findAllByUserId(userId));
+        return mapEventDTOsToDay(findAllEventsByUserId(userId));
     }
 
     private EventDTO eventToEventDTO(Event event) {
