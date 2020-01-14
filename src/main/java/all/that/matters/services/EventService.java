@@ -1,7 +1,9 @@
 package all.that.matters.services;
 
 import all.that.matters.dto.EventDto;
+import all.that.matters.dto.EventsDto;
 import all.that.matters.model.Event;
+import all.that.matters.model.ExceededEvent;
 import all.that.matters.model.Food;
 import all.that.matters.model.User;
 import all.that.matters.repo.EventRepo;
@@ -24,10 +26,12 @@ import java.util.stream.Collectors;
 public class EventService {
 
     private EventRepo eventRepo;
+    private ExceededEventService exceededEventService;
 
     @Autowired
-    public EventService(EventRepo eventRepo) {
+    public EventService(EventRepo eventRepo, ExceededEventService exceededEventService) {
         this.eventRepo = eventRepo;
+        this.exceededEventService = exceededEventService;
     }
 
     public List<EventDto> findForToday() {
@@ -67,6 +71,13 @@ public class EventService {
         return mapEventDtosToDay(findAllByUserId(userId));
     }
 
+    public Map<LocalDate, ExceededEvent> getAllExceededEventsByUser(User user) {
+        Map<LocalDate, ExceededEvent> dayToExceededEvents = new TreeMap<>();
+        List<ExceededEvent> exceededEvents = exceededEventService.findAllByUser(user);
+        exceededEvents.forEach(exceededEvent -> dayToExceededEvents.put(exceededEvent.getDate(), exceededEvent));
+        return dayToExceededEvents;
+    }
+
     public List<EventDto> eventsToDtos(List<Event> events) {
         List<EventDto> eventDtos = new ArrayList<>();
         events.forEach(event -> eventDtos.add(eventToEventDto(event)));
@@ -81,10 +92,64 @@ public class EventService {
                         .timestamp(event.getTimestamp()).build();
     }
 
-    private Map<LocalDate, List<EventDto>> mapEventDtosToDay(List<Event> events) {
-        List<LocalDate> days = events.stream()
+    public List<EventsDto> packEventsToEventsDtos(List<Event> events) {
+        List<EventsDto> eventsDtos = new ArrayList<>();
+        List<LocalDate> days = getDaysOfEvents(events);
+
+        Map<LocalDate, ExceededEvent> dayToExceededEventMap = getAllExceededEventsByUser(ContextUtils.getPrincipal());
+
+        days.forEach(day -> generateEventsDtos(events, eventsDtos, dayToExceededEventMap, day));
+
+        return eventsDtos;
+    }
+
+    private List<LocalDate> getDaysOfEvents(List<Event> events) {
+        return events.stream()
                                        .map(event -> event.getTimestamp().toLocalDate())
                                        .collect(Collectors.toList());
+    }
+
+    private void generateEventsDtos(List<Event> events, List<EventsDto> eventsDtos,
+        Map<LocalDate, ExceededEvent> dayToExceededEventMap, LocalDate day) {
+
+        List<Event> eventsOfTheDay = pickEventsOfTheDay(events, day);
+        List<EventDto> eventsDtosOfTheDay = eventsToDtos(eventsOfTheDay);
+        BigDecimal totalCalories = countTotalCalories(eventsOfTheDay);
+
+        BigDecimal exceededCalories = getExceededCaloriesIfAny(dayToExceededEventMap, day);
+
+        eventsDtos.add(
+                EventsDto.builder()
+                .eventsOfTheDay(eventsDtosOfTheDay)
+                .totalCalories(totalCalories).date(day)
+                .exceededCalories(exceededCalories)
+                .isNormExceeded(exceededCalories.intValue() != 0).build()
+        );
+    }
+
+    private BigDecimal getExceededCaloriesIfAny(Map<LocalDate, ExceededEvent> dayToExceededEventMap, LocalDate day) {
+        return dayToExceededEventMap.containsKey(day)
+                                              ? dayToExceededEventMap.get(day).getExcessive_calories()
+                                              : new BigDecimal(0);
+    }
+
+    private BigDecimal countTotalCalories(List<Event> eventsOfTheDay) {
+        BigDecimal total = new BigDecimal(0.0);
+
+        for (Event event : eventsOfTheDay) {
+            total = total.add(event.getTotalCalories());
+        }
+        return total;
+    }
+
+    private List<Event> pickEventsOfTheDay(List<Event> events, LocalDate day) {
+        return events.stream()
+                .filter(event -> isFromDay(day, event))
+                .collect(Collectors.toList());
+    }
+
+    private Map<LocalDate, List<EventDto>> mapEventDtosToDay(List<Event> events) {
+        List<LocalDate> days = getDaysOfEvents(events);
 
         Map<LocalDate, List<EventDto>> dateToEventDtos = new TreeMap<>();
 
