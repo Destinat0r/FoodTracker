@@ -4,6 +4,7 @@ import all.that.matters.dto.*;
 import all.that.matters.model.User;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
+import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -94,6 +95,13 @@ public class UserController {
 
         foodService.registerConsumption(food);
 
+        return "redirect:/user/main";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@ModelAttribute("food") FoodDTO food) {
+
+        foodService.removeByFoodNameAndUserId(food.getName(), ContextUtils.getPrincipal().getId());
         return "redirect:/user/main";
     }
 
