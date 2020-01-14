@@ -6,6 +6,7 @@ import all.that.matters.repo.UserNotFoundException;
 import all.that.matters.repo.UserRepo;
 import all.that.matters.model.Role;
 import all.that.matters.model.User;
+import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,6 +56,10 @@ public class UserService implements UserDetailsService {
 
     public Optional<User> findById(Long id) {
         return userRepo.findById(id);
+    }
+
+    public UserDTO getCurrentUserDTO() {
+        return userToUserDTO(ContextUtils.getPrincipal());
     }
 
     public UserDTO getUserDTOById(Long id) {
