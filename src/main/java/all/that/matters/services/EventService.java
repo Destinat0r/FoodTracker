@@ -35,13 +35,7 @@ public class EventService {
         List<EventDto> eventDtos = new ArrayList<>();
 
         eventRepo.findAllConsumedFromTodayByUserId(ContextUtils.getPrincipal().getId())
-                .forEach(event -> eventDtos.add(
-                        EventDto.builder()
-                                .foodName(event.getFood().getName())
-                                .foodAmount(event.getAmount())
-                                .totalCalories(event.getTotalCalories())
-                                .timestamp(event.getTimestamp())
-                                .build())
+                .forEach(event -> eventDtos.add(eventToEventDto(event))
                 );
         return eventDtos;
     }
@@ -69,39 +63,47 @@ public class EventService {
         return eventRepo.findAllByUserId(id);
     }
 
+    public Map<LocalDate, List<EventDto>> getDayToEventDtosMapByUserId(Long userId) {
+        return mapEventDtosToDay(findAllByUserId(userId));
+    }
+
     public List<EventDto> eventsToDtos(List<Event> events) {
         List<EventDto> eventDtos = new ArrayList<>();
-        events.forEach(event -> eventDtos.add(EventDto.builder()
-                                        .foodName(event.getFood().getName())
-                                        .foodAmount(event.getAmount())
-                                        .totalCalories(event.getTotalCalories())
-                                        .timestamp(event.getTimestamp()).build())
-        );
+        events.forEach(event -> eventDtos.add(eventToEventDto(event)));
         return eventDtos;
     }
 
-    private Map<LocalDate, List<Event>> mapEventsToDay(List<Event> events) {
+    private EventDto eventToEventDto(Event event) {
+        return EventDto.builder()
+                        .foodName(event.getFood().getName())
+                        .foodAmount(event.getAmount())
+                        .totalCalories(event.getTotalCalories())
+                        .timestamp(event.getTimestamp()).build();
+    }
+
+    private Map<LocalDate, List<EventDto>> mapEventDtosToDay(List<Event> events) {
         List<LocalDate> days = events.stream()
                                        .map(event -> event.getTimestamp().toLocalDate())
                                        .collect(Collectors.toList());
 
-        Map<LocalDate, List<Event>> dateToEvents = new TreeMap<>();
+        Map<LocalDate, List<EventDto>> dateToEventDtos = new TreeMap<>();
 
         days.forEach(day -> {
-            dateToEvents.put(day, new ArrayList<Event>());
-            sortEventsByDay(events, dateToEvents, day);
+            dateToEventDtos.put(day, new ArrayList<EventDto>());
+            sortEventsByDay(events, dateToEventDtos, day);
         });
 
-        return dateToEvents;
+        return dateToEventDtos;
     }
 
-    private void sortEventsByDay(List<Event> events, Map<LocalDate, List<Event>> dateToEvents,
-            LocalDate day) {
-        for (Event event : events) {
-            if (event.getTimestamp().toLocalDate().equals(day)) {
-                List<Event> list = dateToEvents.get(day);
-                list.add(event);
-            }
-        }
+    private void sortEventsByDay(List<Event> events, Map<LocalDate, List<EventDto>> dateToEvents, LocalDate day) {
+        events.stream()
+                .filter(event -> isFromDay(day, event))
+                .forEach(event ->
+                                 dateToEvents.get(day).add(eventToEventDto(event)));
+    }
+
+    private boolean isFromDay(LocalDate day, Event event) {
+        return event.getTimestamp().toLocalDate().equals(day);
     }
 }

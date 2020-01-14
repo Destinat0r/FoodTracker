@@ -1,6 +1,5 @@
 package all.that.matters.controller;
 
-import all.that.matters.dto.EventDtoOld;
 import all.that.matters.model.Role;
 import all.that.matters.model.User;
 import all.that.matters.repo.EventRepo;

@@ -10,26 +10,27 @@
 <div th:insert="~{fragments/navbar :: nb}"></div>
 
 <div class="container">
-    <div th:if="${not #lists.isEmpty(eventDto)}">
-
-        <h1 align="center" th:text="${'History of ' + eventDto.user.username}"></h1>
+    <div th:if="${not #lists.isEmpty(dateToEventDtosMap)}">
+        <h1>History of</h1>
+        <h1 align="center" th:text="${userName}"></h1>
         <table>
-            <tr class="list-group" th:each="day : ${eventDto.dateToEvents}">
-
+            <tr class="list-group" th:each="day : ${dateToEventDtosMap}">
+                <div class="container">
                 <span class="list-group-item" th:text="${day.key}"></span>
                     <table class="table">
                         <thead class="border-dark">
                             <tr>
-                                <th>Time</th><th>Type</th><th>Food</th><th>Amount</th>
+                                <th>Time</th><th>Food name</th><th>Amount</th><th>Total calories</th>
                             </tr>
                         </thead>
                         <tr th:each="event : ${day.value}">
-                            <td th:text="${event.timestamp}"></td>
-                            <td th:text="${event.type}"></td>
-                            <td th:text="${event.food.name}"></td>
-                            <td th:text="${event.amount}"></td>
+                            <td th:text="${event.timestamp.toLocalTime()}"></td>
+                            <td th:text="${event.foodName}"></td>
+                            <td th:text="${event.foodAmount}"></td>
+                            <td th:text="${event.totalCalories}"></td>
                         </tr>
                     </table>
+                </div>
                 <hr>
             </tr>
         </table>

@@ -1,11 +1,10 @@
 package all.that.matters.controller;
 
-import all.that.matters.dto.EventDtoOld;
-import all.that.matters.model.*;
 import all.that.matters.dto.ConsumedStatsDto;
+import all.that.matters.dto.EventDto;
 import all.that.matters.dto.FoodDto;
 import all.that.matters.dto.UserDto;
-import all.that.matters.repo.EventRepo;
+import all.that.matters.model.User;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,9 +104,10 @@ public class UserController {
     public String getHistory(Model model) {
 
         User user = ControllerUtils.getPrincipal();
-        EventDtoOld eventDto = new EventDtoOld(eventService.findAllByUserId(user.getId()), user);
+        Map<LocalDate, List<EventDto>> dateToEventDtosMap = eventService.getDayToEventDtosMapByUserId(user.getId());
 
-        model.addAttribute("eventDto", eventDto);
+        model.addAttribute("dateToEventDtosMap", dateToEventDtosMap);
+        model.addAttribute("userName", user.getUsername());
         return "history";
     }
 }
