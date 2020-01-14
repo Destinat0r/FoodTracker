@@ -48,6 +48,70 @@ public class EventService {
         eventRepo.save(event);
     }
 
+    public List<EventDTOsPack> packEventsToEventsDTOs(List<Event> events) {
+        List<EventDTOsPack> eventDTOsPacks = new ArrayList<>();
+        List<LocalDate> days = getDaysOfEvents(events);
+
+        Map<LocalDate, ExceededEvent> dayToExceededEventMap = getAllExceededEventsByUser(ContextUtils.getPrincipal());
+
+        days.forEach(day -> generateEventsDTOs(events, eventDTOsPacks, dayToExceededEventMap, day));
+
+        return eventDTOsPacks;
+    }
+
+    private List<LocalDate> getDaysOfEvents(List<Event> events) {
+        return events.stream()
+                       .map(event -> event.getTimestamp().toLocalDate())
+                       .collect(Collectors.toList());
+    }
+
+    public Map<LocalDate, ExceededEvent> getAllExceededEventsByUser(User user) {
+        Map<LocalDate, ExceededEvent> dayToExceededEvents = new TreeMap<>();
+        List<ExceededEvent> exceededEvents = exceededEventService.findAllByUser(user);
+        exceededEvents.forEach(exceededEvent -> dayToExceededEvents.put(exceededEvent.getDate(), exceededEvent));
+        return dayToExceededEvents;
+    }
+
+
+    private void generateEventsDTOs(List<Event> events, List<EventDTOsPack> eventDTOsPacks,
+            Map<LocalDate, ExceededEvent> dayToExceededEventMap, LocalDate day) {
+
+        List<Event> eventsOfTheDay = pickEventsOfTheDay(events, day);
+        List<EventDTO> eventsDTOsOfTheDay = eventsToDTOs(eventsOfTheDay);
+        BigDecimal totalCalories = countTotalCalories(eventsOfTheDay);
+
+        BigDecimal exceededCalories = getExceededCaloriesIfAny(dayToExceededEventMap, day);
+
+        eventDTOsPacks.add(
+                EventDTOsPack.builder()
+                        .eventsOfTheDay(eventsDTOsOfTheDay)
+                        .totalCalories(totalCalories).date(day)
+                        .exceededCalories(exceededCalories)
+                        .isNormExceeded(exceededCalories.intValue() != 0).build()
+        );
+    }
+
+    private List<Event> pickEventsOfTheDay(List<Event> events, LocalDate day) {
+        return events.stream()
+                       .filter(event -> isFromDay(day, event))
+                       .collect(Collectors.toList());
+    }
+
+    public List<EventDTO> eventsToDTOs(List<Event> events) {
+        List<EventDTO> eventDTOs = new ArrayList<>();
+        events.forEach(event -> eventDTOs.add(eventToEventDTO(event)));
+        return eventDTOs;
+    }
+
+    private BigDecimal countTotalCalories(List<Event> eventsOfTheDay) {
+        BigDecimal total = new BigDecimal(0);
+
+        for (Event event : eventsOfTheDay) {
+            total = total.add(event.getTotalCalories());
+        }
+        return total;
+    }
+
     public BigDecimal getTotalConsumedCaloriesByUserIdAndDate(Long userId, LocalDate date) {
         return eventRepo.getTotalConsumedCaloriesByUserIdAndDate(userId, date).orElse(new BigDecimal(0));
     }
@@ -71,19 +135,6 @@ public class EventService {
         return mapEventDTOsToDay(findAllByUserId(userId));
     }
 
-    public Map<LocalDate, ExceededEvent> getAllExceededEventsByUser(User user) {
-        Map<LocalDate, ExceededEvent> dayToExceededEvents = new TreeMap<>();
-        List<ExceededEvent> exceededEvents = exceededEventService.findAllByUser(user);
-        exceededEvents.forEach(exceededEvent -> dayToExceededEvents.put(exceededEvent.getDate(), exceededEvent));
-        return dayToExceededEvents;
-    }
-
-    public List<EventDTO> eventsToDTOs(List<Event> events) {
-        List<EventDTO> eventDTOs = new ArrayList<>();
-        events.forEach(event -> eventDTOs.add(eventToEventDTO(event)));
-        return eventDTOs;
-    }
-
     private EventDTO eventToEventDTO(Event event) {
         return EventDTO.builder()
                         .foodName(event.getFood().getName())
@@ -92,60 +143,10 @@ public class EventService {
                         .timestamp(event.getTimestamp()).build();
     }
 
-    public List<EventDTOsPack> packEventsToEventsDTOs(List<Event> events) {
-        List<EventDTOsPack> eventDTOsPacks = new ArrayList<>();
-        List<LocalDate> days = getDaysOfEvents(events);
-
-        Map<LocalDate, ExceededEvent> dayToExceededEventMap = getAllExceededEventsByUser(ContextUtils.getPrincipal());
-
-        days.forEach(day -> generateEventsDTOs(events, eventDTOsPacks, dayToExceededEventMap, day));
-
-        return eventDTOsPacks;
-    }
-
-    private List<LocalDate> getDaysOfEvents(List<Event> events) {
-        return events.stream()
-                                       .map(event -> event.getTimestamp().toLocalDate())
-                                       .collect(Collectors.toList());
-    }
-
-    private void generateEventsDTOs(List<Event> events, List<EventDTOsPack> eventDTOsPacks,
-        Map<LocalDate, ExceededEvent> dayToExceededEventMap, LocalDate day) {
-
-        List<Event> eventsOfTheDay = pickEventsOfTheDay(events, day);
-        List<EventDTO> eventsDTOsOfTheDay = eventsToDTOs(eventsOfTheDay);
-        BigDecimal totalCalories = countTotalCalories(eventsOfTheDay);
-
-        BigDecimal exceededCalories = getExceededCaloriesIfAny(dayToExceededEventMap, day);
-
-        eventDTOsPacks.add(
-                EventDTOsPack.builder()
-                .eventsOfTheDay(eventsDTOsOfTheDay)
-                .totalCalories(totalCalories).date(day)
-                .exceededCalories(exceededCalories)
-                .isNormExceeded(exceededCalories.intValue() != 0).build()
-        );
-    }
-
     private BigDecimal getExceededCaloriesIfAny(Map<LocalDate, ExceededEvent> dayToExceededEventMap, LocalDate day) {
         return dayToExceededEventMap.containsKey(day)
                                               ? dayToExceededEventMap.get(day).getExcessive_calories()
                                               : new BigDecimal(0);
-    }
-
-    private BigDecimal countTotalCalories(List<Event> eventsOfTheDay) {
-        BigDecimal total = new BigDecimal(0);
-
-        for (Event event : eventsOfTheDay) {
-            total = total.add(event.getTotalCalories());
-        }
-        return total;
-    }
-
-    private List<Event> pickEventsOfTheDay(List<Event> events, LocalDate day) {
-        return events.stream()
-                .filter(event -> isFromDay(day, event))
-                .collect(Collectors.toList());
     }
 
     private Map<LocalDate, List<EventDTO>> mapEventDTOsToDay(List<Event> events) {
