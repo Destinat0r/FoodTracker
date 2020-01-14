@@ -57,14 +57,6 @@ public class LoginController {
         return "admin/main";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/user")
-    public String getUserProfile(@RequestParam Long id, Model model) {
-        Optional<User> user = userService.findById(id);
-        user.ifPresent((user1) -> model.addAttribute("user", user1));
-        return "profile";
-    }
-
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.save(user);

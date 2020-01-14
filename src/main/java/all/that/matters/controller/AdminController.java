@@ -1,17 +1,16 @@
 package all.that.matters.controller;
 
 import all.that.matters.dto.FoodDto;
+import all.that.matters.model.User;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -50,5 +49,12 @@ public class AdminController {
     public String getUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         return "admin/users";
+    }
+
+    @GetMapping("/user")
+    public String getUserProfile(@RequestParam Long id, Model model) {
+        Optional<User> user = userService.findById(id);
+        user.ifPresent((user1) -> model.addAttribute("user", user1));
+        return "profile";
     }
 }
