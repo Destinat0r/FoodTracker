@@ -104,7 +104,7 @@ public class UserController {
     public String getHistory(Model model) {
 
         User user = ControllerUtils.getPrincipal();
-        Map<LocalDate, List<EventDTO>> dateToEventDtosMap = eventService.getDayToEventDtosMapByUserId(user.getId());
+        Map<LocalDate, List<EventDTO>> dateToEventDtosMap = eventService.getDayToEventDTOsMapByUserId(user.getId());
 
         model.addAttribute("dateToEventDtosMap", dateToEventDtosMap);
         model.addAttribute("userName", user.getUsername());

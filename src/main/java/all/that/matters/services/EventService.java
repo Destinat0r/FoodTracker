@@ -67,7 +67,7 @@ public class EventService {
         return eventRepo.findAllByUserId(id);
     }
 
-    public Map<LocalDate, List<EventDTO>> getDayToEventDtosMapByUserId(Long userId) {
+    public Map<LocalDate, List<EventDTO>> getDayToEventDTOsMapByUserId(Long userId) {
         return mapEventDtosToDay(findAllByUserId(userId));
     }
 
