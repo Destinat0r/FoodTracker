@@ -28,7 +28,7 @@ public class AdminController {
 
     @GetMapping("/main")
     public String getMain(Model model) {
-        return "admin/admin_main";
+        return "admin/index";
     }
 
     @GetMapping("/food_list")

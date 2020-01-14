@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Welcome to Food Tracker!</title>
+</head>
+<body>
+<div th:insert="~{fragments/user_navbar :: nb}"></div>
+
+    <div class="container container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 th:text="#{hw.greeting}"></h1>
+            </div>
+        </div>
+
+        <div class="container container mt-5">
+            <div th:if="${param.error}">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
+
+            <div th:unless="${#httpServletRequest.remoteUser}" class="container mt-4">
+
+                <form th:action="@{/login}" method="post">
+                    <div><label> User Name : <input type="text" name="username"/> </label></div>
+                    <div><label> Password: <input type="password" name="password"/> </label></div>
+                    <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+                    <div><input type="submit" value="Sign In"/></div>
+                </form>
+                <a href="/registration">Registration</a>
+            </div>
+        </div>
+    </div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+</body>
+</html>
