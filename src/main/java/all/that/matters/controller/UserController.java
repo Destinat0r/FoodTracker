@@ -99,9 +99,9 @@ public class UserController {
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("food") FoodDTO food) {
+    public String delete(@ModelAttribute("userFood") FoodDTO food) {
 
-        foodService.removeByFoodNameAndUserId(food.getName(), ContextUtils.getPrincipal().getId());
+        foodService.removeByFoodNameAndUserId(food.getName(), ContextUtils.getPrincipal());
         return "redirect:/user/main";
     }
 

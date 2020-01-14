@@ -26,6 +26,6 @@ public interface FoodRepo extends JpaRepository<Food, Long> {
             nativeQuery = true)
     List<Food> findAllCommonExcludingPersonalByUserId(Long userId);
 
-    void removeByFoodNameAndUserId(String foodName, Long userId);
+    void removeByNameAndOwner(String foodName, User user);
 
 }

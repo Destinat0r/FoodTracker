@@ -77,15 +77,12 @@ public class FoodService {
         return foodRepo.findById(id);
     }
 
-    public void removeByFoodNameAndUserId(String foodName, Long userId) {
-        foodRepo.removeByFoodNameAndUserId(foodName, userId);
+    public void removeByFoodNameAndUserId(String foodName, User user) {
+        foodRepo.removeByNameAndOwner(foodName, user);
     }
 
     public List<FoodDTO> findAllCommonFoodInDtos() {
-        List<FoodDTO> commonFoodDTOS = new ArrayList<>();
-
-        foodRepo.findAllCommon().forEach(this::foodToFoodDto);
-        return commonFoodDTOS;
+        return foodRepo.findAllCommon().stream().map(this::foodToFoodDto).collect(Collectors.toList());
     }
 
     public void registerConsumption(FoodDTO foodDTO) {

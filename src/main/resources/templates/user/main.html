@@ -77,7 +77,11 @@
                         <button type="submit" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
                     </form>
                 </td>
-
+                <td>
+                    <form th:action="@{/user/delete}" method="post" th:object="${userFood}">
+                        <button type="submit" class="btn btn-danger mb-2" th:text="#{user.food.delete}"></button>
+                    </form>
+                </td>
             </tr>
         </table>
         <hr>
