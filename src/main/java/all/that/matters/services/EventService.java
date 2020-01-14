@@ -48,7 +48,7 @@ public class EventService {
         eventRepo.save(event);
     }
 
-    public List<EventDTOsPack> packEventsToEventsDTOs(List<Event> events) {
+    public List<EventDTOsPack> packEventsToEventsDTOsPacks(List<Event> events) {
         List<EventDTOsPack> eventDTOsPacks = new ArrayList<>();
         List<LocalDate> days = getDaysOfEvents(events);
 
