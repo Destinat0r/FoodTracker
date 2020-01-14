@@ -3,6 +3,7 @@ package all.that.matters.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -12,6 +13,7 @@ import java.util.List;
 @Builder
 
 public class EventsDto {
+    private LocalDate date;
     private List<EventDto> eventsOfTheDay;
     private BigDecimal totalCalories;
     private boolean isNormExceeded;
