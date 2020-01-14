@@ -1,11 +1,11 @@
 package all.that.matters.services;
 
+import all.that.matters.dto.ConsumedStatsDTO;
 import all.that.matters.model.Role;
 import all.that.matters.repo.FoodNotFoundException;
 import all.that.matters.repo.FoodRepo;
 import all.that.matters.model.Food;
 import all.that.matters.model.User;
-import all.that.matters.dto.ConsumedStatsDto;
 import all.that.matters.dto.FoodDTO;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,20 +88,20 @@ public class FoodService {
 
         eventService.createConsumeEvent(food, foodDTO.getAmount(), user);
 
-        ConsumedStatsDto stats = getConsumedStatsForUserAndDate(user, LocalDate.now());
+        ConsumedStatsDTO stats = getConsumedStatsForUserAndDate(user, LocalDate.now());
 
         if (stats.isDailyNormExceeded()) {
             exceededEventService.createExceededNormEvent(user, stats.getCaloriesConsumed());
         }
     }
 
-    public ConsumedStatsDto getConsumedStatsForUserAndDate(User user, LocalDate date) {
+    public ConsumedStatsDTO getConsumedStatsForUserAndDate(User user, LocalDate date) {
         BigDecimal caloriesConsumed = getConsumedCaloriesForToday(user.getId(), date);
         boolean isDailyNormExceeded = getUserDailyNorm().compareTo(caloriesConsumed) < 0;
         BigDecimal exceededCalories = isDailyNormExceeded ?
                                               caloriesConsumed.subtract(getUserDailyNorm()) : new BigDecimal(0.0);
 
-        return ConsumedStatsDto.builder()
+        return ConsumedStatsDTO.builder()
                        .caloriesConsumed(caloriesConsumed)
                        .isDailyNormExceeded(isDailyNormExceeded)
                        .exceededCalories(exceededCalories)

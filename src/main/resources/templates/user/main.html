@@ -87,8 +87,8 @@
         <hr>
 
         <h2>Consumed today</h2>
-        <h3 th:text="${consumedStatsDto.caloriesConsumed}"></h3>
-        <h3 id="exceeded" th:if="${consumedStatsDto.dailyNormExceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${consumedStatsDto.exceededCalories}"></h3>
+        <h3 th:text="${consumedStatsDTO.caloriesConsumed}"></h3>
+        <h3 id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}" th:text="#{user.biometrics.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}"></h3>
 
         <table class="table-striped" th:object="${todayEventsDtos}">
             <thead class="border-dark">

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 
-public class ConsumedStatsDto {
+public class ConsumedStatsDTO {
     private BigDecimal caloriesConsumed;
     private BigDecimal exceededCalories;
     private boolean isDailyNormExceeded;

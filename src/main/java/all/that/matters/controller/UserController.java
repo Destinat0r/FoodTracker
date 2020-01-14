@@ -1,6 +1,6 @@
 package all.that.matters.controller;
 
-import all.that.matters.dto.ConsumedStatsDto;
+import all.that.matters.dto.ConsumedStatsDTO;
 import all.that.matters.dto.EventDTO;
 import all.that.matters.dto.FoodDTO;
 import all.that.matters.dto.UserDto;
@@ -46,12 +46,12 @@ public class UserController {
                                   .dailyNorm(user.getBiometrics().getDailyNorm())
                                   .build();
 
-        ConsumedStatsDto consumedStatsDto = foodService.getConsumedStatsForUserAndDate(user, LocalDate.now());
+        ConsumedStatsDTO consumedStatsDTO = foodService.getConsumedStatsForUserAndDate(user, LocalDate.now());
 
         model.addAttribute("allCommonFood", foodService.findAllCommonFoodInDtos());
         model.addAttribute("food", new FoodDTO());
         model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
-        model.addAttribute("consumedStatsDto", consumedStatsDto);
+        model.addAttribute("consumedStatsDto", consumedStatsDTO);
         model.addAttribute("userDto", userDto);
         model.addAttribute("todayEventsDtos", eventService.findForToday());
 
