@@ -7,7 +7,7 @@
     <title>History of [[${#httpServletRequest.remoteUser}]]</title>
 </head>
 <body>
-<div th:insert="~{fragments/navbar :: nb}"></div>
+<div th:insert="~{user/navbar :: nb}"></div>
 
 <div class="container">
     <div th:if="${not #lists.isEmpty(eventDTOsPacks)}">
@@ -16,7 +16,9 @@
         <table>
             <tr class="list-group" th:each="eventDTOsPack : ${eventDTOsPacks}">
                 <div class="container">
-                <span class="list-group-item" th:text="${eventDTOsPack.date}"></span>
+                    <div class="alert" th:classappend="${eventDTOsPack.normExceeded} ? 'alert-danger'" >
+                        <h5 class="list-group-item" th:text="${eventDTOsPack.date}"></h5>
+                    </div>
                     <table class="table">
                         <thead class="border-dark">
                             <tr>
