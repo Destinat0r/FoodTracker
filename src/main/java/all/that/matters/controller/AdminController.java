@@ -1,7 +1,6 @@
 package all.that.matters.controller;
 
 import all.that.matters.dto.FoodDTO;
-import all.that.matters.model.User;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -53,8 +51,7 @@ public class AdminController {
 
     @GetMapping("/user")
     public String getUserProfile(@RequestParam Long id, Model model) {
-        Optional<User> optionalUser = userService.findById(id);
-        optionalUser.ifPresent(user -> model.addAttribute("userDTO", user));
-        return "profile";
+        model.addAttribute("userDTO", userService.getUserDTOById(id));
+        return "admin/profile";
     }
 }
