@@ -48,18 +48,18 @@ public class UserController {
     @GetMapping("/main")
     public String getMain(Model model ) {
 
-        User user = ControllerUtils.getPrincipal();
-        UserDTO userDTO = UserDTO.builder()
-                                  .username(user.getUsername())
-                                  .dailyNorm(user.getBiometrics().getDailyNorm())
-                                  .build();
+        User user = ContextUtils.getPrincipal();
+        UserDTO userDTO = userService.getCurrentUserDTO();
 
-        ConsumedStatsDTO consumedStatsDTO = foodService.getConsumedStatsForUserAndDate(user, LocalDate.now());
+        model.addAttribute("allCommonFood",
+                foodService.findAllCommonFoodExcludingPersonalByUserIdInDTO(user.getId()));
 
-        model.addAttribute("allCommonFood", foodService.findAllCommonFoodExcludingPersonalByUserIdInDTO(user.getId()));
         model.addAttribute("food", new FoodDTO());
         model.addAttribute("usersFoodDTOs", foodService.findAllByOwner(user));
-        model.addAttribute("consumedStatsDTO", consumedStatsDTO);
+
+        model.addAttribute("consumedStatsDTO",
+                foodService.getConsumedStatsForUserAndDate(user, LocalDate.now()));
+
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("todayEventsDTOs", eventService.findForToday());
 
