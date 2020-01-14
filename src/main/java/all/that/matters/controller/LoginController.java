@@ -1,9 +1,9 @@
 package all.that.matters.controller;
 
-import all.that.matters.model.Role;
-import all.that.matters.repo.EventRepo;
-import all.that.matters.model.User;
 import all.that.matters.dto.EventDtoOld;
+import all.that.matters.model.Role;
+import all.that.matters.model.User;
+import all.that.matters.repo.EventRepo;
 import all.that.matters.services.UserService;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Optional;
 
 @Controller
 public class LoginController {
