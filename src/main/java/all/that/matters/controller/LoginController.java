@@ -59,14 +59,4 @@ public class LoginController {
         userService.save(user);
         return "redirect:/users";
     }
-
-    @GetMapping("/user/history")
-    public String getHistory(Model model) {
-
-        User user = ControllerUtils.getPrincipal();
-        EventDtoOld eventDto = new EventDtoOld(eventRepo.findAllByUserId(user.getId()), user);
-
-        model.addAttribute("eventDto", eventDto);
-        return "history";
-    }
 }

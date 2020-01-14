@@ -1,9 +1,11 @@
 package all.that.matters.controller;
 
+import all.that.matters.dto.EventDtoOld;
 import all.that.matters.model.*;
 import all.that.matters.dto.ConsumedStatsDto;
 import all.that.matters.dto.FoodDto;
 import all.that.matters.dto.UserDto;
+import all.that.matters.repo.EventRepo;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,18 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
     private FoodService foodService;
-
-    @Autowired
     private EventService eventService;
 
+    @Autowired
+    public void setFoodService(FoodService foodService) {
+        this.foodService = foodService;
+    }
+
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     @GetMapping("/main")
     public String getMain(Model model ) {
@@ -91,5 +99,15 @@ public class UserController {
         foodService.registerConsumption(food);
 
         return "redirect:/user/main";
+    }
+
+    @GetMapping("/history")
+    public String getHistory(Model model) {
+
+        User user = ControllerUtils.getPrincipal();
+        EventDtoOld eventDto = new EventDtoOld(eventService.findAllByUserId(user.getId()), user);
+
+        model.addAttribute("eventDto", eventDto);
+        return "history";
     }
 }
