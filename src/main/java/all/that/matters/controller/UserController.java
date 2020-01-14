@@ -1,6 +1,5 @@
 package all.that.matters.controller;
 
-import all.that.matters.dto.ConsumedStatsDTO;
 import all.that.matters.dto.EventDTOsPack;
 import all.that.matters.dto.FoodDTO;
 import all.that.matters.dto.UserDTO;
