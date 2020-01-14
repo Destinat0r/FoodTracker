@@ -48,7 +48,7 @@ public class UserController {
         model.addAttribute("userDto", userDto);
         model.addAttribute("todayEventsDtos", eventService.findForToday());
 
-        return "user_main";
+        return "user/user_main";
     }
 
     @GetMapping("/all")
