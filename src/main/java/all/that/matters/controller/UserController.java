@@ -122,7 +122,7 @@ public class UserController {
 
         model.addAttribute("eventDTOsPacks", eventDTOsPacks);
         model.addAttribute("userName", user.getUsername());
-        return "history";
+        return "user/history";
     }
 
     @GetMapping("/profile")
