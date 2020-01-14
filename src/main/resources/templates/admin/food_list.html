@@ -7,8 +7,7 @@
     <title>All Food</title>
 </head>
 <body>
-<a href="?lang=en">en</a>
-<a href="?lang=uk">ua</a>
+<div th:insert="~{admin/navbar :: nb}"></div>
 
 <div class="container-md">
 
@@ -41,7 +40,7 @@
         </tr>
     </table>
 </div>
-<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
 <script>
     document.querySelector("input").addEventListener("keypress", function (evt) {
         if (evt.which < 48 || evt.which > 57)

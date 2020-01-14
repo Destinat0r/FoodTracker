@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
+<div th:insert="~{admin/navbar :: nb}"></div>
+
     <div class="container">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -21,5 +23,7 @@
             </tr>
         </table>
     </div>
+
+<div th:replace="~{fragments/common :: jsLinks}"></div>
 </body>
 </html>
