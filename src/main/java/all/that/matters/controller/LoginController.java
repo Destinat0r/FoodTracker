@@ -25,9 +25,15 @@ public class LoginController {
         this.eventRepo = eventRepo;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
     public String getIndex(Model model) {
-        return "index";
+        User user = ContextUtils.getPrincipal();
+
+        if (user.getRoles().contains(Role.ADMIN)) {
+            return "admin/index";
+        } else
+            return "user/index";
     }
 
     @GetMapping("/redirect")
