@@ -3,7 +3,7 @@ package all.that.matters.controller;
 import all.that.matters.dto.ConsumedStatsDTO;
 import all.that.matters.dto.EventDTO;
 import all.that.matters.dto.FoodDTO;
-import all.that.matters.dto.UserDto;
+import all.that.matters.dto.UserDTO;
 import all.that.matters.model.User;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
@@ -41,7 +41,7 @@ public class UserController {
     public String getMain(Model model ) {
 
         User user = ControllerUtils.getPrincipal();
-        UserDto userDto = UserDto.builder()
+        UserDTO userDTO = UserDTO.builder()
                                   .username(user.getUsername())
                                   .dailyNorm(user.getBiometrics().getDailyNorm())
                                   .build();
@@ -52,7 +52,7 @@ public class UserController {
         model.addAttribute("food", new FoodDTO());
         model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
         model.addAttribute("consumedStatsDto", consumedStatsDTO);
-        model.addAttribute("userDto", userDto);
+        model.addAttribute("userDto", userDTO);
         model.addAttribute("todayEventsDtos", eventService.findForToday());
 
         return "user/main";

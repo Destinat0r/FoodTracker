@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 
-public class UserDto {
+public class UserDTO {
     private String username;
     private String fullName;
     private String nationalName;
