@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Data
 
 @Entity
-@Table(name = "food", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
+@Table(name = "food", uniqueConstraints={@UniqueConstraint(columnNames={"name", "user_id"})})
 public class Food {
 
     @Id
