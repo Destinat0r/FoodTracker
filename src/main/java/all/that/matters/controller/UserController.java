@@ -2,7 +2,7 @@ package all.that.matters.controller;
 
 import all.that.matters.dto.ConsumedStatsDto;
 import all.that.matters.dto.EventDTO;
-import all.that.matters.dto.FoodDto;
+import all.that.matters.dto.FoodDTO;
 import all.that.matters.dto.UserDto;
 import all.that.matters.model.User;
 import all.that.matters.services.EventService;
@@ -49,7 +49,7 @@ public class UserController {
         ConsumedStatsDto consumedStatsDto = foodService.getConsumedStatsForUserAndDate(user, LocalDate.now());
 
         model.addAttribute("allCommonFood", foodService.findAllCommonFoodInDtos());
-        model.addAttribute("food", new FoodDto());
+        model.addAttribute("food", new FoodDTO());
         model.addAttribute("usersFoodDtos", foodService.findAllByOwner(user));
         model.addAttribute("consumedStatsDto", consumedStatsDto);
         model.addAttribute("userDto", userDto);
@@ -62,7 +62,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
 
-        List<FoodDto> allFood = foodService.findAllCommonFoodInDtos();
+        List<FoodDTO> allFood = foodService.findAllCommonFoodInDtos();
         model.addAttribute("allFood", allFood);
 
         return "food_list";
@@ -70,7 +70,7 @@ public class UserController {
 
     @PostMapping("/add")
     public String add(
-            @Valid FoodDto userFoodDto,
+            @Valid FoodDTO userFoodDTO,
             BindingResult bindingResult,
             Model model) {
 
@@ -79,13 +79,13 @@ public class UserController {
             model.mergeAttributes(errors);
         }
 
-        foodService.add(userFoodDto);
+        foodService.add(userFoodDTO);
         return "redirect:/user/main";
     }
 
     @PostMapping("/consume")
     public String consume(
-            @ModelAttribute("food") FoodDto food,
+            @ModelAttribute("food") FoodDTO food,
             @RequestParam("amount") BigDecimal amount,
             BindingResult bindingResult,
             Model model) {

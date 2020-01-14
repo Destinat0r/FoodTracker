@@ -6,7 +6,7 @@ import all.that.matters.repo.FoodRepo;
 import all.that.matters.model.Food;
 import all.that.matters.model.User;
 import all.that.matters.dto.ConsumedStatsDto;
-import all.that.matters.dto.FoodDto;
+import all.that.matters.dto.FoodDTO;
 import all.that.matters.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,10 +40,10 @@ public class FoodService {
         return foodRepo.findAll();
     }
 
-    public void add(FoodDto foodDto) {
+    public void add(FoodDTO foodDTO) {
         Food food = Food.builder()
-                        .name(foodDto.getName())
-                        .calories(foodDto.getCalories())
+                        .name(foodDTO.getName())
+                        .calories(foodDTO.getCalories())
                         .owner(getOwner())
                         .build();
         foodRepo.save(food);
@@ -54,39 +54,39 @@ public class FoodService {
         return user.getRoles().contains(Role.ADMIN) ? null : user;
     }
 
-    public List<FoodDto> findAllByOwner(User user) {
-        List<FoodDto> foodDtos = new ArrayList<>();
+    public List<FoodDTO> findAllByOwner(User user) {
+        List<FoodDTO> foodDTOS = new ArrayList<>();
         foodRepo.findByOwner(user.getId()).forEach(
-                food -> foodDtos.add(
-                            FoodDto.builder()
+                food -> foodDTOS.add(
+                            FoodDTO.builder()
                                     .name(food.getName())
                                     .calories(food.getCalories())
                                     .build())
         );
-        return foodDtos;
+        return foodDTOS;
     }
 
     public Optional<Food> findById(Long id) {
         return foodRepo.findById(id);
     }
 
-    public List<FoodDto> findAllCommonFoodInDtos() {
-        List<FoodDto> commonFoodDtos = new ArrayList<>();
-        foodRepo.findAllCommon().forEach(food -> commonFoodDtos.add(
-                FoodDto.builder()
+    public List<FoodDTO> findAllCommonFoodInDtos() {
+        List<FoodDTO> commonFoodDTOS = new ArrayList<>();
+        foodRepo.findAllCommon().forEach(food -> commonFoodDTOS.add(
+                FoodDTO.builder()
                         .name(food.getName())
                         .calories(food.getCalories())
                         .build()
         ));
 
-        return commonFoodDtos;
+        return commonFoodDTOS;
     }
 
-    public void registerConsumption(FoodDto foodDto) {
+    public void registerConsumption(FoodDTO foodDTO) {
         User user = ContextUtils.getPrincipal();
-        Food food = foodDtoToFood(foodDto);
+        Food food = foodDtoToFood(foodDTO);
 
-        eventService.createConsumeEvent(food, foodDto.getAmount(), user);
+        eventService.createConsumeEvent(food, foodDTO.getAmount(), user);
 
         ConsumedStatsDto stats = getConsumedStatsForUserAndDate(user, LocalDate.now());
 
@@ -120,15 +120,15 @@ public class FoodService {
         return eventService.getTotalConsumedCaloriesByUserIdAndDate(userId, date);
     }
 
-    public FoodDto foodToFoodDto(Food food) {
-        return FoodDto.builder()
+    public FoodDTO foodToFoodDto(Food food) {
+        return FoodDTO.builder()
                        .name(food.getName())
                        .calories(food.getCalories())
                        .build();
     }
 
-    public Food foodDtoToFood(FoodDto foodDto) {
-        return foodRepo.findByNameAndOwner(foodDto.getName(), ContextUtils.getPrincipal())
-                       .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDto.getName() + " not found."));
+    public Food foodDtoToFood(FoodDTO foodDTO) {
+        return foodRepo.findByNameAndOwner(foodDTO.getName(), ContextUtils.getPrincipal())
+                       .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDTO.getName() + " not found."));
     }
 }

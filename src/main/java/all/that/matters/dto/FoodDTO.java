@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @ToString
 
-public class FoodDto {
+public class FoodDTO {
     private String name;
     private BigDecimal calories;
     private BigDecimal amount;

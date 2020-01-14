@@ -1,6 +1,6 @@
 package all.that.matters.controller;
 
-import all.that.matters.dto.FoodDto;
+import all.that.matters.dto.FoodDTO;
 import all.that.matters.model.User;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
@@ -32,14 +32,14 @@ public class AdminController {
 
     @GetMapping("/food_list")
     public String getFoodList(Model model) {
-        List<FoodDto> allFood = foodService.findAllCommonFoodInDtos();
+        List<FoodDTO> allFood = foodService.findAllCommonFoodInDtos();
         model.addAttribute("allFood", allFood);
         return "admin/food_list";
     }
 
     @PostMapping("/food/add")
     public String addToCommonFood(
-            @ModelAttribute("food") FoodDto food,
+            @ModelAttribute("food") FoodDTO food,
             Model model) {
         foodService.add(food);
         return "redirect:/admin/food_list";
