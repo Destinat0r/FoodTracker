@@ -37,10 +37,6 @@ public class FoodService {
         this.exceededEventService = exceededEventService;
     }
 
-    public List<Food> findAll() {
-        return foodRepo.findAll();
-    }
-
     public void add(FoodDTO foodDTO) {
         Food food = Food.builder()
                         .name(foodDTO.getName())
