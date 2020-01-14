@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
-    <title>History of [[${#httpServletRequest.remoteUser}]]</title>
+    <title>[[#{history.of}]] [[${#httpServletRequest.remoteUser}]]</title>
 </head>
 <body>
 <div th:insert="~{admin/navbar :: nb}"></div>
 
 <div class="container">
     <div th:if="${not #lists.isEmpty(eventDTOsPacks)}">
-        <h1>History of</h1>
+        <h1 th:text="#{history.of}"></h1>
         <h1 align="center" th:text="${userName}"></h1>
         <table>
             <tr class="list-group" th:each="eventDTOsPack : ${eventDTOsPacks}">
@@ -22,7 +22,10 @@
                     <table class="table">
                         <thead class="border-dark">
                             <tr>
-                                <th>Time</th><th>Food name</th><th>Amount</th><th>Total calories</th>
+                                <th th:text="#{history.time}"></th>
+                                <th th:text="#{history.food_name}"></th>
+                                <th th:text="#{history.amount}"></th>
+                                <th th:text="#{history.total_calories}"></th>
                             </tr>
                         </thead>
                         <tr th:each="event : ${eventDTOsPack.eventsOfTheDay}">
@@ -32,8 +35,8 @@
                             <td th:text="${event.totalCalories}"></td>
                         </tr>
                     </table>
-                    <h5 th:text="'Total calories: ' + ${eventDTOsPack.totalCalories}"></h5>
-                    <h5 th:text="${eventDTOsPack.normExceeded} ? 'Exceeded calories: ' + ${eventDTOsPack.exceededCalories}"></h5>
+                    <h5 th:text="#{history.total_calories} + ' ' + ${eventDTOsPack.totalCalories}"></h5>
+                    <h5 th:text="${eventDTOsPack.normExceeded} ? #{history.exceeded_calories} + ${eventDTOsPack.exceededCalories}"></h5>
                 </div>
                 <hr>
             </tr>
