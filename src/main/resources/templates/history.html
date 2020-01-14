@@ -16,7 +16,7 @@
         <table>
             <tr class="list-group" th:each="eventDTOsPack : ${eventDTOsPacks}">
                 <div class="container">
-                    <div class="alert" th:classappend="${eventDTOsPack.normExceeded} ? 'alert-danger'" >
+                    <div class="alert" th:classappend="${eventDTOsPack.normExceeded} ? 'alert-danger'">
                         <h5 class="list-group-item" th:text="${eventDTOsPack.date}"></h5>
                     </div>
                     <table class="table">
@@ -32,6 +32,8 @@
                             <td th:text="${event.totalCalories}"></td>
                         </tr>
                     </table>
+                    <h5 th:text="'Total calories: ' + ${eventDTOsPack.totalCalories}"></h5>
+                    <h5 th:text="${eventDTOsPack.normExceeded} ? 'Exceeded calories: ' + ${eventDTOsPack.exceededCalories}"></h5>
                 </div>
                 <hr>
             </tr>
