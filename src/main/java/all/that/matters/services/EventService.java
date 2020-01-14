@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -75,5 +78,30 @@ public class EventService {
                                         .timestamp(event.getTimestamp()).build())
         );
         return eventDtos;
+    }
+
+    private Map<LocalDate, List<Event>> mapEventsToDay(List<Event> events) {
+        List<LocalDate> days = events.stream()
+                                       .map(event -> event.getTimestamp().toLocalDate())
+                                       .collect(Collectors.toList());
+
+        Map<LocalDate, List<Event>> dateToEvents = new TreeMap<>();
+
+        days.forEach(day -> {
+            dateToEvents.put(day, new ArrayList<Event>());
+            sortEventsByDay(events, dateToEvents, day);
+        });
+
+        return dateToEvents;
+    }
+
+    private void sortEventsByDay(List<Event> events, Map<LocalDate, List<Event>> dateToEvents,
+            LocalDate day) {
+        for (Event event : events) {
+            if (event.getTimestamp().toLocalDate().equals(day)) {
+                List<Event> list = dateToEvents.get(day);
+                list.add(event);
+            }
+        }
     }
 }
