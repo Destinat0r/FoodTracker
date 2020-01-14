@@ -70,15 +70,12 @@ public class FoodService {
         return foodRepo.findById(id);
     }
 
+
+
     public List<FoodDTO> findAllCommonFoodInDtos() {
         List<FoodDTO> commonFoodDTOS = new ArrayList<>();
-        foodRepo.findAllCommon().forEach(food -> commonFoodDTOS.add(
-                FoodDTO.builder()
-                        .name(food.getName())
-                        .calories(food.getCalories())
-                        .build()
-        ));
 
+        foodRepo.findAllCommon().forEach(this::foodToFoodDto);
         return commonFoodDTOS;
     }
 
