@@ -48,6 +48,10 @@ public class EventService {
         eventRepo.save(event);
     }
 
+    public List<EventDTOsPack> getEventDTOsPacksByUserId(Long userId) {
+        return packEventsToEventsDTOsPacks(findAllEventsByUserId(userId));
+    }
+
     public List<EventDTOsPack> packEventsToEventsDTOsPacks(List<Event> events) {
         List<EventDTOsPack> eventDTOsPacks = new ArrayList<>();
         List<LocalDate> days = getDaysOfEvents(events);
