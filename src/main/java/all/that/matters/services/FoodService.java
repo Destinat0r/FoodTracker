@@ -39,7 +39,7 @@ public class FoodService {
         return foodRepo.findAll();
     }
 
-    public void add(FoodDto foodDto) {
+    public void addPersonal(FoodDto foodDto) {
         Food food = Food.builder()
                         .name(foodDto.getName())
                         .calories(foodDto.getCalories())
