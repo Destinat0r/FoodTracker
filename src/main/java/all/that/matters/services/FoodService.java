@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -52,6 +53,16 @@ public class FoodService {
     private User getOwner() {
         User user = ContextUtils.getPrincipal();
         return user.getRoles().contains(Role.ADMIN) ? null : user;
+    }
+
+    public List<FoodDTO> findAllCommonFoodExcludingPersonalByUserIdInDTO(Long userId) {
+        return findAllCommonFoodExcludingPersonalByUserId(userId).stream()
+                       .map(this::foodToFoodDto)
+                       .collect(Collectors.toList());
+    }
+
+    private List<Food> findAllCommonFoodExcludingPersonalByUserId(Long userId) {
+        return foodRepo.findAllCommonExcludingPersonalByUserId(userId);
     }
 
     public List<FoodDTO> findAllByOwner(User user) {

@@ -45,7 +45,7 @@ public class UserController {
 
         ConsumedStatsDTO consumedStatsDTO = foodService.getConsumedStatsForUserAndDate(user, LocalDate.now());
 
-        model.addAttribute("allCommonFood", foodService.findAllCommonFoodInDtos());
+        model.addAttribute("allCommonFood", foodService.findAllCommonFoodExcludingPersonalByUserIdInDTO(user.getId()));
         model.addAttribute("food", new FoodDTO());
         model.addAttribute("usersFoodDTOs", foodService.findAllByOwner(user));
         model.addAttribute("consumedStatsDTO", consumedStatsDTO);
