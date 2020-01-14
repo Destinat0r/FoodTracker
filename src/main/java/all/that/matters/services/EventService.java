@@ -1,6 +1,6 @@
 package all.that.matters.services;
 
-import all.that.matters.dto.EventDto;
+import all.that.matters.dto.EventDTO;
 import all.that.matters.dto.EventDTOsPack;
 import all.that.matters.model.Event;
 import all.that.matters.model.ExceededEvent;
@@ -34,14 +34,14 @@ public class EventService {
         this.exceededEventService = exceededEventService;
     }
 
-    public List<EventDto> findForToday() {
+    public List<EventDTO> findForToday() {
 
-        List<EventDto> eventDtos = new ArrayList<>();
+        List<EventDTO> eventDTOS = new ArrayList<>();
 
         eventRepo.findAllConsumedFromTodayByUserId(ContextUtils.getPrincipal().getId())
-                .forEach(event -> eventDtos.add(eventToEventDto(event))
+                .forEach(event -> eventDTOS.add(eventToEventDto(event))
                 );
-        return eventDtos;
+        return eventDTOS;
     }
 
     public void create(Event event) {
@@ -67,7 +67,7 @@ public class EventService {
         return eventRepo.findAllByUserId(id);
     }
 
-    public Map<LocalDate, List<EventDto>> getDayToEventDtosMapByUserId(Long userId) {
+    public Map<LocalDate, List<EventDTO>> getDayToEventDtosMapByUserId(Long userId) {
         return mapEventDtosToDay(findAllByUserId(userId));
     }
 
@@ -78,14 +78,14 @@ public class EventService {
         return dayToExceededEvents;
     }
 
-    public List<EventDto> eventsToDtos(List<Event> events) {
-        List<EventDto> eventDtos = new ArrayList<>();
-        events.forEach(event -> eventDtos.add(eventToEventDto(event)));
-        return eventDtos;
+    public List<EventDTO> eventsToDtos(List<Event> events) {
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        events.forEach(event -> eventDTOS.add(eventToEventDto(event)));
+        return eventDTOS;
     }
 
-    private EventDto eventToEventDto(Event event) {
-        return EventDto.builder()
+    private EventDTO eventToEventDto(Event event) {
+        return EventDTO.builder()
                         .foodName(event.getFood().getName())
                         .foodAmount(event.getAmount())
                         .totalCalories(event.getTotalCalories())
@@ -113,7 +113,7 @@ public class EventService {
         Map<LocalDate, ExceededEvent> dayToExceededEventMap, LocalDate day) {
 
         List<Event> eventsOfTheDay = pickEventsOfTheDay(events, day);
-        List<EventDto> eventsDtosOfTheDay = eventsToDtos(eventsOfTheDay);
+        List<EventDTO> eventsDtosOfTheDay = eventsToDtos(eventsOfTheDay);
         BigDecimal totalCalories = countTotalCalories(eventsOfTheDay);
 
         BigDecimal exceededCalories = getExceededCaloriesIfAny(dayToExceededEventMap, day);
@@ -148,20 +148,20 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    private Map<LocalDate, List<EventDto>> mapEventDtosToDay(List<Event> events) {
+    private Map<LocalDate, List<EventDTO>> mapEventDtosToDay(List<Event> events) {
         List<LocalDate> days = getDaysOfEvents(events);
 
-        Map<LocalDate, List<EventDto>> dateToEventDtos = new TreeMap<>();
+        Map<LocalDate, List<EventDTO>> dateToEventDtos = new TreeMap<>();
 
         days.forEach(day -> {
-            dateToEventDtos.put(day, new ArrayList<EventDto>());
+            dateToEventDtos.put(day, new ArrayList<EventDTO>());
             sortEventsByDay(events, dateToEventDtos, day);
         });
 
         return dateToEventDtos;
     }
 
-    private void sortEventsByDay(List<Event> events, Map<LocalDate, List<EventDto>> dateToEvents, LocalDate day) {
+    private void sortEventsByDay(List<Event> events, Map<LocalDate, List<EventDTO>> dateToEvents, LocalDate day) {
         events.stream()
                 .filter(event -> isFromDay(day, event))
                 .forEach(event ->

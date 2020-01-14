@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 
-public class EventDto {
+public class EventDTO {
     private String foodName;
     private BigDecimal foodAmount;
     private BigDecimal totalCalories;

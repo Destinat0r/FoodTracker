@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EventDTOsPack {
     private LocalDate date;
-    private List<EventDto> eventsOfTheDay;
+    private List<EventDTO> eventsOfTheDay;
     private BigDecimal totalCalories;
     private boolean isNormExceeded;
     private BigDecimal exceededCalories;

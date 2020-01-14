@@ -1,7 +1,7 @@
 package all.that.matters.controller;
 
 import all.that.matters.dto.ConsumedStatsDto;
-import all.that.matters.dto.EventDto;
+import all.that.matters.dto.EventDTO;
 import all.that.matters.dto.FoodDto;
 import all.that.matters.dto.UserDto;
 import all.that.matters.model.User;
@@ -104,7 +104,7 @@ public class UserController {
     public String getHistory(Model model) {
 
         User user = ControllerUtils.getPrincipal();
-        Map<LocalDate, List<EventDto>> dateToEventDtosMap = eventService.getDayToEventDtosMapByUserId(user.getId());
+        Map<LocalDate, List<EventDTO>> dateToEventDtosMap = eventService.getDayToEventDtosMapByUserId(user.getId());
 
         model.addAttribute("dateToEventDtosMap", dateToEventDtosMap);
         model.addAttribute("userName", user.getUsername());
