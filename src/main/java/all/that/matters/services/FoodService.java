@@ -1,5 +1,6 @@
 package all.that.matters.services;
 
+import all.that.matters.model.Role;
 import all.that.matters.repo.FoodNotFoundException;
 import all.that.matters.repo.FoodRepo;
 import all.that.matters.model.Food;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,14 +41,18 @@ public class FoodService {
         return foodRepo.findAll();
     }
 
-    public void addPersonal(FoodDto foodDto) {
+    public void add(FoodDto foodDto) {
         Food food = Food.builder()
                         .name(foodDto.getName())
                         .calories(foodDto.getCalories())
-                        .owner(ContextUtils.getPrincipal())
+                        .owner(getOwner())
                         .build();
-
         foodRepo.save(food);
+    }
+
+    private User getOwner() {
+        User user = ContextUtils.getPrincipal();
+        return user.getRoles().contains(Role.ADMIN) ? null : user;
     }
 
     public List<FoodDto> findAllByOwner(User user) {
