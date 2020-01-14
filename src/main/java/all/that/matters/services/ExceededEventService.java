@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Transactional
@@ -46,5 +47,9 @@ public class ExceededEventService {
                     user.getId()
             );
         }
+    }
+
+    public List<ExceededEvent> findAllByUser(User user) {
+        return exceededEventRepo.findAllByUser(user);
     }
 }

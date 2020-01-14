@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface ExceededEventRepo extends JpaRepository<ExceededEvent, Long> {
@@ -20,4 +21,5 @@ public interface ExceededEventRepo extends JpaRepository<ExceededEvent, Long> {
     void updateExcessiveCaloriesByDateAndUserId(BigDecimal calories, LocalDate date, Long userId);
 
     boolean existsByUserAndDate(User user, LocalDate date);
+    List<ExceededEvent> findAllByUser(User user);
 }
