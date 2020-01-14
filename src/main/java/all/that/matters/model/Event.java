@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,9 +27,8 @@ public class Event {
     @ManyToOne
     private User user;
 
-    @JoinColumn(name = "food_id", nullable = false)
-    @ManyToOne
-    private Food food;
+    @Column(name = "food", nullable = false)
+    private String food;
 
     @Column(name = "amount")
     private BigDecimal amount;

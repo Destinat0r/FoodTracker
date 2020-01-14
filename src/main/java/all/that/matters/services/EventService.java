@@ -120,7 +120,7 @@ public class EventService {
     public void createConsumeEvent(Food food, BigDecimal amount, User user) {
         Event event = Event.builder()
                               .user(user)
-                              .food(food)
+                              .food(food.getName())
                               .amount(amount)
                               .totalCalories(food.getCalories().multiply(amount))
                               .timestamp(LocalDateTime.now())
@@ -138,7 +138,7 @@ public class EventService {
 
     private EventDTO eventToEventDTO(Event event) {
         return EventDTO.builder()
-                        .foodName(event.getFood().getName())
+                        .foodName(event.getFood())
                         .foodAmount(event.getAmount())
                         .totalCalories(event.getTotalCalories())
                         .timestamp(event.getTimestamp()).build();
