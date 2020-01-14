@@ -58,7 +58,7 @@ public class UserController {
         List<FoodDto> allFood = foodService.findAllCommonFoodInDtos();
         model.addAttribute("allFood", allFood);
 
-        return "all_food";
+        return "food_list";
     }
 
     @PostMapping("/add")
