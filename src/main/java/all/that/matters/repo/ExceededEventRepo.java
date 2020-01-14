@@ -1,6 +1,6 @@
 package all.that.matters.repo;
 
-import all.that.matters.model.ExceededNormEvent;
+import all.that.matters.model.ExceededEvent;
 import all.that.matters.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Repository
-public interface ExceededNormEventRepo extends JpaRepository<ExceededNormEvent, Long> {
+public interface ExceededEventRepo extends JpaRepository<ExceededEvent, Long> {
 
     @Transactional
     @Modifying

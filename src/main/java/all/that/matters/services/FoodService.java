@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,15 +25,15 @@ public class FoodService {
     private FoodRepo foodRepo;
     private EventService eventService;
     private UserService userService;
-    private ExceededNormEventService exceededNormEventService;
+    private ExceededEventService exceededEventService;
 
     @Autowired
     public FoodService(FoodRepo foodRepo, EventService eventService, UserService userService,
-            ExceededNormEventService exceededNormEventService) {
+            ExceededEventService exceededEventService) {
         this.foodRepo = foodRepo;
         this.eventService = eventService;
         this.userService = userService;
-        this.exceededNormEventService = exceededNormEventService;
+        this.exceededEventService = exceededEventService;
     }
 
     public List<Food> findAll() {
@@ -92,7 +91,7 @@ public class FoodService {
         ConsumedStatsDto stats = getConsumedStatsForUserAndDate(user, LocalDate.now());
 
         if (stats.isDailyNormExceeded()) {
-            exceededNormEventService.createExceededNormEvent(user, stats.getCaloriesConsumed());
+            exceededEventService.createExceededNormEvent(user, stats.getCaloriesConsumed());
         }
     }
 

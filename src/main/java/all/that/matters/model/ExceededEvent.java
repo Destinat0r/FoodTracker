@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "exceed_events", uniqueConstraints = {@UniqueConstraint(columnNames={"date", "user_id"})})
-public class ExceededNormEvent {
+public class ExceededEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
