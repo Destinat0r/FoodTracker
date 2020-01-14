@@ -12,15 +12,15 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="admin/main" th:text="#{main}"></a>
+                <a class="nav-link" th:href="@{/admin/main/}" th:text="#{main}"></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/admin/food_list/" th:text="#{user.admin.food_add}"></a>
+                <a class="nav-link" th:href="@{/admin/food_list/}" th:text="#{user.admin.food_add}"></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/admin/users" th:text="#{user.admin.users_list}"></a>
+                <a class="nav-link" th:href="@{/admin/users}" th:text="#{user.admin.users_list}"></a>
             </li>
 
             <li class="nav-item dropdown">
