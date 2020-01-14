@@ -127,8 +127,8 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String getProfile(@RequestParam Long id, Model model) {
-        model.addAttribute("userDTO", userService.getUserDTOById(id));
-        return "profile";
+    public String getProfile(Model model) {
+        model.addAttribute("userDTO", userService.getUserDTOById(ContextUtils.getPrincipal().getId()));
+        return "user/profile";
     }
 }
