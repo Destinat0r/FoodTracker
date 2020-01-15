@@ -58,11 +58,19 @@ public class UserService implements UserDetailsService {
         return userRepo.findById(id);
     }
 
+    public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
+       return userToUserDTO(findByUsername(username).orElseThrow(UserNotFoundException::new));
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
+
     public UserDTO getCurrentUserDTO() {
         return userToUserDTO(ContextUtils.getPrincipal());
     }
 
-    public UserDTO getUserDTOById(Long id) {
+    public UserDTO getUserDTOById(Long id) throws UserNotFoundException {
         Optional<User> optionalUser = findById(id);
         return userToUserDTO(optionalUser.orElseThrow(UserNotFoundException::new));
     }
