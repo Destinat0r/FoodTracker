@@ -9,13 +9,18 @@
     #exceeded {
         color: red;
     }
+    .block {
+        margin:0 auto;
+        margin-bottom: 50px;
+        width: 40%;
+    }
 </style>
 </head>
 <body>
 <div th:insert="~{user/navbar :: nb}"></div>
 
-<div class="container">
-        <h1 th:inline="text">[[#{hello}]] [[${#httpServletRequest.remoteUser}]]!</h1>
+<div class="container block">
+        <h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>
 
         <table class="table-striped">
             <thead class="border-dark">
@@ -37,22 +42,24 @@
             </tr>
         </table>
     <hr>
-        <form th:action="@{/user/add}" method="post" th:object="${food}" novalidate>
-            <div class="form-group row">
+    <div class="col-6">
+        <form th:action="@{/user/add}" method="post" role="form" th:object="${food}" novalidate>
+            <div class="form-group">
                 <label for="name" th:text="#{food.name}"></label>
-                <input type="text" id="name" name="name" placeholder="Name" th:required="true" required/>
+                <input type="text" id="name" name="name" placeholder="Name" th:required="true" class="form-control" required/>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group">
                 <label for="calories" th:text="#{food.calories}"></label>
-                <input type="number" step="100" min="100" th:required="true" name="calories" id="calories" placeholder="calories" pattern="\d+" required/>
+                <input type="number" step="100" min="100" th:required="true" name="calories" id="calories"
+                       class="form-control" placeholder="calories" pattern="\d+" required/>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
             </div>
         </form>
-
+    </div>
         <hr>
         <h2 th:text="#{food.personal}"></h2>
 
@@ -70,27 +77,34 @@
                 <td th:text="${userFood.calories}"></td>
 
                 <td>
-                    <form action="#" th:action="@{/user/use}" th:object="${userFood}" method="post">
-                        <input type="hidden" name="name" th:value="${userFood.name}">
-                        <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5">
-                        <button type="submit" name="consume" class="btn btn-success mb-2" th:text="#{user.consume}"></button>
-                        <button type="submit" name="delete"
-                                onclick="if (!(confirm('Do you really want to delete this food?'))) return false"
-                                class="btn btn-danger mb-2" th:text="#{user.food.delete}"></button>
+                    <form class="form-inline" role="form" th:action="@{/user/use}" th:object="${userFood}" method="post">
+                        <div class="form-group">
+                            <input type="hidden" name="name" th:value="${userFood.name}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="consume" class="btn btn-success btn-sm form-control" th:text="#{user.consume}"></button>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="delete"
+                                    onclick="if (!(confirm('Do you really want to delete this food?'))) return false"
+                                    class="btn btn-danger btn-sm form-control" th:text="#{user.food.delete}"></button>
+                        </div>
                     </form>
                 </td>
             </tr>
         </table>
         <hr>
 
-        <h2 th:text="#{user.daily_norm}"></h2>
-        <h3 th:text="${userDTO.dailyNorm}"></h3>
+        <h2 th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></h2>
         <hr>
 
-        <h2 th:text="#{user.consumed_today}"></h2>
-        <h3 th:text="${consumedStatsDTO.caloriesConsumed}"></h3>
+        <h2 th:text="#{user.consumed_today} + ': ' + ${consumedStatsDTO.caloriesConsumed}"></h2>
         <h3 id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}" th:text="#{user.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}"></h3>
-
+        <hr>
         <table class="table-striped" th:object="${todayEventsDTOs}">
             <thead class="border-dark">
             <tr>
