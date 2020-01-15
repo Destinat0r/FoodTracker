@@ -5,7 +5,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nb">
-    <a class="navbar-brand" href="/">Food Tracker</a>
+    <a class="navbar-brand" href="/" th:text="#{navbar.title}"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,12 +34,12 @@
 
             <li class="nav-item" >
                 <form th:action="@{/user/history}" method="get">
-                    <button class="nav-link btn btn-link"  type="submit">History</button>
+                    <button class="nav-link btn btn-link"  type="submit" th:text="#{navbar.history}"></button>
                 </form>
             </li>
             <li class="nav-item" >
                 <form th:action="@{/logout}" method="post">
-                    <button class="nav-link btn btn-link"  type="submit">Logout</button>
+                    <button class="nav-link btn btn-link"  type="submit" th:text="#{navbar.log_out}"></button>
                 </form>
             </li>
         </ul>
