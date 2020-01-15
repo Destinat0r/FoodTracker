@@ -85,7 +85,7 @@ public class FoodService {
         return foodRepo.findAllCommon().stream().map(this::foodToFoodDto).collect(Collectors.toList());
     }
 
-    public void registerConsumption(FoodDTO foodDTO) {
+    public void registerConsumption(FoodDTO foodDTO) throws FoodNotFoundException {
         User user = ContextUtils.getPrincipal();
         Food food = foodDtoToFood(foodDTO);
 
@@ -130,7 +130,7 @@ public class FoodService {
                        .build();
     }
 
-    public Food foodDtoToFood(FoodDTO foodDTO) {
+    public Food foodDtoToFood(FoodDTO foodDTO) throws FoodNotFoundException {
         return foodRepo.findByNameAndOwner(foodDTO.getName(), ContextUtils.getPrincipal())
                        .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDTO.getName() + " not found."));
     }
