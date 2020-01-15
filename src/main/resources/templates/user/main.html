@@ -60,7 +60,7 @@
             <thead class="border-dark">
             <tr>
                 <th th:text="#{food.table.name}"></th>
-                <th th:text="#{food.table.calories}"></th>
+                <th th:text="#{user.consume}"></th>
             </tr>
             </thead>
             <tr th:each="userFood : ${usersFoodDTOs}">
@@ -73,9 +73,9 @@
                     <form action="#" th:action="@{/user/use}" th:object="${userFood}" method="post">
                         <input type="hidden" name="name" th:value="${userFood.name}">
                         <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5">
-                        <button type="submit" name="consume" class="btn btn-primary mb-2" th:text="#{user.consumed_today}"></button>
+                        <button type="submit" name="consume" class="btn btn-primary mb-2" th:text="#{user.consume}"></button>
                         <button type="submit" name="delete"
-                                onclick="if (!(confirm('[[#{food.delete.confirm}]]'))) return false"
+                                onclick="if (!(confirm('Do you really want to delete this food?'))) return false"
                                 class="btn btn-danger mb-2" th:text="#{user.food.delete}"></button>
                     </form>
                 </td>
