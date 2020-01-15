@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
-    <title th:text="#{greeting}"></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<title th:text="#{greeting}"></title>
+<style>
+    .custom-centered {
+        margin:0 auto;
+        width:300px;
+    }
+</style>
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: nb}"></div>
-<div class="container container mt-5">
-        <div th:if="${param.error}" th:inline="text">
+<div class="container container mt-5 custom-centered">
+    <div th:if="${param.error}" th:inline="text">
             [[#{login.invalid}]]
     </div>
     <div th:if="${param.logout}" th:inline="text">
         [[#{login.logout}]]
     </div>
 
-    <form th:action="@{/login}" method="post">
-        <div><label th:text="#{user.username}"></label>
-            <input type="text" name="username"/>
+    <form th:action="@{/login}" role="form" method="post" class="">
+        <div class="form-group">
+            <label for="username" th:text="#{user.username}"></label>
+            <input type="text" id="username" name="username" class="form-control"/>
         </div>
-        <div>
-            <label th:text="#{user.password}"></label>
-            <input type="password" name="password"/>
+        <div class="form-group">
+            <label for="password" th:text="#{user.password}"></label>
+            <input type="password" id="password" name="password" class="form-control"/>
         </div>
         <div><button type="submit" class="btn btn-success" th:text="#{user.sign_in}"></button></div>
     </form>
