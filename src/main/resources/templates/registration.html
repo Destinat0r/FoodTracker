@@ -114,9 +114,7 @@
                 <input type="password" name="passwordConfirm" class="form-control" th:placeholder="#{user.сonfirm_password}" required/>
             </div>
         </div>
-        <div>
-            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-        </div>
+
         <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
     </form>
 
