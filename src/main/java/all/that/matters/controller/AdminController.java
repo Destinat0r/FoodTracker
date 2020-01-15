@@ -58,6 +58,7 @@ public class AdminController {
     public String getUserProfile(@RequestParam Long id, Model model) {
         try {
             model.addAttribute("userDTO", userService.getUserDTOById(id));
+            model.addAttribute("userId", id);
         } catch (UserNotFoundException e) {
             model.addAttribute("message", e.getMessage());
             return "errors/no_such_user";
@@ -66,8 +67,8 @@ public class AdminController {
         return "admin/profile";
     }
 
-    @GetMapping("/user/history")
-    public String getUserHistory(@RequestParam Long id, Model model) {
+    @GetMapping("/admin/history/{id}")
+    public String getUserHistory(@PathVariable Long id, Model model) {
         List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(id);
 
         model.addAttribute("eventDTOsPacks", eventDTOsPacks);
@@ -79,6 +80,6 @@ public class AdminController {
         }
         model.addAttribute("userId", id);
 
-        return "admin/user/history";
+        return "user/history";
     }
 }
