@@ -86,6 +86,7 @@
         </div>
     </div>
 </form>
+    <a th:href="@{/admin/history/user(id=${userDTO.id})}" th:text="#{user.profile.history}"></a>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
 </body>
