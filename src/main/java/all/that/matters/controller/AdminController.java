@@ -1,6 +1,9 @@
 package all.that.matters.controller;
 
+import all.that.matters.dto.EventDTOsPack;
 import all.that.matters.dto.FoodDTO;
+import all.that.matters.repo.UserNotFoundException;
+import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,13 @@ public class AdminController {
 
     private FoodService foodService;
     private UserService userService;
+    private EventService eventService;
 
     @Autowired
-    public AdminController(FoodService foodService, UserService userService) {
+    public AdminController(FoodService foodService, UserService userService, EventService eventService) {
         this.foodService = foodService;
         this.userService = userService;
+        this.eventService = eventService;
     }
 
     @GetMapping("/main")
@@ -51,7 +56,29 @@ public class AdminController {
 
     @GetMapping("/user")
     public String getUserProfile(@RequestParam Long id, Model model) {
-        model.addAttribute("userDTO", userService.getUserDTOById(id));
+        try {
+            model.addAttribute("userDTO", userService.getUserDTOById(id));
+        } catch (UserNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/no_such_user";
+        }
+
         return "admin/profile";
+    }
+
+    @GetMapping("/user/history")
+    public String getUserHistory(@RequestParam Long id, Model model) {
+        List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(id);
+
+        model.addAttribute("eventDTOsPacks", eventDTOsPacks);
+        try {
+            model.addAttribute("userDTO", userService.getUserDTOById(id));
+        } catch (UserNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/no_such_user";
+        }
+        model.addAttribute("userId", id);
+
+        return "admin/user/history";
     }
 }
