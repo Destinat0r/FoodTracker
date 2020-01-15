@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
-    <title>Registration</title>
+    <title th:text="#{user.registration}"></title>
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: nb}"></div>
@@ -12,7 +12,7 @@
 <div class="container container mt-5">
     <div class="row">
         <div class="col-md-12">
-            <h1>Registration</h1>
+            <h1 th:text="#{user.registration}"></h1>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
             <div class="col-sm-6">
-                <input type="text" name="username" placeholder="Username" th:value="${user != null} ? ${user.username}"
+                <input type="text" name="username" th:placeholder="#{user.username}" th:value="${user != null} ? ${user.username}"
                        class="form-control"
                        th:class="${usernameError != null}? 'is-invalid'" required/>
 
@@ -41,28 +41,28 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
             <div class="col-sm-6">
-                <input type="email" name="email" value="" class="form-control" placeholder="Email" required/>
+                <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
             <div class="col-sm-6">
-                <input type="text" name="fullName" value="" class="form-control" placeholder="Full name" required/>
+                <input type="text" name="fullName" value="" class="form-control" th:placeholder="#{user.full_name}" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
             <div class="col-sm-6">
-                <input type="text" name="nationalName" value="" class="form-control" placeholder="National name" required/>
+                <input type="text" name="nationalName" value="" class="form-control" th:placeholder="#{user.national_name}" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
             <div class="col-sm-6">
-                <input type="datetime-local" name="age" value="" class="form-control" placeholder="Age" required/>
+                <input type="datetime-local" name="age" value="" class="form-control" th:placeholder="#{user.age}" required/>
             </div>
         </div>
 
@@ -79,14 +79,14 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
             <div class="col-sm-6">
-                <input type="number" name="weight" value="" class="form-control" placeholder="Weight" required/>
+                <input type="number" name="weight" value="" class="form-control" th:placeholder="#{user.weight}" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
             <div class="col-sm-6">
-                <input type="number" name="height" value="" class="form-control" placeholder="Height" required/>
+                <input type="number" name="height" value="" class="form-control" th:placeholder="#{user.height}" required/>
             </div>
         </div>
 
@@ -104,18 +104,17 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
             <div class="col-sm-6">
-                <input type="password" name="password" class="form-control" placeholder="Password" required/>
+                <input type="password" name="password" class="form-control" th:placeholder="#{user.password}" required/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.сonfirm_password}"></label>
             <div class="col-sm-6">
-                <input type="password" name="passwordConfirm" class="form-control" placeholder="Retype Password" required/>
+                <input type="password" name="passwordConfirm" class="form-control" th:placeholder="#{user.сonfirm_password}" required/>
             </div>
         </div>
 
-        <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
         <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
     </form>
 
