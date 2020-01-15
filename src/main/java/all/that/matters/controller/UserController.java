@@ -4,6 +4,8 @@ import all.that.matters.dto.EventDTOsPack;
 import all.that.matters.dto.FoodDTO;
 import all.that.matters.dto.UserDTO;
 import all.that.matters.model.User;
+import all.that.matters.repo.FoodNotFoundException;
+import all.that.matters.repo.UserNotFoundException;
 import all.that.matters.services.EventService;
 import all.that.matters.services.FoodService;
 import all.that.matters.services.UserService;
@@ -102,7 +104,11 @@ public class UserController {
             model.mergeAttributes(errors);
         }
 
-        foodService.registerConsumption(food);
+        try {
+            foodService.registerConsumption(food);
+        } catch (FoodNotFoundException e) {
+            return "errors/food_not_found";
+        }
 
         return "redirect:/user/main";
     }
@@ -127,7 +133,11 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
-        model.addAttribute("userDTO", userService.getUserDTOById(ContextUtils.getPrincipal().getId()));
+        try {
+            model.addAttribute("userDTO", userService.getUserDTOById(ContextUtils.getPrincipal().getId()));
+        } catch (UserNotFoundException e) {
+            return "errors/no_such_user";
+        }
         return "user/profile";
     }
 }
