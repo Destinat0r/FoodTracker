@@ -53,12 +53,6 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/admin")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String getAdminMain() {
-        return "admin/main";
-    }
-
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.save(user);
