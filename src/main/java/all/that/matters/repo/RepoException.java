@@ -1,6 +1,6 @@
 package all.that.matters.repo;
 
-public class RepoException extends RuntimeException {
+public class RepoException extends Exception {
 
     public RepoException() {
     }
