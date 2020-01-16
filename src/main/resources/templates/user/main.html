@@ -10,16 +10,6 @@
 <body>
 <div th:insert="~{user/navbar :: nb}"></div>
 
-<div class="calories-bar">
-    <div class="card">
-        <div class="card-header" th:inline="text">[[${#httpServletRequest.remoteUser}]]</div>
-        <div class="card-body" th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></div>
-        <div class="card-body" th:text="#{user.consumed_today} + ': ' + ${consumedStatsDTO.caloriesConsumed}"></div>
-        <div class="card-footer" id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}"
-             th:text="#{user.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}" ></div>
-    </div>
-</div>
-
 <div class="container" id="first">
         <!--<h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>-->
     <div class="row">
@@ -139,6 +129,24 @@
         </div>
     </div>
 </div>
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id="bottom-navbar">
+    <div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
+        <a class="collapse navbar-collapse text-center" id="navbarNav">
+            <li class="nav-item">
+                <a th:inline="text">[[${#httpServletRequest.remoteUser}]]</a>
+            </li>
+            <li class="nav-item">
+                <a th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></a>
+            </li>
+            <li class="nav-item">
+                <a th:text="#{user.consumed_today} + ': ' + ${consumedStatsDTO.caloriesConsumed}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="card-footer" id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}"
+                     th:text="#{user.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}" ></a>
+            </li>
+    </div>
+</nav>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
 </body>
 </html>
