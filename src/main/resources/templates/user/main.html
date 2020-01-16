@@ -4,22 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>[[#{user.main.user}]] [[${#httpServletRequest.remoteUser}]]</title>
-<style>
-    #exceeded {
-        color: red;
-    }
-    .block {
-        margin:0 auto;
-        margin-bottom: 50px;
-        width: 40%;
-    }
-</style>
 </head>
 <body>
 <div th:insert="~{user/navbar :: nb}"></div>
 
-<div class="container block">
+<div class="container" id="first">
         <h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>
 
         <table class="table-striped">
