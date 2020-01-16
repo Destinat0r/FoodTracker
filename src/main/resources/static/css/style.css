@@ -19,3 +19,21 @@
     float: none;
     margin: 0 auto;
 }
+
+.calories-bar {
+    position: fixed;
+    top: 45.5%;
+    float: left;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#exceeded {
+    color: red;
+}
+
+#consumed {
+    margin-bottom: 100px;
+    margin-top: 50px;
+}

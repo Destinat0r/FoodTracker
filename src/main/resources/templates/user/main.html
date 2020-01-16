@@ -10,11 +10,21 @@
 <body>
 <div th:insert="~{user/navbar :: nb}"></div>
 
+<div class="calories-bar">
+    <div class="card">
+        <div class="card-header" th:inline="text">[[${#httpServletRequest.remoteUser}]]</div>
+        <div class="card-body" th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></div>
+        <div class="card-body" th:text="#{user.consumed_today} + ': ' + ${consumedStatsDTO.caloriesConsumed}"></div>
+        <div class="card-footer" id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}"
+             th:text="#{user.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}" ></div>
+    </div>
+</div>
+
 <div class="container" id="first">
-        <h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>
+        <!--<h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>-->
     <div class="row">
         <div class="col">
-            <div class="mx-auto w-50 p-3 bg-dark text-white">
+            <div class="mx-auto w-50 p-5 px-4 bg-dark text-white">
                 <table class="table-striped align-content-center col-centered">
                     <thead class="border-dark">
                     <tr>
@@ -106,28 +116,30 @@
             </div>
         </div>
     </div>
-        <hr>
+    <div class="row justify-content-center">
+        <div class="col col-7">
+            <div class="card card-body" id="consumed">
+                <h2 th:text="#{food.consumed_today}"></h2>
+                <table class="table table-striped border-dark" th:object="${todayEventsDTOs}">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{food.table.name}"></th>
+                        <th scope="col" th:text="#{food.amount}"></th>
+                        <th scope="col" th:text="#{food.total_calories}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-        <h2 th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></h2>
-        <hr>
-
-        <h2 th:text="#{user.consumed_today} + ': ' + ${consumedStatsDTO.caloriesConsumed}"></h2>
-        <h3 id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}" th:text="#{user.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}"></h3>
-        <hr>
-        <table class="table-striped" th:object="${todayEventsDTOs}">
-            <thead class="border-dark">
-            <tr>
-                <th th:text="#{food.table.name}"></th>
-                <th th:text="#{food.amount}"></th>
-                <th th:text="#{food.total_calories}"></th>
-            </tr>
-            </thead>
-            <tr th:each="event : ${todayEventsDTOs}">
-                <td><span th:text="${event.foodName}"></span></td>
-                <td><span th:text="${event.foodAmount}"></span></td>
-                <td><span th:text="${event.totalCalories}"></span></td>
-            </tr>
-        </table>
+                    <tr th:each="event : ${todayEventsDTOs}">
+                        <td th:text="${event.foodName}"></td>
+                        <td th:text="${event.foodAmount}"></td>
+                        <td th:text="${event.totalCalories}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
 </body>
