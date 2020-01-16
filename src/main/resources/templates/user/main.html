@@ -12,46 +12,60 @@
 
 <div class="container" id="first">
         <h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>
-
-        <table class="table-striped">
-            <thead class="border-dark">
-            <tr>
-                <th th:text="#{food.table.name}"></th>
-                <th th:text="#{food.table.calories}"></th>
-            </tr>
-            </thead>
-            <tr th:each="nextFood : ${allCommonFood}">
-                <td><span th:text="${nextFood.name}" ></span></td>
-                <td th:text="${nextFood.calories}"></td>
-                <td>
-                    <form th:action="@{/user/add}" method="post" th:object="${nextFood}" novalidate>
-                        <input type="hidden" name="name" th:value="${nextFood.name}">
-                        <input type="hidden" name="calories" th:value="${nextFood.calories}">
-                        <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
-                    </form>
-                </td>
-            </tr>
-        </table>
-    <hr>
-    <div class="col-6">
-        <form th:action="@{/user/add}" method="post" role="form" th:object="${food}" novalidate>
-            <div class="form-group">
-                <label for="name" th:text="#{food.name}"></label>
-                <input type="text" id="name" name="name" placeholder="Name" th:required="true" class="form-control" required/>
+    <div class="row">
+        <div class="col">
+            <div class="mx-auto w-50 p-3 bg-dark text-white">
+                <table class="table-striped align-content-center col-centered">
+                    <thead class="border-dark">
+                    <tr>
+                        <th th:text="#{food.table.name}"></th>
+                        <th th:text="#{food.table.calories}"></th>
+                    </tr>
+                    </thead>
+                    <tr th:each="nextFood : ${allCommonFood}">
+                        <td><span th:text="${nextFood.name}" ></span></td>
+                        <td th:text="${nextFood.calories}"></td>
+                        <td>
+                            <form th:action="@{/user/add}" method="post" th:object="${nextFood}" novalidate>
+                                <input type="hidden" name="name" th:value="${nextFood.name}">
+                                <input type="hidden" name="calories" th:value="${nextFood.calories}">
+                                <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
             </div>
-
-            <div class="form-group">
-                <label for="calories" th:text="#{food.calories}"></label>
-                <input type="number" step="100" min="100" th:required="true" name="calories" id="calories"
-                       class="form-control" placeholder="calories" pattern="\d+" required/>
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
-            </div>
-        </form>
+        </div>
     </div>
-        <hr>
+    <hr>
+
+
+    <div class="row">
+        <div class="col">
+            <div class="mx-auto w-50 p-3">
+
+                <form th:action="@{/user/add}" method="post" role="form" th:object="${food}" novalidate>
+                    <div class="form-group">
+                        <label for="name" th:text="#{food.name}"></label>
+                        <input type="text" id="name" name="name" placeholder="Name" th:required="true" class="form-control" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="calories" th:text="#{food.calories}"></label>
+                        <input type="number" step="100" min="100" th:required="true" name="calories" id="calories"
+                               class="form-control" placeholder="calories" pattern="\d+" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
         <h2 th:text="#{food.personal}"></h2>
 
             <table class="table-striped" th:object="${usersFoodDTOs}">

@@ -14,3 +14,8 @@
     margin:0 auto;
     width:300px;
 }
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
