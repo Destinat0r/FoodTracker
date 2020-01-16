@@ -4,12 +4,13 @@
     <link rel="stylesheet" media="screen" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
+<div th:fragment="nb" class="fixed-top">
+    <div class="jumbotron clearfix text-center" style="margin-bottom:0">
+        <h1 th:text="#{navbar.title}"></h1>
+    </div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nb">
 <div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
-    <a class="navbar-brand" href="/" th:text="#{navbar.title}"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
 
@@ -25,6 +26,7 @@
     </div>
 </div>
 </nav>
+</div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
 </body>
 </html>

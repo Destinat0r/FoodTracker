@@ -5,3 +5,12 @@
 #first {
     margin-top: 200px;
 }
+
+.empty {
+    margin-bottom: 200px;
+}
+
+.custom-centered {
+    margin:0 auto;
+    width:300px;
+}

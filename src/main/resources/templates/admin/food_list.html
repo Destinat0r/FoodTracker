@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title th:text="#{food.title}"></title>
 </head>
 <body>
 <div th:insert="~{admin/navbar :: nb}"></div>
 
-<div class="container-md col-3">
+<div class="container-md col-3" id="first">
 
     <form th:action="@{/admin/food/add}" method="post" role="form" th:object="${food}" novalidate>
         <div class="form-group row">

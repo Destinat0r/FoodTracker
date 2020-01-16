@@ -4,17 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 <title th:text="#{greeting}"></title>
-<style>
-    .custom-centered {
-        margin:0 auto;
-        width:300px;
-    }
-</style>
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: nb}"></div>
-<div class="container container mt-5 custom-centered">
+<div class="empty">1</div>
+<div class="container container mt-5 custom-centered" id="first">
     <div th:if="${param.error}" th:inline="text">
             [[#{login.invalid}]]
     </div>
