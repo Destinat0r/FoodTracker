@@ -38,7 +38,7 @@
         </div>
     </div>
     <hr>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center bottom-tables">
         <div class="col">
             <div class="card card-body mb-2">
                 <h2 th:text="#{food.personal}"></h2>
@@ -95,7 +95,6 @@
                             <td>
                                 <div class="form-group">
                                     <button type="submit" name="delete"
-                                            onclick="if (!(confirm('Do you really want to delete this food?'))) return false"
                                             class="btn btn-danger btn-sm form-control" th:text="#{user.food.delete}"></button>
                                 </div>
                             </td>
