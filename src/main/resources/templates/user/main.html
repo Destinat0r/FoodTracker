@@ -49,7 +49,7 @@
     </div>
     <hr>
     <div class="row justify-content-center">
-        <div class="col-7">
+        <div class="col">
             <div class="card card-body mb-2">
                 <h2 th:text="#{food.personal}"></h2>
 
@@ -115,9 +115,7 @@
 
             </div>
         </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col col-7">
+        <div class="col">
             <div class="card card-body" id="consumed">
                 <h2 th:text="#{food.consumed_today}"></h2>
                 <table class="table table-striped border-dark" th:object="${todayEventsDTOs}">
