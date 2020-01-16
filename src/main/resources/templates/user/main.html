@@ -64,44 +64,57 @@
         </div>
     </div>
 
-
     <hr>
-        <h2 th:text="#{food.personal}"></h2>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card card-body mb-2">
+                <h2 th:text="#{food.personal}"></h2>
 
-            <table class="table-striped" th:object="${usersFoodDTOs}">
-            <thead class="border-dark">
-            <tr>
-                <th th:text="#{food.table.name}"></th>
-                <th th:text="#{user.consume}"></th>
-            </tr>
-            </thead>
-            <tr th:each="userFood : ${usersFoodDTOs}">
+                <table class="table-striped" th:object="${usersFoodDTOs}">
+                    <thead class="border-dark">
+                    <col width="130">
+                    <col width="150">
+                    <tr>
+                        <th th:text="#{food.table.name}"></th>
+                        <th th:text="#{user.consume}"></th>
+
+                    </tr>
+                    </thead>
+                    <tr th:each="userFood : ${usersFoodDTOs}">
 
 
-                <td><span th:text="${userFood.name}"></span></td>
-                <td th:text="${userFood.calories}"></td>
+                        <td><span th:text="${userFood.name}"></span></td>
+                        <form class="form-inline" role="form" th:action="@{/user/use}" th:object="${userFood}" method="post">
+                        <td th:text="${userFood.calories}"></td>
+                        <td>
+                            <div class="form-group">
+                                <input type="hidden" name="name" th:value="${userFood.name}" class="form-control">
+                            </div>
 
-                <td>
-                    <form class="form-inline" role="form" th:action="@{/user/use}" th:object="${userFood}" method="post">
-                        <div class="form-group">
-                            <input type="hidden" name="name" th:value="${userFood.name}" class="form-control">
-                        </div>
+                            <div class="form-group">
+                                <input type="number" name="amount" th:required="true" maxlength="2" size="4" value="1" min="0.5" step="0.5" class="form-control input-digit">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <button type="submit" name="consume" class="btn btn-success btn-sm form-control" th:text="#{user.consume}"></button>
+                            </div>
+                        <td>
+                            <div class="form-group">
+                                <button type="submit" name="delete"
+                                        onclick="if (!(confirm('Do you really want to delete this food?'))) return false"
+                                        class="btn btn-danger btn-sm form-control" th:text="#{user.food.delete}"></button>
+                            </div>
+                        </td>
+                        </td>
+                        </td>
+                        </form>
+                    </tr>
+                </table>
 
-                        <div class="form-group">
-                            <input type="number" name="amount" th:required="true" value="1" min="0.5" step="0.5" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" name="consume" class="btn btn-success btn-sm form-control" th:text="#{user.consume}"></button>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" name="delete"
-                                    onclick="if (!(confirm('Do you really want to delete this food?'))) return false"
-                                    class="btn btn-danger btn-sm form-control" th:text="#{user.food.delete}"></button>
-                        </div>
-                    </form>
-                </td>
-            </tr>
-        </table>
+            </div>
+        </div>
+    </div>
         <hr>
 
         <h2 th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></h2>
