@@ -53,3 +53,7 @@
 .bottom-tables {
     margin-bottom: 50px;
 }
+
+#commonFood {
+    display: none;
+}
