@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository public interface EventRepo extends JpaRepository<Event, Long> {
 
     @Query(value = "SELECT id, user_id, food, amount, total_calories, timestamp FROM events WHERE user_id = ?1"
-                           + " AND date_trunc('day', timestamp) >= current_date", nativeQuery = true)
+                           + " AND date_trunc('day', timestamp) >= current_date ORDER BY timestamp DESC", nativeQuery = true)
     List<Event> findAllConsumedFromTodayByUserId(Long userId);
 
     List<Event> findAllByUserId(Long userId);
