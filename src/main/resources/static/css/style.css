@@ -57,3 +57,7 @@
 #commonFood {
     display: none;
 }
+
+#userInfo {
+    margin-bottom: 30px;
+}
