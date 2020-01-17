@@ -10,84 +10,63 @@
 <div th:insert="~{user/navbar :: nb}"></div>
 <div class="empty">.</div>
 <div class="container container mt-5" id="first">
-    
-<form th method="post" th:object="${userDTO}" novalidate>
 
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
-        <p th:text="${userDTO.username}"></p>
-    </div>
+    <div class="row">
+        <div class="col col-6 col-centered">
+            <div class="card card-body">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <td th:text="#{user.username}"></td>
+                    <td th:text="${userDTO.username}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.email}"></td>
+                    <td th:text="${userDTO.email}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.full_name}"></td>
+                    <td th:text="${userDTO.fullName}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.national_name}"></td>
+                    <td th:text="${userDTO.nationalName}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.age}"></td>
+                    <td th:text="${userDTO.age}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.sex}"></td>
+                    <td th:text="${userDTO.sex}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.weight}"></td>
+                    <td th:text="${userDTO.weight}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.height}"></td>
+                    <td th:text="${userDTO.height}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.lifestyle}"></td>
+                    <td th:text="${userDTO.lifestyle}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.daily_norm}"></td>
+                    <td th:text="${userDTO.dailyNorm}"></td>
+                </tr>
+                <tr>
+                    <td th:text="#{user.role}"></td>
+                    <td th:text="${userDTO.role}"></td>
+                </tr>
 
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.email}" />
+                </tbody>
+            </table>
+            </div>
         </div>
     </div>
 
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.fullName}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.nationalName}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.age}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.sex}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.sex}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.weight}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.height}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.lifestyle}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.lifestyle}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.daily_norm}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.dailyNorm}"></p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" th:text="#{user.role}"></label>
-        <div class="col-sm-6">
-            <p th:text="${userDTO.role}"></p>
-        </div>
-    </div>
-</form>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
 </body>
