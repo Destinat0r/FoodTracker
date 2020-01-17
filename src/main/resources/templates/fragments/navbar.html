@@ -6,7 +6,11 @@
 <body>
 <div th:fragment="nb" class="fixed-top">
     <div class="jumbotron clearfix text-center" style="margin-bottom:0">
-        <h1 th:text="#{navbar.title}"></h1>
+        <a id="jubmolink" th:href="@{/}">
+            <div class="thumbnail">
+                <h1 th:text="#{navbar.title}"></h1>
+            </div>
+        </a>
     </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nb">
