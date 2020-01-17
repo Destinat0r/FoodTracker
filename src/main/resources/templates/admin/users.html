@@ -10,17 +10,25 @@
 <div th:insert="~{admin/navbar :: nb}"></div>
 
     <div class="container" id="first">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th th:text="#{user.username}"></th>
-            </tr>
-            </thead>
-            <tr th:each="user : ${users}">
-                <td><a href="#"
-                       th:href="@{/admin/user(id=${user.id})}"><span th:text="${user.username}" ></span></a></td>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col col-6 col-centered">
+                <div class="card card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th th:text="#{user.username}"></th>
+                            <th th:text="#{user.national_name}"></th>
+                        </tr>
+                        </thead>
+                        <tr th:each="user : ${users}">
+                            <td><a href="#"
+                                   th:href="@{/admin/user(id=${user.id})}" th:text="${user.username}" ></a></td>
+                            <td th:text="${user.nationalName}"></td>
+                        </tr>
+                    </table>
+                    </div>
+            </div>
+        </div>
     </div>
 
 <div th:replace="~{fragments/common :: jsLinks}"></div>
