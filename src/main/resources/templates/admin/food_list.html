@@ -12,7 +12,7 @@
 
 <div class="container-md col-3" id="first">
 
-    <form th:action="@{/admin/food/add}" method="post" role="form" th:object="${food}" novalidate>
+    <form th:action="@{/admin/food/add}" class="needs-validation" method="post" role="form" th:object="${food}" novalidate>
         <div class="form-group row">
             <label for="name" th:text="#{food.name}"></label>
             <input type="text" id="name" name="name" placeholder="Name" class="form-control" required/>
@@ -20,7 +20,7 @@
 
         <div class="form-group row">
             <label for="calories" th:text="#{food.calories}"></label>
-            <input type="number" step="100" min="100" th:required="Number" name="calories" id="calories"
+            <input type="number" step="50" min="1" th:required="number" name="calories" id="calories"
                    placeholder="calories" pattern="\d+" class="form-control" required/>
         </div>
 
@@ -44,5 +44,6 @@
     </table>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
+<script th:src="@{/js/form_validator.js}"></script>
 </body>
 </html>
