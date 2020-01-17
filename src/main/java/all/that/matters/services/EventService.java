@@ -46,7 +46,9 @@ public class EventService {
     }
 
     public List<EventDTOsPack> getEventDTOsPacksByUserId(Long userId) {
-        return packEventsToEventsDTOsPacks(findAllEventsByUserId(userId));
+        List<EventDTOsPack> DTOpack = packEventsToEventsDTOsPacks(findAllEventsByUserId(userId));
+        DTOpack.sort((o1, o2) -> (int) (o2.getDate().toEpochDay() - o1.getDate().toEpochDay()));
+        return DTOpack;
     }
 
     public List<EventDTOsPack> packEventsToEventsDTOsPacks(List<Event> events) {
