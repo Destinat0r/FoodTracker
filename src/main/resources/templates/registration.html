@@ -26,7 +26,7 @@
                        class="form-control"
                        th:class="${usernameError != null}? 'is-invalid'" required/>
 
-                <div th:if="${usernameError}">
+                <div th:if="${usernameError != null}">
                     <div class="invalid-feedback">
                         [[${#usernameError}]]
                     </div>
@@ -43,7 +43,7 @@
             <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
             <div class="col-sm-6" field>
                 <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}" required/>
-                <div class="invalid-feedback">Please enter correct email.</div>
+                <div class="invalid-feedback" th:text="#{registration.invalid.email}"></div>
             </div>
         </div>
 
@@ -64,7 +64,8 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
             <div class="col-sm-6 field">
-                <input type="datetime-local" name="age" value="" class="form-control" th:placeholder="#{user.age}" required/>
+                <input type="number" size="2" min="1" name="age" value="" class="form-control" th:placeholder="#{user.age}" required/>
+                <div class="invalid-feedback" th:text="#{registration.invalid.age}"></div>
             </div>
         </div>
 
@@ -81,14 +82,16 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
             <div class="col-sm-6 field">
-                <input type="number" name="weight" value="" class="form-control" th:placeholder="#{user.weight}" required/>
+                <input type="number" name="weight" min="1" value="" class="form-control" th:placeholder="#{user.weight}" required/>
+                <div class="invalid-feedback" th:text="#{registration.invalid.weight}"></div>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
             <div class="col-sm-6 field">
-                <input type="number" name="height" value="" class="form-control" th:placeholder="#{user.height}" required/>
+                <input type="number" name="height" min="1" value="" class="form-control" th:placeholder="#{user.height}" required/>
+                <div class="invalid-feedback" th:text="#{registration.invalid.height}"></div>
             </div>
         </div>
 
