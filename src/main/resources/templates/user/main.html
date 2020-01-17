@@ -12,9 +12,12 @@
 
 <div class="container" id="first">
         <!--<h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>-->
+
+
     <div class="row">
         <div class="col col-6 col-centered">
-            <div class="card card-body">
+            <button type="button" class="btn btn-info btn-block" onclick="unfold();">Info</button>
+            <div class="card card-body" id="commonFood">
                 <table class="table table-striped border-dark">
                     <thead>
                     <tr>
@@ -153,5 +156,15 @@
 </nav>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
 <script th:src="@{/js/form_validator.js}"></script>
+<script>
+    function unfold() {
+        var x = document.getElementById("commonFood");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>
