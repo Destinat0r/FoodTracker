@@ -29,19 +29,27 @@
         </div>
     </form>
 
-    <table class="table-striped">
-        <thead class="border-dark">
-        <tr>
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+                <table class="table table-striped border-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{food.table.name}"></th>
+                        <th scope="col" th:text="#{food.table.calories}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-            <th th:text="#{food.table.name}"></th>
-            <th th:text="#{food.table.calories}"></th>
-        </tr>
-        </thead>
-        <tr th:each="food : ${allFood}">
-            <td><span th:text="${food.name}" ></span></td>
-            <td th:text="${food.calories}"></td>
-        </tr>
-    </table>
+                    <tr th:each="food : ${allFood}">
+                        <td th:text="${food.name}"></td>
+                        <td th:text="${food.calories}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
 <script th:src="@{/js/form_validator.js}"></script>
