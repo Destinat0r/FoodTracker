@@ -20,11 +20,6 @@
     margin: 0 auto;
 }
 
-#upper-navbar a:hover, button:hover {
-    color: #1b1e21;
-    background-color: #4CAF50;
-}
-
 #exceeded {
     color: red;
 }
@@ -52,10 +47,6 @@
 
 .bottom-tables {
     margin-bottom: 50px;
-}
-
-#commonFood {
-    display: none;
 }
 
 #userInfo {
