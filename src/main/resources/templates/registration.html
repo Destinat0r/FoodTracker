@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <form th:action="@{/registration}" method="post" th:object="${user}" novalidate>
+    <form th:action="@{/registration}" method="post" class="needs-validation" th:object="${user}" novalidate>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
@@ -43,6 +43,7 @@
             <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
             <div class="col-sm-6" field>
                 <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}" required/>
+                <div class="invalid-feedback">Please enter correct email.</div>
             </div>
         </div>
 
@@ -121,5 +122,6 @@
 
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
+<script th:src="@{/js/form_validator.js}"></script>
 </body>
 </html>
