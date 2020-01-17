@@ -12,20 +12,22 @@
 
 <div class="container-md col-3" id="first">
 
-    <form th:action="@{/admin/food/add}" class="needs-validation" method="post" role="form" th:object="${food}" novalidate>
-        <div class="form-group row">
-            <label for="name" th:text="#{food.name}"></label>
-            <input type="text" id="name" name="name" placeholder="Name" class="form-control" required/>
-        </div>
+    <form th:action="@{/admin/food/add}" method="post" class="needs-validation" role="form" th:object="${food}" novalidate>
+        <div class="form-row">
 
-        <div class="form-group row">
-            <label for="calories" th:text="#{food.calories}"></label>
-            <input type="number" step="50" min="1" th:required="number" name="calories" id="calories"
-                   placeholder="calories" pattern="\d+" class="form-control" required/>
-        </div>
 
-        <div class="form-group row">
-            <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+            <div class="col-6">
+                <input type="text" name="name" th:placeholder="#{food.name}" th:required="true" class="form-control" required/>
+            </div>
+
+            <div class="col">
+                <input type="number" step="50" min="1" th:required="true" name="calories"
+                       class="form-control" th:placeholder="#{food.calories}" pattern="\d+" required/>
+            </div>
+
+            <div class="col">
+                <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+            </div>
         </div>
     </form>
 
