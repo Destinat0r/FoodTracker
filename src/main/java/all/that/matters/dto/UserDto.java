@@ -4,6 +4,7 @@ import all.that.matters.model.Lifestyle;
 import all.that.matters.model.Role;
 import all.that.matters.model.Sex;
 import lombok.*;
+import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -29,17 +30,21 @@ public class UserDTO {
     @NotBlank(message = "Name cannot be empty")
     private String nationalName;
 
+    @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email is not correct")
     private String email;
     private Role role;
 
-    @Min(value = 1, message = "Incorrect weight")
+    @NotNull(message = "Age cannot be null")
+    @Min(value = 1, message = "Incorrect age")
     private BigDecimal age;
     private Sex sex;
 
+    @NotNull(message = "Weight cannot be null")
     @Min(value = 1, message = "Incorrect weight")
     private BigDecimal weight;
 
+    @NotNull(message = "Height cannot be null")
     @Min(value = 1, message = "Incorrect height")
     private BigDecimal height;
     private Lifestyle lifestyle;
