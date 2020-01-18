@@ -1,5 +1,7 @@
 package all.that.matters.services;
 
+import all.that.matters.dto.UserDTO;
+import all.that.matters.model.User;
 import all.that.matters.repo.BiometricRepository;
 import all.that.matters.model.Biometrics;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BiometricService {
     private BiometricRepository biometricRepository;
+    private UserService userService;
 
     @Autowired
-    public BiometricService(BiometricRepository biometricRepository) {
+    public BiometricService(BiometricRepository biometricRepository, UserService userService) {
         this.biometricRepository = biometricRepository;
+        this.userService = userService;
     }
 
     public void create(Biometrics biometrics) {
         biometricRepository.save(biometrics);
+    }
+
+    public Biometrics userDTOtoBiometrics(UserDTO userDTO, User user) {
+        return Biometrics.builder()
+                       .age(userDTO.getAge())
+                       .weight(userDTO.getWeight())
+                       .height(userDTO.getHeight())
+                       .owner(user).sex(userDTO.getSex())
+                       .lifestyle(userDTO.getLifestyle())
+                       .dailyNorm(userDTO.getDailyNorm())
+                       .build();
     }
 }
