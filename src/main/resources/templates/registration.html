@@ -19,45 +19,39 @@
 
     <form th:action="@{/registration}" method="post" class="needs-validation" th:object="${user}" novalidate>
 
-        <div class="form-group row">
+        <div class="form-group row field">
             <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
-            <div class="col-sm-6">
-                <input type="text" name="username" th:placeholder="#{user.username}" th:value="${user != null} ? ${user.username}"
-                       class="form-control"
-                       th:class="${usernameError != null}? 'is-invalid'" required/>
-
-                <div th:if="${usernameError != null}">
-                    <div class="invalid-feedback">
-                        [[${#usernameError}]]
-                    </div>
-                </div>
-                <div th:unless="${usernameError}">
-                    <div class="invalid-feedback">
-                        [[${#usernameError}]]
-                    </div>
-                </div>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('username')}" class="help-block" th:errors="*{username}"></span>
+                <input type="text" class="form-control" maxlength="32" th:field="*{username}" th:placeholder="#{user.username}"
+                       th:classappend="${#fields.hasErrors('username')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row field">
             <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
-            <div class="col-sm-6" field>
-                <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}" required/>
-                <div class="invalid-feedback" th:text="#{registration.invalid.email}"></div>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('email')}" class="help-block" th:errors="*{email}"></span>
+                <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}"
+                       th:classappend="${#fields.hasErrors('username')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
-            <div class="col-sm-6" field>
-                <input type="text" name="fullName" value="" class="form-control" th:placeholder="#{user.full_name}" required/>
+            <div class="col-sm-6 field" >
+                <span th:if="${#fields.hasErrors('fullName')}" class="help-block" th:errors="*{fullName}"></span>
+                <input type="text" name="fullName" value="" class="form-control" th:placeholder="#{user.full_name}"
+                        th:classappend="${#fields.hasErrors('fullName')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
             <div class="col-sm-6 field">
-                <input type="text" name="nationalName" value="" class="form-control" th:placeholder="#{user.national_name}" required/>
+                <span th:if="${#fields.hasErrors('nationalName')}" class="help-block" th:errors="*{nationalName}"></span>
+                <input type="text" name="nationalName" value="" class="form-control" th:placeholder="#{user.national_name}"
+                        th:classappend="${#fields.hasErrors('nationalName')} ? 'error-input' : ''"/>
             </div>
         </div>
 
@@ -65,7 +59,6 @@
             <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
             <div class="col-sm-6 field">
                 <input type="number" size="2" min="1" name="age" value="" class="form-control" th:placeholder="#{user.age}" required/>
-                <div class="invalid-feedback" th:text="#{registration.invalid.age}"></div>
             </div>
         </div>
 
@@ -109,7 +102,9 @@
         <div class="form-group row field">
             <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
             <div class="col-sm-6 field">
-                <input type="password" name="password" class="form-control" th:placeholder="#{user.password}" required/>
+                <span th:if="${#fields.hasErrors('password')}" class="help-block" th:errors="*{password}"></span>
+                <input type="password" name="password" class="form-control" th:placeholder="#{user.password}"
+                       th:classappend="${#fields.hasErrors('nationalName')} ? 'error-input' : ''"/>
             </div>
         </div>
 
@@ -125,6 +120,6 @@
 
 </div>
 <div th:replace="~{fragments/common :: jsLinks}"></div>
-<script th:src="@{/js/form_validator.js}"></script>
+<!--<script th:src="@{/js/form_validator.js}"></script>-->
 </body>
 </html>

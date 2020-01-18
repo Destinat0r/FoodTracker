@@ -32,21 +32,20 @@ public class RegistrationController {
     @GetMapping("/registration")
     public String registration(@ModelAttribute("message") String message, Model model) {
         model.addAttribute("biometrics", new Biometrics());
+        model.addAttribute("user", new User());
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(
             @RequestParam("passwordConfirm") String passwordConfirm,
-            @Valid @ModelAttribute("user") User user,
-            Biometrics biometrics,
+            @Valid User user,
             BindingResult bindingResult,
+            Biometrics biometrics,
             Model model) {
 
 
         if (bindingResult.hasErrors()) {
-            bindingResult.rejectValue("username", "Error!!");
-
             return "registration";
         }
 
