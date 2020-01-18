@@ -17,48 +17,50 @@
         </div>
     </div>
 
-    <form th:action="@{/registration}" method="post" class="needs-validation" th:object="${user}" novalidate>
+    <form th:action="@{/registration}" method="post" class="needs-validation" novalidate>
 
         <div class="form-group row field">
             <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
             <div class="col-sm-6 field">
-                <span th:if="${#fields.hasErrors('username')}" class="help-block" th:errors="*{username}"></span>
-                <input type="text" class="form-control" maxlength="32" th:field="*{username}" th:placeholder="#{user.username}"
-                       th:classappend="${#fields.hasErrors('username')} ? 'error-input' : ''"/>
+                <span th:if="${#fields.hasErrors('userDTO.username')}" class="help-block" th:errors="*{userDTO.username}"></span>
+                <input type="text" class="form-control" maxlength="32" th:field="*{userDTO.username}" th:placeholder="#{user.username}"
+                       th:classappend="${#fields.hasErrors('userDTO.username')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row field">
             <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
             <div class="col-sm-6 field">
-                <span th:if="${#fields.hasErrors('email')}" class="help-block" th:errors="*{email}"></span>
+                <span th:if="${#fields.hasErrors('userDTO.email')}" class="help-block" th:errors="*{userDTO.email}"></span>
                 <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}"
-                       th:classappend="${#fields.hasErrors('username')} ? 'error-input' : ''"/>
+                       th:classappend="${#fields.hasErrors('userDTO.email')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
             <div class="col-sm-6 field" >
-                <span th:if="${#fields.hasErrors('fullName')}" class="help-block" th:errors="*{fullName}"></span>
+                <span th:if="${#fields.hasErrors('userDTO.fullName')}" class="help-block" th:errors="*{userDTO.fullName}"></span>
                 <input type="text" name="fullName" value="" class="form-control" th:placeholder="#{user.full_name}"
-                        th:classappend="${#fields.hasErrors('fullName')} ? 'error-input' : ''"/>
+                        th:classappend="${#fields.hasErrors('userDTO.fullName')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
             <div class="col-sm-6 field">
-                <span th:if="${#fields.hasErrors('nationalName')}" class="help-block" th:errors="*{nationalName}"></span>
+                <span th:if="${#fields.hasErrors('userDTO.nationalName')}" class="help-block" th:errors="*{userDTO.nationalName}"></span>
                 <input type="text" name="nationalName" value="" class="form-control" th:placeholder="#{user.national_name}"
-                        th:classappend="${#fields.hasErrors('nationalName')} ? 'error-input' : ''"/>
+                        th:classappend="${#fields.hasErrors('userDTO.nationalName')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
             <div class="col-sm-6 field">
-                <input type="number" size="2" min="1" name="age" value="" class="form-control" th:placeholder="#{user.age}" required/>
+                <span th:if="${#fields.hasErrors('userDTO.age')}" class="help-block" th:errors="*{userDTO.age}"></span>
+                <input type="number" name="age" value="" class="form-control" th:placeholder="#{user.age}"
+                       th:classappend="${#fields.hasErrors('userDTO.age')} ? 'error-input' : ''"/>
             </div>
         </div>
 
@@ -75,16 +77,18 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
             <div class="col-sm-6 field">
-                <input type="number" name="weight" min="1" value="" class="form-control" th:placeholder="#{user.weight}" required/>
-                <div class="invalid-feedback" th:text="#{registration.invalid.weight}"></div>
+                <span th:if="${#fields.hasErrors('userDTO.weight')}" class="help-block" th:errors="*{userDTO.weight}"></span>
+                <input type="number" name="weight" min="1" value="" class="form-control" th:placeholder="#{user.weight}"
+                       th:classappend="${#fields.hasErrors('userDTO.weight')} ? 'error-input' : ''"/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
             <div class="col-sm-6 field">
-                <input type="number" name="height" min="1" value="" class="form-control" th:placeholder="#{user.height}" required/>
-                <div class="invalid-feedback" th:text="#{registration.invalid.height}"></div>
+                <span th:if="${#fields.hasErrors('userDTO.nationalName')}" class="help-block" th:errors="*{userDTO.nationalName}"></span>
+                <input type="number" name="height" min="1" value="" class="form-control" th:placeholder="#{user.height}"
+                       th:classappend="${#fields.hasErrors('userDTO.weight')} ? 'error-input' : ''"/>
             </div>
         </div>
 
@@ -102,9 +106,9 @@
         <div class="form-group row field">
             <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
             <div class="col-sm-6 field">
-                <span th:if="${#fields.hasErrors('password')}" class="help-block" th:errors="*{password}"></span>
+                <span th:if="${#fields.hasErrors('userDTO.password')}" class="help-block" th:errors="*{userDTO.password}"></span>
                 <input type="password" name="password" class="form-control" th:placeholder="#{user.password}"
-                       th:classappend="${#fields.hasErrors('nationalName')} ? 'error-input' : ''"/>
+                       th:classappend="${#fields.hasErrors('userDTO.password')} ? 'error-input' : ''"/>
             </div>
         </div>
 
