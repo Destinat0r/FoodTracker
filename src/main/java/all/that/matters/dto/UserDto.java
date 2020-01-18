@@ -25,4 +25,5 @@ public class UserDTO {
     private BigDecimal height;
     private Lifestyle lifestyle;
     private BigDecimal dailyNorm;
+    private String password;
 }
