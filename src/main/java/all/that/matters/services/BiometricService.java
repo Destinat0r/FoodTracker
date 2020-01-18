@@ -24,12 +24,11 @@ public class BiometricService {
         biometricRepository.save(biometrics);
     }
 
-    public Biometrics userDTOtoBiometrics(UserDTO userDTO, User user) {
+    public Biometrics userDTOtoBiometrics(UserDTO userDTO) {
         return Biometrics.builder()
                        .age(userDTO.getAge())
                        .weight(userDTO.getWeight())
                        .height(userDTO.getHeight())
-                       .owner(user).sex(userDTO.getSex())
                        .lifestyle(userDTO.getLifestyle())
                        .dailyNorm(userDTO.getDailyNorm())
                        .build();
