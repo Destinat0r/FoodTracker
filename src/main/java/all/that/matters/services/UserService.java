@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
         return user.get();
     }
 
-    public void addUser(User user) {
+    public void create(User user) {
         user.setRoles(Collections.singleton(Role.USER));
         user.setActive(true);
         user.setPassword(passwordEncoder().encode(user.getPassword()));
@@ -70,6 +70,7 @@ public class UserService implements UserDetailsService {
                 .nationalName(userDTO.getNationalName())
                 .email(userDTO.getEmail())
                 .roles(Collections.singleton(Role.USER))
+                .password(userDTO.getPassword())
                 .build();
     }
 
