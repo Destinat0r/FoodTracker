@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +61,16 @@ public class UserService implements UserDetailsService {
 
     public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
        return userToUserDTO(findByUsername(username).orElseThrow(UserNotFoundException::new));
+    }
+
+    public User userDTOtoUser(UserDTO userDTO) {
+        return User.builder()
+                .username(userDTO.getUsername())
+                .fullName(userDTO.getFullName())
+                .nationalName(userDTO.getNationalName())
+                .email(userDTO.getEmail())
+                .roles(Collections.singleton(Role.USER))
+                .build();
     }
 
     public Optional<User> findByUsername(String username) {
