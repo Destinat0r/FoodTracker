@@ -53,13 +53,12 @@ public class Biometrics {
                             .add(new BigDecimal(5.003).multiply(height))
                             .subtract(new BigDecimal(6.755).multiply(age)))
                            .multiply(lifestyle.getCoefficient());
-        } else {
-            return (new BigDecimal(655.1)
-                            .add(new BigDecimal(9.563).multiply(weight))
-                            .add(new BigDecimal(1.850).multiply(height))
-                            .subtract(new BigDecimal(4.676).multiply(age)))
-                           .multiply(lifestyle.getCoefficient());
         }
+        return (new BigDecimal(655.1)
+                        .add(new BigDecimal(9.563).multiply(weight))
+                        .add(new BigDecimal(1.850).multiply(height))
+                        .subtract(new BigDecimal(4.676).multiply(age)))
+                       .multiply(lifestyle.getCoefficient());
     }
 
     public void setDailyNorm() {
