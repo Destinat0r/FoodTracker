@@ -18,37 +18,42 @@ import java.math.BigDecimal;
 
 public class UserDTO {
 
-    @NotBlank(message = "Username cannot be empty")
+    @NotBlank(message = "Please enter username")
+    @Size(min = 2, max = 32, message = "username must be between 2 and 32 characters long")
     private String username;
 
-    @NotBlank(message = "Password cannot be empty")
+    @NotBlank(message = "Please enter password")
+    @Size(min = 4, max = 32, message = "Password must be between 4 and 32 characters long")
     private String password;
 
-    @NotBlank(message = "Name cannot be empty")
+    @NotBlank(message = "Please enter full name")
+    @Size(min = 2, max = 32, message = "Full name must be between 2 and 32 characters long")
     private String fullName;
 
-    @NotBlank(message = "Name cannot be empty")
+    @NotBlank(message = "Please enter national name")
+    @Size(min = 2, max = 32, message = "National name must be between 2 and 32 characters long")
     private String nationalName;
 
-    @NotBlank(message = "Email cannot be empty")
+    @NotBlank(message = "Please enter email")
     @Email(message = "Email is not correct")
     private String email;
 
-
     private Role role;
 
-    @NotNull(message = "Age cannot be null")
-    @Min(value = 1, message = "Incorrect age")
+    @NotEmpty(message = "Please enter age")
+    @Min(value = 18, message = "Sorry, you should be at least 18 years old to use our service")
+    @Max(value = 120, message = "Sorry, age upper than 200 is not supported.")
     private BigDecimal age;
 
     private Sex sex;
 
-    @NotNull(message = "Weight cannot be null")
-    @Min(value = 1, message = "Incorrect weight")
+    @NotEmpty(message = "Please enter weight")
+    @Min(value = 30, message = "Weight should be at least 30")
+    @Max(value = 200, message = "Sorry, weight upper than 200 is not supported.")
     private BigDecimal weight;
 
-    @NotNull(message = "Height cannot be null")
-    @Min(value = 1, message = "Incorrect height")
+    @NotEmpty(message = "Please enter weight")
+    @Min(value = 1, message = "Height should be at bigger than 0")
     private BigDecimal height;
     private Lifestyle lifestyle;
     private BigDecimal dailyNorm;
