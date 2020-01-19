@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
+@ToString
 
 public class UserDTO {
 
@@ -31,7 +31,7 @@ public class UserDTO {
     private String nationalName;
 
     @NotBlank(message = "Email cannot be empty")
-    @Email(message = "Email is not correct")
+//    @Email(message = "Email is not correct")
     private String email;
 
 

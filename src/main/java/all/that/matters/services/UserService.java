@@ -2,6 +2,7 @@ package all.that.matters.services;
 
 import all.that.matters.dto.UserDTO;
 import all.that.matters.model.Biometrics;
+import all.that.matters.repo.UserExistsException;
 import all.that.matters.repo.UserNotFoundException;
 import all.that.matters.repo.UserRepo;
 import all.that.matters.model.Role;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService implements UserDetailsService {
 
     private UserRepo userRepo;
@@ -44,12 +44,17 @@ public class UserService implements UserDetailsService {
         return user.get();
     }
 
-    public void create(User user) {
+    public void create(User user) throws UserExistsException {
         user.setRoles(Collections.singleton(Role.USER));
         user.setActive(true);
         user.setPassword(passwordEncoder().encode(user.getPassword()));
-        userRepo.save(user);
+        try {
+            userRepo.save(user);
+        } catch (Exception e) {
+            throw new UserExistsException("User with username " + user.getUsername() + " already exists!");
+        }
     }
+
 
     public List<User> findAll() {
         return userRepo.findAll();
@@ -64,6 +69,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User userDTOtoUser(UserDTO userDTO) {
+        System.out.println("userDTO.username " + userDTO.getUsername());
+        System.out.println("userDTO.username " + userDTO.getPassword());
         return User.builder()
                 .username(userDTO.getUsername())
                 .fullName(userDTO.getFullName())

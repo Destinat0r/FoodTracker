@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@Transactional
 public class ExceededEventService {
 
     private ExceededEventRepo exceededEventRepo;

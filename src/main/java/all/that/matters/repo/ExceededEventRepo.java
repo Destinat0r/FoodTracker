@@ -15,7 +15,6 @@ import java.util.List;
 @Repository
 public interface ExceededEventRepo extends JpaRepository<ExceededEvent, Long> {
 
-    @Transactional
     @Modifying
     @Query(value = "UPDATE exceed_events SET excessive_calories = ?1 WHERE date = ?2 AND user_id = ?3", nativeQuery = true)
     void updateExcessiveCaloriesByDateAndUserId(BigDecimal calories, LocalDate date, Long userId);
