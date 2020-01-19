@@ -29,6 +29,7 @@ public class BiometricService {
                        .age(userDTO.getAge())
                        .weight(userDTO.getWeight())
                        .height(userDTO.getHeight())
+                       .sex(userDTO.getSex())
                        .lifestyle(userDTO.getLifestyle())
                        .dailyNorm(userDTO.getDailyNorm())
                        .build();
