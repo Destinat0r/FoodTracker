@@ -49,11 +49,12 @@ public class UserDTO {
 
     @NotEmpty(message = "Please enter weight")
     @Min(value = 30, message = "Weight should be at least 30")
-    @Max(value = 200, message = "Sorry, weight upper than 200 is not supported.")
+    @Max(value = 200, message = "Sorry, weight bigger than 200 is not supported.")
     private BigDecimal weight;
 
     @NotEmpty(message = "Please enter weight")
     @Min(value = 1, message = "Height should be at bigger than 0")
+    @Max(value = 300, message = "Sorry, height upper than 300 is no supported")
     private BigDecimal height;
     private Lifestyle lifestyle;
     private BigDecimal dailyNorm;
