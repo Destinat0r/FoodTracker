@@ -1,13 +1,14 @@
 package all.that.matters.controller;
 
+import all.that.matters.dto.UserDTO;
 import all.that.matters.model.Biometrics;
 import all.that.matters.model.User;
+import all.that.matters.repo.UserExistsException;
 import all.that.matters.services.BiometricService;
 import all.that.matters.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 public class RegistrationController {
@@ -31,23 +31,28 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String registration(@ModelAttribute("message") String message, Model model) {
-        model.addAttribute("biometrics", new Biometrics());
-        model.addAttribute("user", new User());
+        model.addAttribute("userDTO", new UserDTO());
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(
             @RequestParam("passwordConfirm") String passwordConfirm,
-            @Valid User user,
+            @Valid UserDTO userDTO,
             BindingResult bindingResult,
-            Biometrics biometrics,
             Model model) {
-
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
+
+        if (!userDTO.getPassword().equals(passwordConfirm)) {
+            model.addAttribute("passwordsDontMatch", true);
+            return "registration";
+        }
+
+        User user = userService.userDTOtoUser(userDTO);
+        Biometrics biometrics = biometricService.userDTOtoBiometrics(userDTO);
 
         biometrics.setDailyNorm();
 
@@ -55,8 +60,8 @@ public class RegistrationController {
             biometricService.create(biometrics);
             user.setBiometrics(biometrics);
             biometrics.setOwner(user);
-            userService.addUser(user);
-        } catch (Exception e) {
+            userService.create(user);
+        } catch (UserExistsException e) {
             model.addAttribute("usernameError", "Username or email already exists!");
             model.addAttribute("emailError", "Username or email already exists!");
             return "registration";
