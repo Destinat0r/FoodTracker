@@ -2,6 +2,7 @@ package all.that.matters.services;
 
 import all.that.matters.dto.UserDTO;
 import all.that.matters.model.Biometrics;
+import all.that.matters.repo.UserExistsException;
 import all.that.matters.repo.UserNotFoundException;
 import all.that.matters.repo.UserRepo;
 import all.that.matters.model.Role;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService implements UserDetailsService {
 
     private UserRepo userRepo;
@@ -44,12 +44,17 @@ public class UserService implements UserDetailsService {
         return user.get();
     }
 
-    public void create(User user) {
+    public void create(User user) throws UserExistsException {
         user.setRoles(Collections.singleton(Role.USER));
         user.setActive(true);
         user.setPassword(passwordEncoder().encode(user.getPassword()));
-        userRepo.save(user);
+        try {
+            userRepo.save(user);
+        } catch (Exception e) {
+            throw new UserExistsException("User with username " + user.getUsername() + " already exists!");
+        }
     }
+
 
     public List<User> findAll() {
         return userRepo.findAll();
@@ -60,18 +65,18 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
-       return userToUserDTO(findByUsername(username).orElseThrow(UserNotFoundException::new));
+        return userToUserDTO(findByUsername(username).orElseThrow(UserNotFoundException::new));
     }
 
     public User userDTOtoUser(UserDTO userDTO) {
         return User.builder()
-                .username(userDTO.getUsername())
-                .fullName(userDTO.getFullName())
-                .nationalName(userDTO.getNationalName())
-                .email(userDTO.getEmail())
-                .roles(Collections.singleton(Role.USER))
-                .password(userDTO.getPassword())
-                .build();
+               .username(userDTO.getUsername())
+               .fullName(userDTO.getFullName())
+               .nationalName(userDTO.getNationalName())
+               .email(userDTO.getEmail())
+               .roles(Collections.singleton(Role.USER))
+               .password(userDTO.getPassword())
+               .build();
     }
 
     public Optional<User> findByUsername(String username) {
@@ -90,17 +95,17 @@ public class UserService implements UserDetailsService {
     private UserDTO userToUserDTO(User user) {
         Biometrics biometrics = user.getBiometrics();
         return UserDTO.builder()
-                .username(user.getUsername())
-                .fullName(user.getFullName())
-                .nationalName(user.getNationalName())
-                .email(user.getEmail())
-                .age(biometrics.getAge())
-                .sex(biometrics.getSex())
-                .weight(biometrics.getWeight())
-                .height(biometrics.getHeight())
-                .lifestyle(biometrics.getLifestyle())
-                .dailyNorm(biometrics.getDailyNorm())
-                .build();
+                       .username(user.getUsername())
+                       .fullName(user.getFullName())
+                       .nationalName(user.getNationalName())
+                       .email(user.getEmail())
+                       .age(biometrics.getAge())
+                       .sex(biometrics.getSex())
+                       .weight(biometrics.getWeight())
+                       .height(biometrics.getHeight())
+                       .lifestyle(biometrics.getLifestyle())
+                       .dailyNorm(biometrics.getDailyNorm())
+                       .build();
     }
 
     public void save(User user) {
