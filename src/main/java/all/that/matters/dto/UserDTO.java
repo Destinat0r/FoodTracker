@@ -33,11 +33,14 @@ public class UserDTO {
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email is not correct")
     private String email;
+
+
     private Role role;
 
     @NotNull(message = "Age cannot be null")
     @Min(value = 1, message = "Incorrect age")
     private BigDecimal age;
+
     private Sex sex;
 
     @NotNull(message = "Weight cannot be null")
