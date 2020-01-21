@@ -1,0 +1,84 @@
+package org.training.food_tracker.controller;
+
+import org.training.food_tracker.dto.EventDTOsPack;
+import org.training.food_tracker.dto.FoodDTO;
+import org.training.food_tracker.repo.UserNotFoundException;
+import org.training.food_tracker.services.EventService;
+import org.training.food_tracker.services.FoodService;
+import org.training.food_tracker.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+
+    private FoodService foodService;
+    private UserService userService;
+    private EventService eventService;
+
+    @Autowired
+    public AdminController(FoodService foodService, UserService userService, EventService eventService) {
+        this.foodService = foodService;
+        this.userService = userService;
+        this.eventService = eventService;
+    }
+
+    @GetMapping("/main")
+    public String getMain(Model model) {
+        return "admin/index";
+    }
+
+    @GetMapping("/food_list")
+    public String getFoodList(Model model) {
+        List<FoodDTO> allFood = foodService.findAllCommonFoodInDtos();
+        model.addAttribute("allFood", allFood);
+        return "admin/food_list";
+    }
+
+    @PostMapping("/food/add")
+    public String addToCommonFood(@ModelAttribute("food") FoodDTO food) {
+        foodService.add(food);
+        return "redirect:/admin/food_list";
+    }
+
+    @GetMapping("/users")
+    public String getUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "admin/users";
+    }
+
+    @GetMapping("/user")
+    public String getUserProfile(@RequestParam Long id, Model model) {
+        try {
+            model.addAttribute("userDTO", userService.getUserDTOById(id));
+            model.addAttribute("userId", id);
+        } catch (UserNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/no_such_user";
+        }
+
+        return "admin/profile";
+    }
+
+    //TODO find out why it's not working
+    @GetMapping("/admin/history/user/{id}")
+    public String getUserHistory(@PathVariable Long id, Model model) {
+        List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(id);
+
+        model.addAttribute("eventDTOsPacks", eventDTOsPacks);
+        try {
+            model.addAttribute("userDTO", userService.getUserDTOById(id));
+        } catch (UserNotFoundException e) {
+            model.addAttribute("message", e.getMessage());
+            return "errors/no_such_user";
+        }
+        model.addAttribute("userId", id);
+
+        return "user/history";
+    }
+}
