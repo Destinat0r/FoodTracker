@@ -23,6 +23,7 @@
             <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
             <div class="col-sm-6 field">
                 <span th:if="${#fields.hasErrors('userDTO.username')}" class="help-block" th:errors="*{userDTO.username}"></span>
+                <span th:if="${usernameError}" class="text-danger" th:text="${usernameError}"></span>
                 <input type="text" class="form-control" maxlength="32" th:field="*{userDTO.username}" th:placeholder="#{user.username}"
                        th:value="${userDTO.username} ? ${userDTO.username} :  ''"
                        th:classappend="${#fields.hasErrors('userDTO.username')} ? 'error-input' : ''"/>
@@ -33,6 +34,7 @@
             <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
             <div class="col-sm-6 field">
                 <span th:if="${#fields.hasErrors('userDTO.email')}" class="help-block" th:errors="*{userDTO.email}"></span>
+                <span th:if="${usernameError}" class="text-danger" th:text="${usernameError}"></span>
                 <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}"
                        th:value="${userDTO.email} ? ${userDTO.email} :  ''"
                        th:classappend="${#fields.hasErrors('userDTO.email')} ? 'error-input' : ''"/>
