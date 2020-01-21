@@ -65,7 +65,8 @@ public class AdminController {
         return "admin/profile";
     }
 
-    @GetMapping("/admin/history/{id}")
+    //TODO find out why it's not working
+    @GetMapping("/admin/history/user/{id}")
     public String getUserHistory(@PathVariable Long id, Model model) {
         List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(id);
 
