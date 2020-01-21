@@ -63,6 +63,9 @@ public class RegistrationController {
             userService.create(user);
         } catch (UserExistsException e) {
             model.addAttribute("usernameError", "Such username or email already exists!");
+            return "registration";
+        }
+
         return "redirect:/login";
     }
 }
