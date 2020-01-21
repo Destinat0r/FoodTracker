@@ -41,9 +41,7 @@ public class AdminController {
     }
 
     @PostMapping("/food/add")
-    public String addToCommonFood(
-            @ModelAttribute("food") FoodDTO food,
-            Model model) {
+    public String addToCommonFood(@ModelAttribute("food") FoodDTO food) {
         foodService.add(food);
         return "redirect:/admin/food_list";
     }
