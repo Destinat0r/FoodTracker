@@ -138,15 +138,7 @@ public class UserController {
     public String getProfile(Model model) {
         log.debug("Getting profile page");
 
-        UserDTO userDTO = null;
-        try {
-            userDTO = userService.getUserDTOById(ContextUtils.getPrincipal().getId());
-        } catch (UserNotFoundException e) {
-            log.error("User with not found ",  e);
-        }
-        log.debug("Got userDTO from context with id {}", userDTO.getId());
-        model.addAttribute("userDTO", userDTO);
-
+        model.addAttribute("userDTO", userService.userToUserDTO(ContextUtils.getPrincipal()));
         return "user/profile";
     }
 
@@ -159,8 +151,8 @@ public class UserController {
         log.debug("Updating user {} with id {}", userDTO, userDTO.getId());
 
         if (bindingResult.hasErrors()) {
-            log.warn("Errors in input: {}", bindingResult.getAllErrors());
-            log.warn(" Redirecting back to profile");
+            log.error("Errors in input: {}", bindingResult.getAllErrors());
+            log.debug("Redirecting back to profile");
             return "user/profile";
         }
 
