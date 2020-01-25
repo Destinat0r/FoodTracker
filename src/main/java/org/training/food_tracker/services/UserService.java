@@ -62,13 +62,12 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public User findById(Long id) throws UserNotFoundException {
+        return userRepo.findById(id).orElseThrow(UserNotFoundException::new);
+    }
 
     public List<User> findAll() {
         return userRepo.findAll();
-    }
-
-    public Optional<User> findById(Long id) {
-        return userRepo.findById(id);
     }
 
     public int update(UserDTO userDTO) {
@@ -109,8 +108,7 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDTO getUserDTOById(Long id) throws UserNotFoundException {
-        Optional<User> optionalUser = findById(id);
-        return userToUserDTO(optionalUser.orElseThrow(UserNotFoundException::new));
+        return userToUserDTO(findById(id));
     }
 
     public UserDTO userToUserDTO(User user) {
