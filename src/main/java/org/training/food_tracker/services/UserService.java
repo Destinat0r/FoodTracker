@@ -113,6 +113,7 @@ public class UserService implements UserDetailsService {
     private UserDTO userToUserDTO(User user) {
         Biometrics biometrics = user.getBiometrics();
         return UserDTO.builder()
+                       .id(user.getId())
                        .username(user.getUsername())
                        .fullName(user.getFullName())
                        .nationalName(user.getNationalName())
