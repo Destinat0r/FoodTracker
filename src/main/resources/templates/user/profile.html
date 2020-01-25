@@ -66,8 +66,6 @@
                         </div>
                     </div>
 
-<!--                    <div class="form-row">-->
-
                         <div class="form-group">
 <!--                            <label th:text="#{user.sex}"></label>-->
                             <div class="custom-control custom-radio custom-control-inline" th:object="${userDTO}" th:each="sexOpt : ${T(org.training.food_tracker.model.Sex).values()}">
@@ -121,12 +119,15 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="password" th:value="${userDTO.password}">
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" th:text="#{form.save}"></button>
                     </div>
                 </form>
             </article>
 
+<!--            <div class="border-top card-body text-center">Have an account? <a href="">Log In</a></div>-->
         </div>
     </div>
 </div>
