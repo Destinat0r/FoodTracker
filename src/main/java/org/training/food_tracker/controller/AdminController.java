@@ -80,9 +80,9 @@ public class AdminController {
         try {
             model.addAttribute("userDTO", userService.getUserDTOById(id));
         } catch (UserNotFoundException e) {
-            model.addAttribute("message", e.getMessage());
-            log.error("Failed to found history of user with id {}", id);
-            return "errors/no_such_user";
+            model.addAttribute("userId", id);
+            log.error("Failed to found history of user with id {}", id, e);
+            return "../public/error/no_such_user";
         }
         model.addAttribute("userId", id);
 
