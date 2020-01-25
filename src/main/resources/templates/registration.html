@@ -75,7 +75,7 @@
             <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.sex}"></label>
             <div class="col-sm-6 field">
                 <select id="sex" name="sex">
-                    <option th:object="${userDTO}" th:each="sexOpt : ${T(all.that.matters.model.Sex).values()}"
+                    <option th:object="${userDTO}" th:each="sexOpt : ${T(org.training.food_tracker.model.Sex).values()}"
                             th:value="${sexOpt}" th:text="${sexOpt}"></option>
                 </select>
             </div>
@@ -106,7 +106,7 @@
             <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.lifestyle}"></label>
             <div class="col-sm-6 field">
                 <select id="lifestyle" name="lifestyle">
-                    <option th:each="lifestyleOpt : ${T(all.that.matters.model.Lifestyle).values()}"
+                    <option th:each="lifestyleOpt : ${T(org.training.food_tracker.model.Lifestyle).values()}"
                             th:value="${lifestyleOpt}" th:text="${lifestyleOpt}"></option>
                 </select>
             </div>
