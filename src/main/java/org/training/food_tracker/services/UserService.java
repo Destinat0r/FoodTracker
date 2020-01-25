@@ -110,7 +110,7 @@ public class UserService implements UserDetailsService {
         return userToUserDTO(optionalUser.orElseThrow(UserNotFoundException::new));
     }
 
-    private UserDTO userToUserDTO(User user) {
+    public UserDTO userToUserDTO(User user) {
         Biometrics biometrics = user.getBiometrics();
         return UserDTO.builder()
                        .id(user.getId())
