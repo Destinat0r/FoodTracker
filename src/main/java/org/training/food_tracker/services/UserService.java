@@ -1,5 +1,7 @@
 package org.training.food_tracker.services;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.repo.UserExistsException;
@@ -20,6 +22,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+@Slf4j
+@Log4j2
 
 @Service
 public class UserService implements UserDetailsService {
@@ -43,12 +48,16 @@ public class UserService implements UserDetailsService {
     }
 
     public void create(User user) throws UserExistsException {
+        log.debug("Setting role of the user and making the user active");
         user.setRole(Role.USER);
         user.setActive(true);
+        log.debug("Encoding the password and setting it to user");
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         try {
+            log.debug("Saving user");
             userRepo.save(user);
         } catch (Exception e) {
+            log.error("Creation of user " + user + " has failed", e);
             throw new UserExistsException("User with username " + user.getUsername() + " already exists!");
         }
     }
