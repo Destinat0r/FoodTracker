@@ -2,6 +2,12 @@ package org.training.food_tracker.controller;
 
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
@@ -12,12 +18,6 @@ import org.training.food_tracker.services.EventService;
 import org.training.food_tracker.services.FoodService;
 import org.training.food_tracker.services.UserService;
 import org.training.food_tracker.utils.ContextUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -136,34 +136,36 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
-        model.addAttribute("userDTO", userService.userToUserDTO(ContextUtils.getPrincipal()));
+        log.debug("Getting profile page");
+
+        UserDTO userDTO = null;
+        try {
+            userDTO = userService.getUserDTOById(ContextUtils.getPrincipal().getId());
+        } catch (UserNotFoundException e) {
+            log.error("User with not found ",  e);
+        }
+        log.debug("Got userDTO from context with id {}", userDTO.getId());
+        model.addAttribute("userDTO", userDTO);
+
         return "user/profile";
     }
 
     @PostMapping("/update")
     public String update(
-            @RequestParam("passwordConfirm") String passwordConfirm,
             @Valid UserDTO userDTO,
-            BindingResult bindingResult,
-            Model model) {
+            BindingResult bindingResult) {
 
-        log.debug("Updating user {}", userDTO.getUsername());
+        userDTO.setId(ContextUtils.getPrincipal().getId());
+        log.debug("Updating user {} with id {}", userDTO, userDTO.getId());
 
         if (bindingResult.hasErrors()) {
             log.warn("Errors in input: {}", bindingResult.getAllErrors());
             log.warn(" Redirecting back to profile");
-            return "redirect:/user/profile";
-        }
-
-        if (!userDTO.getPassword().equals(passwordConfirm)) {
-            log.warn("Passwords dont match. Redirecting back to profile");
-            model.addAttribute("passwordsDontMatch", true);
-            return "redirect:/user/profile";
+            return "user/profile";
         }
 
         log.debug("Launching update by service");
         userService.update(userDTO);
-
         return "redirect:/user/profile";
     }
 }
