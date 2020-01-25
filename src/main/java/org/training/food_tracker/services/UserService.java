@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.model.Biometrics;
+import org.training.food_tracker.repo.RepoException;
 import org.training.food_tracker.repo.UserExistsException;
 import org.training.food_tracker.repo.UserNotFoundException;
 import org.training.food_tracker.repo.UserRepo;
@@ -73,13 +74,17 @@ public class UserService implements UserDetailsService {
     }
 
     public int update(UserDTO userDTO) {
-        return userRepo.updateById(
+
+        int updatedRows = userRepo.updateById(
                 userDTO.getId(),
                 userDTO.getFullName(),
-                userDTO.getNationalName(),
-                userDTO.getEmail(),
-                userDTO.getPassword()
+                userDTO.getNationalName()
         );
+
+        if (updatedRows == 0) {
+            log.error("Update of user with id {} failed", userDTO.getId());
+        }
+        return updatedRows;
     }
 
     public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
