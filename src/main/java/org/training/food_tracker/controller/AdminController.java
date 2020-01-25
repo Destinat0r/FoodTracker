@@ -86,6 +86,6 @@ public class AdminController {
         }
         model.addAttribute("userId", id);
 
-        return "user/history";
+        return "admin/user_history";
     }
 }
