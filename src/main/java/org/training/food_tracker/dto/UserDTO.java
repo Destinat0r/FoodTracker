@@ -18,23 +18,23 @@ import java.math.BigDecimal;
 public class UserDTO {
 
     @NotBlank(message = "{userDTO.constraints.username.not_blank}")
-    @Size(min = 2, max = 32, message = "{userDTO.constraints.username.size}")
+//    @Size(min = 2, max = 32, message = "{userDTO.constraints.username.size}")
     private String username;
 
     @NotBlank(message = "{userDTO.constraints.password.not_blank}")
-    @Size(min = 4, max = 32, message = "{userDTO.constraints.password.size}")
+//    @Size(min = 4, max = 32, message = "{userDTO.constraints.password.size}")
     private String password;
 
     @NotBlank(message = "{userDTO.constraints.full_name.not_blank}")
-    @Size(min = 2, max = 32, message = "{userDTO.constraints.full_name.size}")
+//    @Size(min = 2, max = 32, message = "{userDTO.constraints.full_name.size}")
     private String fullName;
 
     @NotBlank(message = "{userDTO.constraints.national_name.not_blank}")
-    @Size(min = 2, max = 32, message = "{userDTO.constraints.national_name.size}")
+//    @Size(min = 2, max = 32, message = "{userDTO.constraints.national_name.size}")
     private String nationalName;
 
     @NotBlank(message = "{userDTO.constraints.email.not_blank}")
-    @Email(message = "{userDTO.constraints.email.size}")
+//    @Email(message = "{userDTO.constraints.email.size}")
     private String email;
 
     private Role role;
