@@ -12,6 +12,9 @@
 <div class="container" th:fragment="event_table">
     <div class="row">
         <div class="col col-6 col-centered">
+            <div th:if="${#lists.isEmpty(eventDTOsPacks)}" class="text-center">
+                <h2>No history yet</h2>
+            </div>
             <div th:if="${not #lists.isEmpty(eventDTOsPacks)}">
                 <h1 align="center" th:text="${userName}"></h1>
 
