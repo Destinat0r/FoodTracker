@@ -136,11 +136,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
-        try {
-            model.addAttribute("userDTO", userService.getUserDTOById(ContextUtils.getPrincipal().getId()));
-        } catch (UserNotFoundException e) {
-            return "errors/no_such_user";
-        }
+        model.addAttribute("userDTO", userService.userToUserDTO(ContextUtils.getPrincipal()));
         return "user/profile";
     }
 
