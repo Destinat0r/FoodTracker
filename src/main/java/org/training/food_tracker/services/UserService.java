@@ -4,9 +4,8 @@ import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.model.Biometrics;
-import org.training.food_tracker.repo.RepoException;
-import org.training.food_tracker.repo.UserExistsException;
-import org.training.food_tracker.repo.UserNotFoundException;
+import org.training.food_tracker.repo.exceptions.UserExistsException;
+import org.training.food_tracker.repo.exceptions.UserNotFoundException;
 import org.training.food_tracker.repo.UserRepo;
 import org.training.food_tracker.model.Role;
 import org.training.food_tracker.model.User;
@@ -20,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

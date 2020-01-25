@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
-import org.training.food_tracker.repo.UserNotFoundException;
+import org.training.food_tracker.repo.exceptions.UserNotFoundException;
 import org.training.food_tracker.services.EventService;
 import org.training.food_tracker.services.FoodService;
 import org.training.food_tracker.services.UserService;

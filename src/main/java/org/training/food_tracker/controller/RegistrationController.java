@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.User;
-import org.training.food_tracker.repo.UserExistsException;
+import org.training.food_tracker.repo.exceptions.UserExistsException;
 import org.training.food_tracker.services.BiometricService;
 import org.training.food_tracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

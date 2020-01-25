@@ -1,4 +1,4 @@
-package org.training.food_tracker.repo;
+package org.training.food_tracker.repo.exceptions;
 
 import org.training.food_tracker.model.User;
 

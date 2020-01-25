@@ -2,7 +2,7 @@ package org.training.food_tracker.services;
 
 import org.training.food_tracker.dto.ConsumedStatsDTO;
 import org.training.food_tracker.model.Role;
-import org.training.food_tracker.repo.FoodNotFoundException;
+import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
 import org.training.food_tracker.repo.FoodRepo;
 import org.training.food_tracker.model.Food;
 import org.training.food_tracker.model.User;
