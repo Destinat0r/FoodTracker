@@ -66,15 +66,28 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <p th:text="#{user.sex}"></p>
-                        <div class="custom-control custom-radio custom-control-inline" th:object="${userDTO}" th:each="sexOpt : ${T(org.training.food_tracker.model.Sex).values()}">
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" th:field="*{sex}" th:value="${sexOpt}" class="custom-control-input">
-                                <label class="custom-control-label" th:for="${#ids.prev('sex')}" th:text="${sexOpt}"></label>
+<!--                    <div class="form-row">-->
+
+                        <div class="form-group">
+<!--                            <label th:text="#{user.sex}"></label>-->
+                            <div class="custom-control custom-radio custom-control-inline" th:object="${userDTO}" th:each="sexOpt : ${T(org.training.food_tracker.model.Sex).values()}">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" th:field="*{sex}" th:value="${sexOpt}" class="custom-control-input">
+                                    <label class="custom-control-label" th:for="${#ids.prev('sex')}" th:text="${sexOpt}"></label>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="form-group col-md-6">
+                            <label th:text="#{user.age}"></label>
+                            <div>
+                                <span th:if="${#fields.hasErrors('userDTO.age')}" class="help-block" th:errors="*{userDTO.age}"></span>
+                                <input type="number" name="age" value="" class="form-control" th:placeholder="#{user.age}"
+                                       th:value="${userDTO.age} ? ${userDTO.age} :  ''"
+                                       th:classappend="${#fields.hasErrors('userDTO.age')} ? 'error-input' : ''"/>
+                            </div>
+                        </div>
+<!--                    </div>-->
 
 
                     <div class="form-row">
