@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 
 public class UserDTO {
 
+    private Long id;
+
     @NotBlank(message = "{userDTO.constraints.username.not_blank}")
 //    @Size(min = 2, max = 32, message = "{userDTO.constraints.username.size}")
     private String username;
