@@ -1,18 +1,22 @@
 package org.training.food_tracker.controller;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.repo.UserNotFoundException;
 import org.training.food_tracker.services.EventService;
 import org.training.food_tracker.services.FoodService;
 import org.training.food_tracker.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
+@Log4j2
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -66,8 +70,11 @@ public class AdminController {
     }
 
     //TODO find out why it's not working
-    @GetMapping("/admin/history/user/{id}")
-    public String getUserHistory(@PathVariable Long id, Model model) {
+    @GetMapping("/history/user/{id}")
+    public String getUserHistory(@PathVariable("id") Long id, Model model) {
+        log.debug("Getting history of user with id: {}", id);
+
+        log.debug("Getting eventDTOsPacks");
         List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(id);
 
         model.addAttribute("eventDTOsPacks", eventDTOsPacks);
@@ -75,6 +82,7 @@ public class AdminController {
             model.addAttribute("userDTO", userService.getUserDTOById(id));
         } catch (UserNotFoundException e) {
             model.addAttribute("message", e.getMessage());
+            log.error("Failed to found history of user with id {}", id);
             return "errors/no_such_user";
         }
         model.addAttribute("userId", id);
