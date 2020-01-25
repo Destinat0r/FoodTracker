@@ -62,8 +62,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User findById(Long id) throws UserNotFoundException {
-        return userRepo.findById(id).orElseThrow(UserNotFoundException::new);
+    public User findById(Long id) {
+        return userRepo.findById(id).get();
     }
 
     public List<User> findAll() {
@@ -71,7 +71,11 @@ public class UserService implements UserDetailsService {
     }
 
     public int update(UserDTO userDTO) {
-
+        log.debug("Updating user with id: {} to username: {}, national name: {}",
+                userDTO.getId(),
+                userDTO.getFullName(),
+                userDTO.getNationalName()
+        );
         int updatedRows = userRepo.updateById(
                 userDTO.getId(),
                 userDTO.getFullName(),
