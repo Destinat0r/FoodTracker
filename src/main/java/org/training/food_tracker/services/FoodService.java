@@ -46,7 +46,7 @@ public class FoodService {
 
     private User getOwner() {
         User user = ContextUtils.getPrincipal();
-        return user.getRoles().contains(Role.ADMIN) ? null : user;
+        return user.getRole() == Role.ADMIN ? null : user;
     }
 
     public List<FoodDTO> findAllCommonFoodExcludingPersonalByUserIdInDTO(Long userId) {

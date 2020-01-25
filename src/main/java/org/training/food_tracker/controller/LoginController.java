@@ -30,7 +30,7 @@ public class LoginController {
     public String getIndex(Model model) {
         User user = ContextUtils.getPrincipal();
 
-        if (user.getRoles().contains(Role.ADMIN)) {
+        if (user.getRole() == Role.ADMIN) {
             return "admin/index";
         } else
             return "user/index";
@@ -42,7 +42,7 @@ public class LoginController {
 
         User user = ContextUtils.getPrincipal();
 
-        if (user.getRoles().contains(Role.ADMIN)) {
+        if (user.getRole() == Role.ADMIN) {
             return "redirect:/admin/main";
         }
             return "redirect:/user/main";

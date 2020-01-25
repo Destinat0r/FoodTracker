@@ -31,35 +31,29 @@ public class UserController {
     private EventService eventService;
     private UserService userService;
 
-    @Autowired
-    public void setFoodService(FoodService foodService) {
+    @Autowired public void setFoodService(FoodService foodService) {
         this.foodService = foodService;
     }
 
-    @Autowired
-    public void setEventService(EventService eventService) {
+    @Autowired public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    @Autowired public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/main")
-    public String getMain(Model model ) {
+    @GetMapping("/main") public String getMain(Model model) {
 
         User user = ContextUtils.getPrincipal();
         UserDTO userDTO = userService.getCurrentUserDTO();
 
-        model.addAttribute("allCommonFood",
-                foodService.findAllCommonFoodExcludingPersonalByUserIdInDTO(user.getId()));
+        model.addAttribute("allCommonFood", foodService.findAllCommonFoodExcludingPersonalByUserIdInDTO(user.getId()));
 
         model.addAttribute("food", new FoodDTO());
         model.addAttribute("usersFoodDTOs", foodService.findAllByOwner(user));
 
-        model.addAttribute("consumedStatsDTO",
-                foodService.getConsumedStatsForUserAndDate(user, LocalDate.now()));
+        model.addAttribute("consumedStatsDTO", foodService.getConsumedStatsForUserAndDate(user, LocalDate.now()));
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("todayEventsDTOs", eventService.findForToday());
@@ -67,9 +61,7 @@ public class UserController {
         return "user/main";
     }
 
-    @GetMapping("/all")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String getAllFoods(Model model) {
+    @GetMapping("/all") @PreAuthorize("hasAuthority('ADMIN')") public String getAllFoods(Model model) {
 
         List<FoodDTO> allFood = foodService.findAllCommonFoodInDtos();
         model.addAttribute("allFood", allFood);
@@ -77,11 +69,7 @@ public class UserController {
         return "food_list";
     }
 
-    @PostMapping("/add")
-    public String add(
-            @Valid FoodDTO userFoodDTO,
-            BindingResult bindingResult,
-            Model model) {
+    @PostMapping("/add") public String add(@Valid FoodDTO userFoodDTO, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
@@ -92,12 +80,8 @@ public class UserController {
         return "redirect:/user/main";
     }
 
-    @PostMapping(value = "/use", params = "consume")
-    public String consume(
-            @ModelAttribute("food") FoodDTO food,
-            @RequestParam("amount") BigDecimal amount,
-            BindingResult bindingResult,
-            Model model) {
+    @PostMapping(value = "/use", params = "consume") public String consume(@ModelAttribute("food") FoodDTO food,
+            @RequestParam("amount") BigDecimal amount, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
@@ -113,15 +97,13 @@ public class UserController {
         return "redirect:/user/main";
     }
 
-    @PostMapping(value = "/use", params = "delete")
-    public String delete(@ModelAttribute("userFood") FoodDTO food) {
+    @PostMapping(value = "/use", params = "delete") public String delete(@ModelAttribute("userFood") FoodDTO food) {
 
         foodService.removeByFoodNameAndUserId(food.getName(), ContextUtils.getPrincipal());
         return "redirect:/user/main";
     }
 
-    @GetMapping("/history")
-    public String getHistory(Model model) {
+    @GetMapping("/history") public String getHistory(Model model) {
 
         User user = ControllerUtils.getPrincipal();
         List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(user.getId());
@@ -131,13 +113,30 @@ public class UserController {
         return "user/history";
     }
 
-    @GetMapping("/profile")
-    public String getProfile(Model model) {
+    @GetMapping("/profile") public String getProfile(Model model) {
         try {
             model.addAttribute("userDTO", userService.getUserDTOById(ContextUtils.getPrincipal().getId()));
         } catch (UserNotFoundException e) {
             return "errors/no_such_user";
         }
+        return "user/profile";
+    }
+
+    @PostMapping("/update") public String update(
+            @RequestParam("passwordConfirm") String passwordConfirm,
+            @Valid UserDTO userDTO,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/user/profile";
+        }
+
+        if (!userDTO.getPassword().equals(passwordConfirm)) {
+            model.addAttribute("passwordsDontMatch", true);
+            return "redirect:/user/profile";
+        }
+
         return "user/profile";
     }
 }

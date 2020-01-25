@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void create(User user) throws UserExistsException {
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRole(Role.USER);
         user.setActive(true);
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         try {
@@ -72,7 +72,7 @@ public class UserService implements UserDetailsService {
                .fullName(userDTO.getFullName())
                .nationalName(userDTO.getNationalName())
                .email(userDTO.getEmail())
-               .roles(Collections.singleton(Role.USER))
+               .role(Role.USER)
                .password(userDTO.getPassword())
                .build();
     }
