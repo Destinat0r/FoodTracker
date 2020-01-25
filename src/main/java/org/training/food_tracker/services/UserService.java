@@ -72,16 +72,14 @@ public class UserService implements UserDetailsService {
         return userRepo.findById(id);
     }
 
-    public Optional<User> updateByEmail(UserDTO userDTO) {
-        return userRepo.updateByEmail(
+    public int update(UserDTO userDTO) {
+        return userRepo.updateById(
+                userDTO.getId(),
                 userDTO.getFullName(),
                 userDTO.getNationalName(),
-                userDTO.getAge(),
-                userDTO.getWeight(),
-                userDTO.getHeight(),
-                userDTO.getSex().toString(),
-                userDTO.getLifestyle().toString(),
-                userDTO.getEmail());
+                userDTO.getEmail(),
+                userDTO.getPassword()
+        );
     }
 
     public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
