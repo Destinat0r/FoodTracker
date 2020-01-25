@@ -18,5 +18,9 @@ spring:
           lob:
             non_contextual_creation: true
 
-  freemarker:
-    suffix: .ftl
+logging:
+  config: classpath:log4j2-spring.xml
+  file:
+    path: logs
+  level:
+    org.training.food_tracker: debug

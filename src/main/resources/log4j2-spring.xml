@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="log-path">./logs</Property>
+        <Property name="log-path">logs</Property>
     </Properties>
 
     <Appenders>
 
-        <Console name="console-log" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        <Console name="console-log" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%t] %c{1} - %msg%n%throwable}{FATAL=white, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}"/>
         </Console>
 
         <RollingFile name="trace-log" fileName="${log-path}/trace.log"
