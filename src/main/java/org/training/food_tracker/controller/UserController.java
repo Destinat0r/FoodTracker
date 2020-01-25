@@ -166,7 +166,7 @@ public class UserController {
         }
 
         log.debug("Launching update by service");
-        userService.updateByEmail(userDTO);
+        userService.update(userDTO);
 
         return "redirect:/user/profile";
     }
