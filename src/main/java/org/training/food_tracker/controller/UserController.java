@@ -1,5 +1,7 @@
 package org.training.food_tracker.controller;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
@@ -22,6 +24,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
+@Slf4j
+@Log4j2
 
 @Controller
 @RequestMapping("/user")
@@ -146,15 +151,23 @@ public class UserController {
             BindingResult bindingResult,
             Model model) {
 
+        log.debug("Updating user {}", userDTO.getUsername());
+
         if (bindingResult.hasErrors()) {
+            log.warn("Errors in input: {}", bindingResult.getAllErrors());
+            log.warn(" Redirecting back to profile");
             return "redirect:/user/profile";
         }
 
         if (!userDTO.getPassword().equals(passwordConfirm)) {
+            log.warn("Passwords dont match. Redirecting back to profile");
             model.addAttribute("passwordsDontMatch", true);
             return "redirect:/user/profile";
         }
 
-        return "user/profile";
+        log.debug("Launching update by service");
+        userService.updateByEmail(userDTO);
+
+        return "redirect:/user/profile";
     }
 }
