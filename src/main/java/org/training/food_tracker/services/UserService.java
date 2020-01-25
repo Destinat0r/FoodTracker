@@ -112,6 +112,7 @@ public class UserService implements UserDetailsService {
                        .height(biometrics.getHeight())
                        .lifestyle(biometrics.getLifestyle())
                        .dailyNorm(biometrics.getDailyNorm())
+                       .role(user.getRole())
                        .build();
     }
 
