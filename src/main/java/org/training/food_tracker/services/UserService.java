@@ -51,6 +51,7 @@ public class UserService implements UserDetailsService {
         log.debug("Setting role of the user and making the user active");
         user.setRole(Role.USER);
         user.setActive(true);
+
         log.debug("Encoding the password and setting it to user");
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         try {
@@ -113,6 +114,7 @@ public class UserService implements UserDetailsService {
                        .lifestyle(biometrics.getLifestyle())
                        .dailyNorm(biometrics.getDailyNorm())
                        .role(user.getRole())
+                       .password(user.getPassword())
                        .build();
     }
 
