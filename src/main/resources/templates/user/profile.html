@@ -26,9 +26,9 @@
                             <div>
                                 <span th:if="${#fields.hasErrors('userDTO.username')}" class="help-block" th:errors="*{userDTO.username}"></span>
                                 <span th:if="${usernameError}" class="text-danger" th:text="${usernameError}"></span>
-                                <input type="text" class="form-control" maxlength="32" th:field="*{userDTO.username}" th:placeholder="#{user.username}"
+                                <input type="text" class="form-control" maxlength="32" th:field="*{userDTO.username}" id="username" th:placeholder="#{user.username}"
                                        th:value="${userDTO.username} ? ${userDTO.username} :  ''"
-                                       th:classappend="${#fields.hasErrors('userDTO.username')} ? 'error-input' : ''"/>
+                                       th:classappend="${#fields.hasErrors('userDTO.username')} ? 'error-input' : ''" readonly="readonly"/>
                             </div>
                         </div>
 
