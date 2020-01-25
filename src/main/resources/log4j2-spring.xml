@@ -7,13 +7,13 @@
     <Appenders>
 
         <Console name="console-log" target="SYSTEM_OUT" follow="true">
-            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%t] %c{1} - %msg%n%throwable}{FATAL=white, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}"/>
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss} [%t] %c{1} - %msg%n%throwable}{FATAL=white, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}"/>
         </Console>
 
         <RollingFile name="trace-log" fileName="${log-path}/trace.log"
                      filePattern="${log-path}/trace-%d{yyyy-MM-dd}.log">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -24,7 +24,7 @@
         <RollingFile name="debug-log" fileName="${log-path}/debug.log"
                      filePattern="${log-path}/debug-%d{yyyy-MM-dd}.log">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -35,7 +35,7 @@
         <RollingFile name="info-log" fileName="${log-path}/info.log"
                      filePattern="${log-path}/info-%d{yyyy-MM-dd}.log">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -59,10 +59,10 @@
     <Loggers>
         <Logger name="org.training.food_tracker" level="trace" additivity="false">
             <appender-ref ref="debug-log" level="debug"/>
-            <appender-ref ref="info-log" level="info"/>
-            <appender-ref ref="error-log" level="error"/>
+<!--            <appender-ref ref="info-log" level="info"/>-->
+<!--            <appender-ref ref="error-log" level="error"/>-->
             <appender-ref ref="console-log" level="debug"/>
-            <appender-ref ref="trace-log" level="trace"/>
+<!--            <appender-ref ref="trace-log" level="trace"/>-->
         </Logger>
         <Root level="info" additivity="false">
             <AppenderRef ref="console-log"/>
