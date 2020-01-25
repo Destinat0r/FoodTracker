@@ -96,6 +96,26 @@
                         <td th:text="${userDTO.role}"></td>
                     </tr>
                     <tr>
+                        <td th:text="#{user.password}"></td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('userDTO.password')}" class="help-block" th:errors="*{userDTO.password}"></span>
+                            <input type="password" name="password" class="form-control" th:placeholder="#{user.password}"
+                                   th:value="${userDTO.password}"
+                                   th:classappend="${#fields.hasErrors('userDTO.password')} ? 'error-input' : ''" />
+                            <span th:if="${passwordsDontMatch}" th:text="#{user.password.dontmatch}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{user.сonfirm_password}"></td>
+                        <td>
+                            <span th:if="${#fields.hasErrors('userDTO.password')}" class="help-block" th:errors="*{userDTO.password}"></span>
+                            <input type="password" name="passwordConfirm" class="form-control" th:placeholder="#{user.сonfirm_password}"
+                                   th:value="${userDTO.password}"
+                                   th:classappend="${#fields.hasErrors('userDTO.password')} ? 'error-input' : ''" />
+                            <span th:if="${passwordsDontMatch}" th:text="#{user.password.dontmatch}"></span>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
                             <button type="submit" class="btn btn-primary mb-2" th:text="#{form.save}"></button>
                         </td>
