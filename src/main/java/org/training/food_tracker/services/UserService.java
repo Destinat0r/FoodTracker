@@ -72,6 +72,18 @@ public class UserService implements UserDetailsService {
         return userRepo.findById(id);
     }
 
+    public Optional<User> updateByEmail(UserDTO userDTO) {
+        return userRepo.updateByEmail(
+                userDTO.getFullName(),
+                userDTO.getNationalName(),
+                userDTO.getAge(),
+                userDTO.getWeight(),
+                userDTO.getHeight(),
+                userDTO.getSex().toString(),
+                userDTO.getLifestyle().toString(),
+                userDTO.getEmail());
+    }
+
     public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
         return userToUserDTO(findByUsername(username).orElseThrow(UserNotFoundException::new));
     }
