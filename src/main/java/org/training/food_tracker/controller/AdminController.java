@@ -69,7 +69,6 @@ public class AdminController {
         return "admin/profile";
     }
 
-    //TODO find out why it's not working
     @GetMapping("/history/user/{id}")
     public String getUserHistory(@PathVariable("id") Long id, Model model) {
         log.debug("Getting history of user with id: {}", id);
