@@ -87,8 +87,6 @@
                                        th:classappend="${#fields.hasErrors('userDTO.age')} ? 'error-input' : ''"/>
                             </div>
                         </div>
-<!--                    </div>-->
-
 
                     <div class="form-row">
 
@@ -123,36 +121,12 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label th:text="#{user.password}"></label>
-                            <div>
-                                <span th:if="${#fields.hasErrors('userDTO.password')}" class="help-block" th:errors="*{userDTO.password}"></span>
-                                <input type="password" name="password" class="form-control" th:placeholder="#{user.password}"
-                                       th:value="${userDTO.password}"
-                                       th:classappend="${#fields.hasErrors('userDTO.password')} ? 'error-input' : ''" required/>
-                                <span th:if="${passwordsDontMatch}" th:text="#{user.password.dontmatch}"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label th:text="#{user.сonfirm_password}"></label>
-                            <div>
-                                <span th:if="${#fields.hasErrors('userDTO.password')}" class="help-block" th:errors="*{userDTO.password}"></span>
-                                <input type="password" name="passwordConfirm" class="form-control" th:placeholder="#{user.сonfirm_password}"
-                                       th:value="${userDTO.password}" required/>
-                                <span th:if="${passwordsDontMatch}" th:text="#{user.password.dontmatch}"></span>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" th:text="#{form.save}"></button>
                     </div>
                 </form>
             </article>
 
-<!--            <div class="border-top card-body text-center">Have an account? <a href="">Log In</a></div>-->
         </div>
     </div>
 </div>
