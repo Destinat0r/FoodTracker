@@ -34,7 +34,7 @@ public class UserDTO {
     private String nationalName;
 
     @NotBlank(message = "{userDTO.constraints.email.not_blank}")
-//    @Email(message = "{userDTO.constraints.email.size}")
+    @Email(message = "{userDTO.constraints.email.size}")
     private String email;
 
     private Role role;
