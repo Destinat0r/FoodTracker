@@ -17,6 +17,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "UPDATE users SET full_name = ?1, national_name = ?2, age = ?3, weight = ?4, height = ?5, sex = ?6, "
                    + "lifestyle = ?7 WHERE email = ?8", nativeQuery = true)
-    Optional<User> updateUserByEmail(String fullName, String nationalName,  BigDecimal age, BigDecimal weight,
+    Optional<User> updateByEmail(String fullName, String nationalName,  BigDecimal age, BigDecimal weight,
             BigDecimal height, String sex, String lifestyle, String email);
 }
