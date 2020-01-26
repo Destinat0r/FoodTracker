@@ -13,12 +13,10 @@ import java.math.BigDecimal;
 @Service
 public class BiometricService {
     private BiometricRepository biometricRepository;
-    private UserService userService;
 
     @Autowired
-    public BiometricService(BiometricRepository biometricRepository, UserService userService) {
+    public BiometricService(BiometricRepository biometricRepository) {
         this.biometricRepository = biometricRepository;
-        this.userService = userService;
     }
 
     public void create(Biometrics biometrics) {
