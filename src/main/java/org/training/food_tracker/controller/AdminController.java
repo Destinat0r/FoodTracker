@@ -66,7 +66,7 @@ public class AdminController {
             return "errors/no_such_user";
         }
 
-        return "admin/profile";
+        return "admin/user_profile";
     }
 
     @GetMapping("/history/user/{id}")
