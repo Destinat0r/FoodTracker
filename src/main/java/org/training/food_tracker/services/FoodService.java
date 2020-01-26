@@ -114,18 +114,18 @@ public class FoodService {
         return ContextUtils.getPrincipal().getBiometrics().getDailyNorm();
     }
 
-    public BigDecimal getConsumedCaloriesForToday(Long userId, LocalDate date) {
+    private BigDecimal getConsumedCaloriesForToday(Long userId, LocalDate date) {
         return eventService.getTotalConsumedCaloriesByUserIdAndDate(userId, date);
     }
 
-    public FoodDTO foodToFoodDTO(Food food) {
+    private FoodDTO foodToFoodDTO(Food food) {
         return FoodDTO.builder()
                        .name(food.getName())
                        .calories(food.getCalories())
                        .build();
     }
 
-    public Food foodDTOToFood(FoodDTO foodDTO) throws FoodNotFoundException {
+    private Food foodDTOToFood(FoodDTO foodDTO) throws FoodNotFoundException {
         return foodRepo.findByNameAndOwner(foodDTO.getName(), ContextUtils.getPrincipal())
                        .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDTO.getName() + " not found."));
     }
