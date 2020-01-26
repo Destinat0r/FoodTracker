@@ -51,7 +51,7 @@ public class FoodService {
 
     public List<FoodDTO> findAllCommonExcludingPersonalByUserIdInDTO(Long userId) {
         return findAllCommonExcludingPersonalByUserId(userId).stream()
-                       .map(this::foodToFoodDto)
+                       .map(this::foodToFoodDTO)
                        .collect(Collectors.toList());
     }
 
@@ -80,7 +80,7 @@ public class FoodService {
     }
 
     public List<FoodDTO> findAllCommonInDtos() {
-        return foodRepo.findAllCommon().stream().map(this::foodToFoodDto).collect(Collectors.toList());
+        return foodRepo.findAllCommon().stream().map(this::foodToFoodDTO).collect(Collectors.toList());
     }
 
     public void registerConsumption(FoodDTO foodDTO) throws FoodNotFoundException {
@@ -121,7 +121,7 @@ public class FoodService {
         return eventService.getTotalConsumedCaloriesByUserIdAndDate(userId, date);
     }
 
-    public FoodDTO foodToFoodDto(Food food) {
+    public FoodDTO foodToFoodDTO(Food food) {
         return FoodDTO.builder()
                        .name(food.getName())
                        .calories(food.getCalories())
