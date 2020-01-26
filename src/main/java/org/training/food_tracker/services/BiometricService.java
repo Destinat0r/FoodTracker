@@ -21,6 +21,16 @@ public class BiometricService {
         biometricRepository.save(biometrics);
     }
 
+    public int update(UserDTO userDTO) {
+        return biometricRepository.updateByOwnerId(
+                userDTO.getId(),
+                userDTO.getAge(),
+                userDTO.getSex().toString(),
+                userDTO.getWeight(),
+                userDTO.getHeight(),
+                userDTO.getLifestyle().toString());
+    }
+
     public Biometrics userDTOtoBiometrics(UserDTO userDTO) {
         return Biometrics.builder()
                        .age(userDTO.getAge())
