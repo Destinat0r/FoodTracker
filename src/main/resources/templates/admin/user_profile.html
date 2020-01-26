@@ -18,8 +18,8 @@
             </header>
             <article class="card-body">
 
-                <form th:action="@{/admin/user/update}" method="post">
-
+                <form th:action="@{/admin/user/update/}" method="post">
+                    <input type="hidden" name="id" th:value="${userDTO.id}">
                     <div class="form-row">
                         <div class="col form-group">
                             <label th:text="#{user.username}"></label>
