@@ -76,6 +76,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group col-md-6">
                             <label th:text="#{user.age}"></label>
                             <div>
@@ -85,12 +86,10 @@
                                        th:classappend="${#fields.hasErrors('userDTO.age')} ? 'error-input' : ''"/>
                             </div>
                         </div>
-
                     </div>
 
 
                     <div class="form-row">
-
                         <div class="form-group col-md-6">
                             <label th:text="#{user.weight}"></label>
                             <div>
@@ -144,13 +143,8 @@
                     </div>
                 </form>
             </article>
-
-<!--            <div class="border-top card-body text-center">Have an account? <a href="">Log In</a></div>-->
         </div>
     </div>
-</div>
-
-
 </div>
 
 <div th:replace="~{fragments/common :: jsLinks}"></div>
