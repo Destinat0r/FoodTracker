@@ -66,16 +66,16 @@
                         </div>
                     </div>
 
+                    <div class="form-row">
                         <div class="form-group">
-<!--                            <label th:text="#{user.sex}"></label>-->
-                            <div class="custom-control custom-radio custom-control-inline" th:object="${userDTO}" th:each="sexOpt : ${T(org.training.food_tracker.model.Sex).values()}">
+                            <label th:text="#{user.sex}" for="sex"></label>
+                            <div id="sex" class="custom-control custom-radio custom-control-inline" th:object="${userDTO}" th:each="sexOpt : ${T(org.training.food_tracker.model.Sex).values()}">
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" th:field="*{sex}" th:value="${sexOpt}" class="custom-control-input">
                                     <label class="custom-control-label" th:for="${#ids.prev('sex')}" th:text="${sexOpt}"></label>
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group col-md-6">
                             <label th:text="#{user.age}"></label>
                             <div>
@@ -85,6 +85,9 @@
                                        th:classappend="${#fields.hasErrors('userDTO.age')} ? 'error-input' : ''"/>
                             </div>
                         </div>
+
+                    </div>
+
 
                     <div class="form-row">
 
@@ -116,6 +119,21 @@
                                 <input type="radio" th:field="*{lifestyle}" th:value="${lifestyleOpt}" class="custom-control-input">
                                 <label class="custom-control-label" th:for="${#ids.prev('lifestyle')}" th:text="${lifestyleOpt}"></label>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group col-md-6">
+                            <label th:text="#{user.daily_norm}"></label>
+                            <div>
+                                <input type="text" class="form-control" th:value="${userDTO.dailyNorm}" readonly/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group col-md-6">
+                            <label th:text="#{user.role} + ': ' + ${userDTO.role}"></label>
                         </div>
                     </div>
 
