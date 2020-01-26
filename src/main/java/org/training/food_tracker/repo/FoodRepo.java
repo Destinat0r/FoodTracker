@@ -1,5 +1,6 @@
 package org.training.food_tracker.repo;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.training.food_tracker.model.Food;
 import org.training.food_tracker.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,8 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface FoodRepo extends JpaRepository<Food, Long> {
-    @Query(value = "SELECT id, name, calories, user_id FROM food WHERE user_id = ?1 ORDER BY id DESC", nativeQuery = true)
-    List<Food> findByOwner(Long userId);
+    List<Food> findByOwnerOrderByIdDesc(User user);
 
     Optional<Food> findById(Long id);
 
@@ -26,6 +26,7 @@ public interface FoodRepo extends JpaRepository<Food, Long> {
             nativeQuery = true)
     List<Food> findAllCommonExcludingPersonalByUserId(Long userId);
 
+    @Transactional
     void removeByNameAndOwner(String foodName, User user);
 
 }

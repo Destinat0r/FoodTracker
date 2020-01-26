@@ -58,12 +58,11 @@ public class FoodService {
 
     public List<FoodDTO> findAllByOwnerInDTOs(User user) {
         List<FoodDTO> foodDTOS = new ArrayList<>();
-        foodRepo.findByOwner(user.getId()).forEach(
-                food -> foodDTOS.add(
-                            FoodDTO.builder()
-                                    .name(food.getName())
-                                    .calories(food.getCalories())
-                                    .build())
+        foodRepo.findByOwnerOrderByIdDesc(user)
+                .forEach(food -> foodDTOS.add(FoodDTO.builder()
+                                                .name(food.getName())
+                                                .calories(food.getCalories())
+                                                .build())
         );
         return foodDTOS;
     }
