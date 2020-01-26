@@ -1,5 +1,7 @@
 package org.training.food_tracker.services;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.training.food_tracker.dto.EventDTO;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.model.Event;
@@ -17,6 +19,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Log4j2
+
 @Service
 public class EventService {
 
@@ -30,7 +35,7 @@ public class EventService {
     }
 
     public List<EventDTO> findForTodayByUserId(Long userId) {
-
+       log.debug("Finding all today's events by user id {} and packing them to DTOs", userId);
         List<EventDTO> eventDTOS = new ArrayList<>();
 
         eventRepo.findAllConsumedFromTodayByUserId(userId)
@@ -39,6 +44,7 @@ public class EventService {
     }
 
     public void create(Event event) {
+        log.debug("Creating event");
         eventRepo.save(event);
     }
 
