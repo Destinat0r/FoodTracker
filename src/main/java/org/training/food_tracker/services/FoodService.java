@@ -59,7 +59,7 @@ public class FoodService {
         return foodRepo.findAllCommonExcludingPersonalByUserId(userId);
     }
 
-    public List<FoodDTO> findAllByOwner(User user) {
+    public List<FoodDTO> findAllByOwnerInDTOs(User user) {
         List<FoodDTO> foodDTOS = new ArrayList<>();
         foodRepo.findByOwner(user.getId()).forEach(
                 food -> foodDTOS.add(

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
-import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
@@ -68,7 +67,7 @@ public class UserController {
         model.addAttribute("allCommonFood", foodService.findAllCommonFoodExcludingPersonalByUserIdInDTO(user.getId()));
 
         model.addAttribute("food", new FoodDTO());
-        model.addAttribute("usersFoodDTOs", foodService.findAllByOwner(user));
+        model.addAttribute("usersFoodDTOs", foodService.findAllByOwnerInDTOs(user));
 
         model.addAttribute("consumedStatsDTO", foodService.getConsumedStatsForUserAndDate(user, LocalDate.now()));
 
