@@ -15,7 +15,8 @@ public interface BiometricRepository extends JpaRepository<Biometrics, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE biometrics SET age = ?2, sex = ?3, weight = ?4, height = ?5, lifestyle = ?6 WHERE user_id = ?1",
-            nativeQuery = true)
-    int updateByOwnerId(Long id, BigDecimal age, String sex, BigDecimal weight, BigDecimal height, String lifestyle);
+    @Query(value = "UPDATE biometrics SET age = ?2, sex = ?3, weight = ?4, height = ?5, lifestyle = ?6, norm = ?7 "
+                           + "WHERE user_id = ?1", nativeQuery = true)
+    int updateByOwnerId(Long id, BigDecimal age, String sex, BigDecimal weight, BigDecimal height, String lifestyle,
+            BigDecimal dailyNorm);
 }
