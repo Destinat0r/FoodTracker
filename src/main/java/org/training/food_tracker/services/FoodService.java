@@ -23,15 +23,12 @@ public class FoodService {
 
     private FoodRepo foodRepo;
     private EventService eventService;
-    private UserService userService;
     private ExceededEventService exceededEventService;
 
     @Autowired
-    public FoodService(FoodRepo foodRepo, EventService eventService, UserService userService,
-            ExceededEventService exceededEventService) {
+    public FoodService(FoodRepo foodRepo, EventService eventService, ExceededEventService exceededEventService) {
         this.foodRepo = foodRepo;
         this.eventService = eventService;
-        this.userService = userService;
         this.exceededEventService = exceededEventService;
     }
 
