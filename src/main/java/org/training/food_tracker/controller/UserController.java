@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
+import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
+import org.training.food_tracker.services.BiometricService;
 import org.training.food_tracker.services.EventService;
 import org.training.food_tracker.services.FoodService;
 import org.training.food_tracker.services.UserService;
@@ -35,6 +37,7 @@ public class UserController {
     private FoodService foodService;
     private EventService eventService;
     private UserService userService;
+    private BiometricService biometricService;
 
     @Autowired
     public void setFoodService(FoodService foodService) {
@@ -49,6 +52,11 @@ public class UserController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setBiometricService(BiometricService biometricService) {
+        this.biometricService = biometricService;
     }
 
     @GetMapping("/main")
@@ -155,8 +163,10 @@ public class UserController {
             @Valid UserDTO userDTO,
             BindingResult bindingResult) {
 
-        userDTO.setId(ContextUtils.getPrincipal().getId());
-        log.debug("Updating user {} with id {}", userDTO, userDTO.getId());
+        Long userId = ContextUtils.getPrincipal().getId();
+
+        userDTO.setId(userId);
+        log.debug("Updating user {} with id {}", userDTO, userId);
 
         if (bindingResult.hasErrors()) {
             log.warn("Errors in input: {}", bindingResult.getAllErrors());
@@ -164,7 +174,10 @@ public class UserController {
             return "user/profile";
         }
 
-        log.debug("Launching update by service");
+        log.debug("updating biometrics");
+        biometricService.update(userDTO);
+
+        log.debug("Updating user");
         userService.update(userDTO);
         return "redirect:/user/profile";
     }
