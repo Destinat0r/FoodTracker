@@ -72,7 +72,7 @@ public class UserController {
         model.addAttribute("consumedStatsDTO", foodService.getConsumedStatsForUserAndDate(user, LocalDate.now()));
 
         model.addAttribute("userDTO", userDTO);
-        model.addAttribute("todayEventsDTOs", eventService.findForToday());
+        model.addAttribute("todayEventsDTOs", eventService.findForTodayByUserId(user.getId()));
 
         return "user/main";
     }

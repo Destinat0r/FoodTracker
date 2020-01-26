@@ -29,13 +29,12 @@ public class EventService {
         this.exceededEventService = exceededEventService;
     }
 
-    public List<EventDTO> findForToday() {
+    public List<EventDTO> findForTodayByUserId(Long userId) {
 
         List<EventDTO> eventDTOS = new ArrayList<>();
 
-        eventRepo.findAllConsumedFromTodayByUserId(ContextUtils.getPrincipal().getId())
-                .forEach(event -> eventDTOS.add(eventToEventDTO(event))
-                );
+        eventRepo.findAllConsumedFromTodayByUserId(userId)
+                .forEach(event -> eventDTOS.add(eventToEventDTO(event)));
         return eventDTOS;
     }
 
