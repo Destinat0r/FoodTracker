@@ -105,7 +105,6 @@ public class UserController {
     @PostMapping(value = "/use", params = "consume")
     public String consume(
             @ModelAttribute("food") FoodDTO food,
-            @RequestParam("amount") BigDecimal amount,
             BindingResult bindingResult,
             Model model) {
 
