@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Repository
-public interface BiometricRepository extends JpaRepository<Biometrics, Long> {
+public interface BiometricRepo extends JpaRepository<Biometrics, Long> {
 
     @Transactional
     @Modifying

@@ -1,9 +1,8 @@
 package org.training.food_tracker.services;
 
 import org.training.food_tracker.dto.UserDTO;
-import org.training.food_tracker.model.Lifestyle;
 import org.training.food_tracker.model.Sex;
-import org.training.food_tracker.repo.BiometricRepository;
+import org.training.food_tracker.repo.BiometricRepo;
 import org.training.food_tracker.model.Biometrics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,19 +11,19 @@ import java.math.BigDecimal;
 
 @Service
 public class BiometricService {
-    private BiometricRepository biometricRepository;
+    private BiometricRepo biometricRepo;
 
     @Autowired
-    public BiometricService(BiometricRepository biometricRepository) {
-        this.biometricRepository = biometricRepository;
+    public BiometricService(BiometricRepo biometricRepo) {
+        this.biometricRepo = biometricRepo;
     }
 
     public void create(Biometrics biometrics) {
-        biometricRepository.save(biometrics);
+        biometricRepo.save(biometrics);
     }
 
     public int update(UserDTO userDTO) {
-        return biometricRepository.updateByOwnerId(
+        return biometricRepo.updateByOwnerId(
                 userDTO.getId(),
                 userDTO.getAge(),
                 userDTO.getSex().toString(),
