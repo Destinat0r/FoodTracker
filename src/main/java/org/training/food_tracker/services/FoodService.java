@@ -85,7 +85,7 @@ public class FoodService {
 
     public void registerConsumption(FoodDTO foodDTO) throws FoodNotFoundException {
         User user = ContextUtils.getPrincipal();
-        Food food = foodDtoToFood(foodDTO);
+        Food food = foodDTOToFood(foodDTO);
 
         eventService.createConsumeEvent(food, foodDTO.getAmount(), user);
 
@@ -128,7 +128,7 @@ public class FoodService {
                        .build();
     }
 
-    public Food foodDtoToFood(FoodDTO foodDTO) throws FoodNotFoundException {
+    public Food foodDTOToFood(FoodDTO foodDTO) throws FoodNotFoundException {
         return foodRepo.findByNameAndOwner(foodDTO.getName(), ContextUtils.getPrincipal())
                        .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDTO.getName() + " not found."));
     }
