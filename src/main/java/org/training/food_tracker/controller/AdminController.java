@@ -65,6 +65,7 @@ public class AdminController {
 
     @GetMapping("/user")
     public String getUserProfile(@RequestParam Long id, Model model) {
+        log.debug("Getting user with id: {}", id);
         try {
             model.addAttribute("userDTO", userService.getUserDTOById(id));
             model.addAttribute("userId", id);
@@ -72,16 +73,16 @@ public class AdminController {
             model.addAttribute("message", e.getMessage());
             return "errors/no_such_user";
         }
-
+        log.debug("User has been found. Returning user page");
         return "admin/user_profile";
     }
 
-    @PostMapping("/update/user/{id}")
+    @PostMapping("/user/update/")
     public String updateUser(
-        @PathVariable("id") Long id,
         @Valid UserDTO userDTO,
         BindingResult bindingResult) {
 
+            Long id = userDTO.getId();
             log.debug("Updating user {} with id {}", userDTO, id);
 
             if (bindingResult.hasErrors()) {
@@ -96,7 +97,7 @@ public class AdminController {
             log.debug("Updating user");
             userService.update(userDTO);
 
-            return "redirect:/history/user/" + id;
+            return "redirect:/admin/user?id=" + id;
     }
 
     @GetMapping("/history/user/{id}")
