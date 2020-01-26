@@ -64,7 +64,7 @@ public class UserController {
         User user = ContextUtils.getPrincipal();
         UserDTO userDTO = userService.getCurrentUserDTO();
 
-        model.addAttribute("allCommonFood", foodService.findAllCommonFoodExcludingPersonalByUserIdInDTO(user.getId()));
+        model.addAttribute("allCommonFood", foodService.findAllCommonExcludingPersonalByUserIdInDTO(user.getId()));
 
         model.addAttribute("food", new FoodDTO());
         model.addAttribute("usersFoodDTOs", foodService.findAllByOwnerInDTOs(user));
@@ -81,7 +81,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
 
-        List<FoodDTO> allFood = foodService.findAllCommonFoodInDtos();
+        List<FoodDTO> allFood = foodService.findAllCommonInDtos();
         model.addAttribute("allFood", allFood);
 
         return "food_list";
@@ -126,7 +126,7 @@ public class UserController {
     @PostMapping(value = "/use", params = "delete")
     public String delete(@ModelAttribute("userFood") FoodDTO food) {
 
-        foodService.removeByFoodNameAndUserId(food.getName(), ContextUtils.getPrincipal());
+        foodService.removeByNameAndUserId(food.getName(), ContextUtils.getPrincipal());
         return "redirect:/user/main";
     }
 

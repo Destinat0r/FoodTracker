@@ -49,13 +49,13 @@ public class FoodService {
         return user.getRole() == Role.ADMIN ? null : user;
     }
 
-    public List<FoodDTO> findAllCommonFoodExcludingPersonalByUserIdInDTO(Long userId) {
-        return findAllCommonFoodExcludingPersonalByUserId(userId).stream()
+    public List<FoodDTO> findAllCommonExcludingPersonalByUserIdInDTO(Long userId) {
+        return findAllCommonExcludingPersonalByUserId(userId).stream()
                        .map(this::foodToFoodDto)
                        .collect(Collectors.toList());
     }
 
-    private List<Food> findAllCommonFoodExcludingPersonalByUserId(Long userId) {
+    private List<Food> findAllCommonExcludingPersonalByUserId(Long userId) {
         return foodRepo.findAllCommonExcludingPersonalByUserId(userId);
     }
 
@@ -75,11 +75,11 @@ public class FoodService {
         return foodRepo.findById(id);
     }
 
-    public void removeByFoodNameAndUserId(String foodName, User user) {
+    public void removeByNameAndUserId(String foodName, User user) {
         foodRepo.removeByNameAndOwner(foodName, user);
     }
 
-    public List<FoodDTO> findAllCommonFoodInDtos() {
+    public List<FoodDTO> findAllCommonInDtos() {
         return foodRepo.findAllCommon().stream().map(this::foodToFoodDto).collect(Collectors.toList());
     }
 

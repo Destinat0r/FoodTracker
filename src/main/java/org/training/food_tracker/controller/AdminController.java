@@ -46,7 +46,7 @@ public class AdminController {
 
     @GetMapping("/food_list")
     public String getFoodList(Model model) {
-        List<FoodDTO> allFood = foodService.findAllCommonFoodInDtos();
+        List<FoodDTO> allFood = foodService.findAllCommonInDtos();
         model.addAttribute("allFood", allFood);
         return "admin/food_list";
     }
