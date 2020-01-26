@@ -5,14 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
+import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
+import org.training.food_tracker.services.BiometricService;
 import org.training.food_tracker.services.EventService;
 import org.training.food_tracker.services.FoodService;
 import org.training.food_tracker.services.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -24,12 +28,15 @@ public class AdminController {
     private FoodService foodService;
     private UserService userService;
     private EventService eventService;
+    private BiometricService biometricService;
 
     @Autowired
-    public AdminController(FoodService foodService, UserService userService, EventService eventService) {
+    public AdminController(FoodService foodService, UserService userService, EventService eventService,
+            BiometricService biometricService) {
         this.foodService = foodService;
         this.userService = userService;
         this.eventService = eventService;
+        this.biometricService = biometricService;
     }
 
     @GetMapping("/main")
@@ -67,6 +74,29 @@ public class AdminController {
         }
 
         return "admin/user_profile";
+    }
+
+    @PostMapping("/update/user/{id}")
+    public String updateUser(
+        @PathVariable("id") Long id,
+        @Valid UserDTO userDTO,
+        BindingResult bindingResult) {
+
+            log.debug("Updating user {} with id {}", userDTO, id);
+
+            if (bindingResult.hasErrors()) {
+                log.warn("Errors in input: {}", bindingResult.getAllErrors());
+                log.warn(" Redirecting back to profile");
+                return "user/profile";
+            }
+
+            log.debug("updating biometrics");
+            biometricService.update(userDTO);
+
+            log.debug("Updating user");
+            userService.update(userDTO);
+
+            return "redirect:/history/user/" + id;
     }
 
     @GetMapping("/history/user/{id}")
