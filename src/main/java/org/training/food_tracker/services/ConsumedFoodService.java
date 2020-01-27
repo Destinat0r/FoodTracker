@@ -32,7 +32,7 @@ public class ConsumedFoodService {
                 ConsumedFood.builder()
                         .food(foodDTO.getName())
                         .amount(foodDTO.getAmount())
-                        .totalCalories(foodDTO.getCalories())
+                        .totalCalories(foodDTO.getTotalCalories())
                         .day(day)
                         .time(LocalTime.now())
                         .build()

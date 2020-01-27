@@ -45,7 +45,7 @@
 
                     <tr th:each="food : ${allFood}">
                         <td th:text="${food.name}"></td>
-                        <td th:text="${food.calories}"></td>
+                        <td th:text="${food.getTotalCalories}"></td>
                     </tr>
                     </tbody>
                 </table>

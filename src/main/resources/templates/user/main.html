@@ -53,7 +53,8 @@
 
                         <td><span th:text="${userFood.name}"></span></td>
                         <form class="form-inline needs-validation" role="form" th:action="@{/user/use}" th:object="${userFood}" method="post">
-                            <td th:text="${userFood.calories}"></td>
+                            <td th:text="${userFood.totalCalories}"></td>
+                            <input type="hidden" name="totalCalories" th:value="${userFood.totalCalories}" >
                             <td>
                                 <div class="form-group">
                                     <input type="hidden" name="name" th:value="${userFood.name}" class="form-control">
@@ -119,11 +120,11 @@
 
                     <tr th:each="nextFood : ${allCommonFood}">
                         <td><span th:text="${nextFood.name}" ></span></td>
-                        <td th:text="${nextFood.calories}"></td>
+                        <td th:text="${nextFood.getTotalCalories}"></td>
                         <td>
                             <form th:action="@{/user/add}" method="post" th:object="${nextFood}" novalidate>
                                 <input type="hidden" name="name" th:value="${nextFood.name}">
-                                <input type="hidden" name="calories" th:value="${nextFood.calories}">
+                                <input type="hidden" name="calories" th:value="${nextFood.getTotalCalories}">
                                 <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
                             </form>
                         </td>

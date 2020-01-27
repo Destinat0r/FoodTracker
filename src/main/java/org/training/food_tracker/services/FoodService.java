@@ -2,9 +2,6 @@ package org.training.food_tracker.services;
 
 import org.training.food_tracker.dto.ConsumedStatsDTO;
 import org.training.food_tracker.model.*;
-import org.training.food_tracker.repo.ConsumedFoodRepo;
-import org.training.food_tracker.repo.DayRepo;
-import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
 import org.training.food_tracker.repo.FoodRepo;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.utils.ContextUtils;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +32,7 @@ public class FoodService {
     public void add(FoodDTO foodDTO) {
         Food food = Food.builder()
                         .name(foodDTO.getName())
-                        .calories(foodDTO.getCalories())
+                        .calories(foodDTO.getTotalCalories())
                         .owner(getOwner())
                         .build();
         foodRepo.save(food);
@@ -67,7 +63,7 @@ public class FoodService {
         foodRepo.findByOwnerOrderByIdDesc(user)
                 .forEach(food -> foodDTOS.add(FoodDTO.builder()
                                                 .name(food.getName())
-                                                .calories(food.getCalories())
+                                                .totalCalories(food.getCalories())
                                                 .build())
         );
         return foodDTOS;
@@ -113,7 +109,7 @@ public class FoodService {
     private FoodDTO foodToFoodDTO(Food food) {
         return FoodDTO.builder()
                        .name(food.getName())
-                       .calories(food.getCalories())
+                       .totalCalories(food.getCalories())
                        .build();
     }
 

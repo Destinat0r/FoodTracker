@@ -2,6 +2,7 @@ package org.training.food_tracker.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -12,7 +13,10 @@ import java.math.BigDecimal;
 @ToString
 
 public class FoodDTO {
+    @NotNull
     private String name;
-    private BigDecimal calories;
+    @NotNull
+    private BigDecimal totalCalories;
+    @NotNull
     private BigDecimal amount;
 }

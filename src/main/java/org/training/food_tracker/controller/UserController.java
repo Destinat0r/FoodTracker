@@ -112,15 +112,14 @@ public class UserController {
 
     @PostMapping(value = "/use", params = "consume")
     public String consume(
-            @ModelAttribute("food") FoodDTO foodDTO,
+            @Valid FoodDTO foodDTO,
             BindingResult bindingResult,
             Model model) {
 
         log.debug("Obtained foodDTO from client: {} ", foodDTO);
 
         if (bindingResult.hasErrors()) {
-            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
-            model.mergeAttributes(errors);
+            return "main";
         }
 
         log.debug("Registering consumption");
