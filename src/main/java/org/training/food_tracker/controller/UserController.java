@@ -112,20 +112,19 @@ public class UserController {
 
     @PostMapping(value = "/use", params = "consume")
     public String consume(
-            @ModelAttribute("food") FoodDTO food,
+            @ModelAttribute("food") FoodDTO foodDTO,
             BindingResult bindingResult,
             Model model) {
+
+        log.debug("Obtained foodDTO from client: {} ", foodDTO);
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
         }
 
-        try {
-            foodService.registerConsumption(food);
-        } catch (FoodNotFoundException e) {
-            return "errors/food_not_found";
-        }
+        log.debug("Registering consumption");
+        foodService.registerConsumption(foodDTO);
 
         return "redirect:/user/main";
     }
