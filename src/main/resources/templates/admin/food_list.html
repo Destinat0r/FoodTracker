@@ -21,7 +21,7 @@
             </div>
 
             <div class="col">
-                <input type="number" min="1" th:required="true" name="calories"
+                <input type="number" min="1" th:required="true" name="totalCalories" th:value="${food.totalCalories}"
                        class="form-control" th:placeholder="#{food.calories}" pattern="\d+" required/>
             </div>
 
@@ -45,7 +45,7 @@
 
                     <tr th:each="food : ${allFood}">
                         <td th:text="${food.name}"></td>
-                        <td th:text="${food.getTotalCalories}"></td>
+                        <td th:text="${food.totalCalories}"></td>
                     </tr>
                     </tbody>
                 </table>
