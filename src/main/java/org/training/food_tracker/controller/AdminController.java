@@ -46,13 +46,16 @@ public class AdminController {
 
     @GetMapping("/food_list")
     public String getFoodList(Model model) {
+        log.debug("loading food...");
         List<FoodDTO> allFood = foodService.findAllCommonInDtos();
         model.addAttribute("allFood", allFood);
+        model.addAttribute("food", new FoodDTO());
         return "admin/food_list";
     }
 
     @PostMapping("/food/add")
-    public String addToCommonFood(@ModelAttribute("food") FoodDTO food) {
+    public String addToCommonFood(@Valid FoodDTO food) {
+        log.debug("Obtained entered food {}, adding to DB", food);
         foodService.add(food);
         return "redirect:/admin/food_list";
     }
