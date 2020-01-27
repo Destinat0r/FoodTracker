@@ -83,7 +83,7 @@
         <div class="col">
             <div class="card card-body" id="consumed">
                 <h2 th:text="#{food.consumed_today}"></h2>
-                <table class="table table-striped border-dark" th:object="${todayEventsDTOs}">
+                <table class="table table-striped border-dark" th:object="${currentDay}">
                     <thead>
                     <tr>
                         <th scope="col" th:text="#{food.table.name}"></th>
@@ -93,10 +93,10 @@
                     </thead>
                     <tbody>
 
-                    <tr th:each="event : ${todayEventsDTOs}">
-                        <td th:text="${event.foodName}"></td>
-                        <td th:text="${event.foodAmount}"></td>
-                        <td th:text="${event.totalCalories}"></td>
+                    <tr th:each="consumedFood : ${currentDay.consumedFoods}">
+                        <td th:text="${consumedFood.food}"></td>
+                        <td th:text="${consumedFood.amount}"></td>
+                        <td th:text="${consumedFood.totalCalories}"></td>
                     </tr>
                     </tbody>
                 </table>
