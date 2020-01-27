@@ -1,5 +1,7 @@
 package org.training.food_tracker.services;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.training.food_tracker.dto.ConsumedStatsDTO;
 import org.training.food_tracker.model.*;
 import org.training.food_tracker.repo.FoodRepo;
@@ -14,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+@Slf4j
+@Log4j2
 
 @Service
 public class FoodService {
@@ -30,6 +35,7 @@ public class FoodService {
     }
 
     public void add(FoodDTO foodDTO) {
+        log.debug("adding foodDTO: {}", foodDTO);
         Food food = Food.builder()
                         .name(foodDTO.getName())
                         .calories(foodDTO.getTotalCalories())
