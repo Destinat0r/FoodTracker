@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
+import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.Day;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
@@ -18,6 +19,7 @@ import org.training.food_tracker.services.*;
 import org.training.food_tracker.utils.ContextUtils;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -167,7 +169,9 @@ public class UserController {
             @Valid UserDTO userDTO,
             BindingResult bindingResult) {
 
-        Long userId = ContextUtils.getPrincipal().getId();
+        User currentUser = ContextUtils.getPrincipal();
+
+        Long userId = currentUser.getId();
 
         userDTO.setId(userId);
         log.debug("Updating user {} with id {}", userDTO, userId);
@@ -181,8 +185,25 @@ public class UserController {
         log.debug("updating biometrics");
         biometricService.update(userDTO);
 
+        updateUser(currentUser, userDTO);
+
         log.debug("Updating user");
         userService.update(userDTO);
         return "redirect:/user/profile";
+    }
+
+    private void updateUser(User user, UserDTO userDTO) {
+        user.setEmail(userDTO.getEmail());
+        user.setFullName(userDTO.getFullName());
+        user.setNationalName(userDTO.getNationalName());
+
+        Biometrics biometrics = user.getBiometrics();
+
+        biometrics.setAge(userDTO.getAge());
+        biometrics.setHeight(userDTO.getHeight());
+        biometrics.setWeight(userDTO.getWeight());
+        biometrics.setSex(userDTO.getSex());
+        biometrics.setLifestyle(userDTO.getLifestyle());
+        biometrics.setDailyNorm();
     }
 }
