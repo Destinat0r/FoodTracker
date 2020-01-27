@@ -22,8 +22,8 @@ public class ConsumedFood {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @JoinColumn(name = "day_id", nullable = false)
     @ManyToOne
+    @JoinColumn(name="day_id", nullable=false)
     private Day day;
 
     @Column(name = "food", nullable = false)
