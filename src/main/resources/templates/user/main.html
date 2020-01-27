@@ -120,11 +120,11 @@
 
                     <tr th:each="nextFood : ${allCommonFood}">
                         <td><span th:text="${nextFood.name}" ></span></td>
-                        <td th:text="${nextFood.getTotalCalories}"></td>
+                        <td th:text="${nextFood.totalCalories}"></td>
                         <td>
                             <form th:action="@{/user/add}" method="post" th:object="${nextFood}" novalidate>
                                 <input type="hidden" name="name" th:value="${nextFood.name}">
-                                <input type="hidden" name="calories" th:value="${nextFood.getTotalCalories}">
+                                <input type="hidden" name="calories" th:value="${nextFood.totalCalories}">
                                 <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
                             </form>
                         </td>
