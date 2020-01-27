@@ -1,9 +1,6 @@
 package org.training.food_tracker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -36,4 +33,12 @@ public class Day {
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
+
+    public void addCalories(BigDecimal calories) {
+        totalCalories = totalCalories.add(calories);
+    }
+
+    @Override public String toString() {
+        return "Day{" + "id=" + id + ", consumedFoods=" + consumedFoods + '}';
+    }
 }
