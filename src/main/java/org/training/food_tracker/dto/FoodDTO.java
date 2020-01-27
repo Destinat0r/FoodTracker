@@ -17,6 +17,5 @@ public class FoodDTO {
     private String name;
     @NotNull
     private BigDecimal totalCalories;
-    @NotNull
     private BigDecimal amount;
 }
