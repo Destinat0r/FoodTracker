@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="col">
-                            <input type="number" step="1" min="1" th:required="true" name="calories" id="calories"
+                            <input type="number" step="1" min="1" th:required="true" name="calories" th:value="${food.totalCalories}" id="calories"
                                    class="form-control" th:placeholder="#{food.calories}" pattern="\d+" required/>
                         </div>
 
@@ -124,7 +124,7 @@
                         <td>
                             <form th:action="@{/user/add}" method="post" th:object="${nextFood}" novalidate>
                                 <input type="hidden" name="name" th:value="${nextFood.name}">
-                                <input type="hidden" name="calories" th:value="${nextFood.totalCalories}">
+                                <input type="hidden" name="totalCalories" th:value="${nextFood.totalCalories}">
                                 <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
                             </form>
                         </td>
