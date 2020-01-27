@@ -79,8 +79,7 @@ public class UserController {
         model.addAttribute("currentDay", currentDay);
 
         log.debug("getting consumedStatsDTO");
-        model.addAttribute("consumedStatsDTO",
-                dayService.getDayStatsForUser(user, currentDay));
+        model.addAttribute("consumedStatsDTO", dayService.getDayStatsForUser(user, currentDay));
 
         return "user/main";
     }
@@ -96,16 +95,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String add(
-            @Valid FoodDTO userFoodDTO,
-            BindingResult bindingResult,
-            Model model) {
-
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-        }
-
+    public String add(FoodDTO userFoodDTO) {
         foodService.add(userFoodDTO);
         return "redirect:/user/main";
     }
