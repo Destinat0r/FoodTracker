@@ -8,21 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.training.food_tracker.dto.EventDTOsPack;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
+import org.training.food_tracker.model.Day;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
-import org.training.food_tracker.services.BiometricService;
-import org.training.food_tracker.services.EventService;
-import org.training.food_tracker.services.FoodService;
-import org.training.food_tracker.services.UserService;
+import org.training.food_tracker.services.*;
 import org.training.food_tracker.utils.ContextUtils;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +29,7 @@ import java.util.Map;
 public class UserController {
 
     private FoodService foodService;
-    private EventService eventService;
+    private DayService dayService;
     private UserService userService;
     private BiometricService biometricService;
 
@@ -44,13 +39,13 @@ public class UserController {
     }
 
     @Autowired
-    public void setEventService(EventService eventService) {
-        this.eventService = eventService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setDayService(DayService dayService) {
+        this.dayService = dayService;
     }
 
     @Autowired
@@ -60,19 +55,30 @@ public class UserController {
 
     @GetMapping("/main")
     public String getMain(Model model) {
+        log.debug("loading user's main");
 
         User user = ContextUtils.getPrincipal();
         UserDTO userDTO = userService.getCurrentUserDTO();
 
+        log.debug("setting allCommonFood");
         model.addAttribute("allCommonFood", foodService.findAllCommonExcludingPersonalByUserIdInDTO(user.getId()));
 
         model.addAttribute("food", new FoodDTO());
+
+        log.debug("setting usersFoodDTOs");
         model.addAttribute("usersFoodDTOs", foodService.findAllByOwnerInDTOs(user));
 
-        model.addAttribute("consumedStatsDTO", foodService.getConsumedStatsForUserAndDate(user, LocalDate.now()));
-
+        log.debug("setting userDTO {}", userDTO);
         model.addAttribute("userDTO", userDTO);
-        model.addAttribute("todayEventsDTOs", eventService.findForTodayByUserId(user.getId()));
+
+        log.debug("getting current day");
+        Day currentDay = dayService.getCurrentDayOfUser(user);
+
+        model.addAttribute("currentDay", currentDay);
+
+        log.debug("getting consumedStatsDTO");
+        model.addAttribute("consumedStatsDTO",
+                dayService.getDayStatsForUser(user, currentDay));
 
         return "user/main";
     }
@@ -129,16 +135,16 @@ public class UserController {
         return "redirect:/user/main";
     }
 
-    @GetMapping("/history")
-    public String getHistory(Model model) {
-
-        User user = ControllerUtils.getPrincipal();
-        List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(user.getId());
-
-        model.addAttribute("eventDTOsPacks", eventDTOsPacks);
-        model.addAttribute("userName", user.getUsername());
-        return "user/history";
-    }
+//    @GetMapping("/history")
+//    public String getHistory(Model model) {
+//
+//        User user = ControllerUtils.getPrincipal();
+//        List<EventDTOsPack> eventDTOsPacks = consumedFoodService.getEventDTOsPacksByUserId(user.getId());
+//
+//        model.addAttribute("eventDTOsPacks", eventDTOsPacks);
+//        model.addAttribute("userName", user.getUsername());
+//        return "user/history";
+//    }
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
