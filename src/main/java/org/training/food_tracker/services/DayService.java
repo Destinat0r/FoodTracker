@@ -35,7 +35,9 @@ public class DayService {
 
         Optional<Day> optionalDay = dayRepo.findByUserAndDate(user, LocalDate.now());
         if (optionalDay.isPresent()) {
-            return optionalDay.get();
+            Day day = optionalDay.get();
+            sortConsumedFoodByTimeDesc(day.getConsumedFoods());
+            return day;
         }
         Day newDay = Day.builder()
                          .date(LocalDate.now())
@@ -45,6 +47,10 @@ public class DayService {
                          .build();
         dayRepo.save(newDay);
         return newDay;
+    }
+
+    private void sortConsumedFoodByTimeDesc(List<ConsumedFood> foods) {
+        foods.sort((food1, food2) -> (food2.getTime().toSecondOfDay() - food1.getTime().toSecondOfDay()));
     }
 
     public List<Day> getAllDaysByUser(User user) {
