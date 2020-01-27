@@ -24,7 +24,7 @@ public class ConsumedFood {
     private Day day;
 
     @Column(name = "food", nullable = false)
-    private String food;
+    private String name;
 
     @Column(name = "amount")
     private BigDecimal amount;
@@ -36,7 +36,7 @@ public class ConsumedFood {
     private LocalTime time;
 
     @Override public String toString() {
-        return "ConsumedFood{" + "food='" + food + '\'' + ", amount=" + amount + ", totalCalories=" + totalCalories
+        return "ConsumedFood{" + "food='" + name + '\'' + ", amount=" + amount + ", totalCalories=" + totalCalories
                        + '}';
     }
 }
