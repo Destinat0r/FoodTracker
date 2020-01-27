@@ -1,5 +1,7 @@
 package org.training.food_tracker.services;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.training.food_tracker.dto.ConsumedStatsDTO;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
+@Log4j2
+
 @Service
 public class DayService {
 
@@ -27,6 +32,7 @@ public class DayService {
     }
 
     public Day getCurrentDayOfUser(User user) {
+
         Optional<Day> optionalDay = dayRepo.findByUserAndDate(user, LocalDate.now());
         if (optionalDay.isPresent()) {
             return optionalDay.get();
@@ -54,8 +60,13 @@ public class DayService {
     }
 
     public ConsumedStatsDTO getDayStatsForUser(User user, Day day) {
+        log.debug("Getting day statistics for user");
+
         BigDecimal userDailyNorm = user.getBiometrics().getDailyNorm();
+        log.debug("User's daily norm {}", userDailyNorm);
+
         BigDecimal currentDayTotalCalories = day.getTotalCalories();
+        log.debug("Current day total calories: {}", currentDayTotalCalories);
         boolean isNormExceeded = false;
         BigDecimal exceededCalories;
 
@@ -65,6 +76,8 @@ public class DayService {
             exceededCalories = currentDayTotalCalories.subtract(userDailyNorm);
             isNormExceeded = true;
         }
+        log.debug("exceeded calories: {}", exceededCalories);
+
         return ConsumedStatsDTO.builder()
                        .caloriesConsumed(currentDayTotalCalories)
                        .isDailyNormExceeded(isNormExceeded)
