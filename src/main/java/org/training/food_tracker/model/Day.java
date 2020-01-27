@@ -24,8 +24,7 @@ public class Day {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "consumed_foods")
+    @OneToMany(mappedBy = "day",fetch = FetchType.EAGER)
     private List<ConsumedFood> consumedFoods;
 
     @Column(name = "total_calories")
