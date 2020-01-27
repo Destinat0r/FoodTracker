@@ -1,11 +1,11 @@
 package org.training.food_tracker.services;
 
 import org.training.food_tracker.dto.ConsumedStatsDTO;
-import org.training.food_tracker.model.Role;
+import org.training.food_tracker.model.*;
+import org.training.food_tracker.repo.ConsumedFoodRepo;
+import org.training.food_tracker.repo.DayRepo;
 import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
 import org.training.food_tracker.repo.FoodRepo;
-import org.training.food_tracker.model.Food;
-import org.training.food_tracker.model.User;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,13 @@ public class FoodService {
 
     private FoodRepo foodRepo;
     private EventService eventService;
-    private ExceededEventService exceededEventService;
+    private ConsumedFoodService consumedFoodService;
 
     @Autowired
-    public FoodService(FoodRepo foodRepo, EventService eventService, ExceededEventService exceededEventService) {
+    public FoodService(FoodRepo foodRepo, EventService eventService, ConsumedFoodService consumedFoodService) {
         this.foodRepo = foodRepo;
         this.eventService = eventService;
-        this.exceededEventService = exceededEventService;
+        this.consumedFoodService = consumedFoodService;
     }
 
     public void add(FoodDTO foodDTO) {
@@ -40,6 +41,11 @@ public class FoodService {
                         .build();
         foodRepo.save(food);
     }
+
+    public void registerConsumption(FoodDTO foodDTO) {
+        consumedFoodService.registerConsumption(foodDTO);
+    }
+
 
     private User getOwner() {
         User user = ContextUtils.getPrincipal();
@@ -79,19 +85,6 @@ public class FoodService {
         return foodRepo.findAllCommon().stream().map(this::foodToFoodDTO).collect(Collectors.toList());
     }
 
-    public void registerConsumption(FoodDTO foodDTO) throws FoodNotFoundException {
-        User user = ContextUtils.getPrincipal();
-        Food food = foodDTOToFood(foodDTO);
-
-        eventService.createConsumeEvent(food, foodDTO.getAmount(), user);
-
-        ConsumedStatsDTO stats = getConsumedStatsForUserAndDate(user, LocalDate.now());
-
-        if (stats.isDailyNormExceeded()) {
-            exceededEventService.createExceededNormEvent(user, stats.getCaloriesConsumed());
-        }
-    }
-
     public ConsumedStatsDTO getConsumedStatsForUserAndDate(User user, LocalDate date) {
         BigDecimal caloriesConsumed = getConsumedCaloriesForToday(user.getId(), date);
         boolean isDailyNormExceeded = getUserDailyNorm().compareTo(caloriesConsumed) < 0;
@@ -124,8 +117,4 @@ public class FoodService {
                        .build();
     }
 
-    private Food foodDTOToFood(FoodDTO foodDTO) throws FoodNotFoundException {
-        return foodRepo.findByNameAndOwner(foodDTO.getName(), ContextUtils.getPrincipal())
-                       .orElseThrow(() -> new FoodNotFoundException("Food with name: " + foodDTO.getName() + " not found."));
-    }
 }
