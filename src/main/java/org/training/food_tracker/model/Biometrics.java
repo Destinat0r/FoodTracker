@@ -62,7 +62,7 @@ public class Biometrics {
     }
 
     public void setDailyNorm() {
-        this.dailyNorm = calculateDailyNorm();
+        this.dailyNorm = calculateDailyNorm().setScale(2, BigDecimal.ROUND_HALF_DOWN);
     }
 
     public void setId(Long id) {
