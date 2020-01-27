@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "exceed_events", uniqueConstraints = {@UniqueConstraint(columnNames={"date", "user_id"})})
+@Table(name = "days", uniqueConstraints = {@UniqueConstraint(columnNames={"date", "user_id"})})
 public class Day {
 
     @Id
