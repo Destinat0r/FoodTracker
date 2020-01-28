@@ -9,8 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
+import org.training.food_tracker.model.Day;
+import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
 import org.training.food_tracker.services.BiometricService;
+import org.training.food_tracker.services.DayService;
 import org.training.food_tracker.services.FoodService;
 import org.training.food_tracker.services.UserService;
 
@@ -26,12 +29,15 @@ public class AdminController {
     private FoodService foodService;
     private UserService userService;
     private BiometricService biometricService;
+    private DayService dayService;
 
     @Autowired
-    public AdminController(FoodService foodService, UserService userService, BiometricService biometricService) {
+    public AdminController(FoodService foodService, UserService userService, BiometricService biometricService,
+            DayService dayService) {
         this.foodService = foodService;
         this.userService = userService;
         this.biometricService = biometricService;
+        this.dayService = dayService;
     }
 
     @GetMapping("/main")
@@ -98,23 +104,26 @@ public class AdminController {
             return "redirect:/admin/user?id=" + id;
     }
 
-//    @GetMapping("/history/user/{id}")
-//    public String getUserHistory(@PathVariable("id") Long id, Model model) {
-//        log.debug("Getting history of user with id: {}", id);
-//
-//        log.debug("Getting eventDTOsPacks");
-//        List<EventDTOsPack> eventDTOsPacks = eventService.getEventDTOsPacksByUserId(id);
-//
-//        model.addAttribute("eventDTOsPacks", eventDTOsPacks);
-//        try {
-//            model.addAttribute("userDTO", userService.getUserDTOById(id));
-//        } catch (UserNotFoundException e) {
-//            model.addAttribute("userId", id);
-//            log.error("Failed to found history of user with id {}", id, e);
-//            return "../public/error/no_such_user";
-//        }
-//        model.addAttribute("userId", id);
-//
-//        return "admin/user_history";
-//    }
+    @GetMapping("/history/user/{id}")
+    public String getUserHistory(@PathVariable("id") Long id, Model model) {
+        log.debug("Getting history of user with id: {}", id);
+
+        log.debug("Getting user by id");
+        User user = userService.findById(id);
+
+        log.debug("Getting eventDTOsPacks");
+        List<Day> userDays = dayService.getAllDaysByUser(user);
+
+        model.addAttribute("userDays", userDays);
+        try {
+            model.addAttribute("userDTO", userService.getUserDTOById(id));
+        } catch (UserNotFoundException e) {
+            model.addAttribute("userId", id);
+            log.error("Failed to found history of user with id {}", id, e);
+            return "../public/error/no_such_user";
+        }
+        model.addAttribute("userId", id);
+
+        return "admin/user_history";
+    }
 }
