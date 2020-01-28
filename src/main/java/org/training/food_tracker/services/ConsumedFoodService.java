@@ -43,7 +43,7 @@ public class ConsumedFoodService {
         log.debug("saving consumed food from foodDTO: {}", foodDTO);
         consumedFoodRepo.save(
                 ConsumedFood.builder()
-                        .food(foodDTO.getName())
+                        .name(foodDTO.getName())
                         .amount(foodDTO.getAmount())
                         .totalCalories(foodDTO.getTotalCalories().multiply(foodDTO.getAmount()))
                         .day(day)
