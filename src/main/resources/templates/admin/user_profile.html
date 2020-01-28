@@ -139,8 +139,13 @@
                     <input type="hidden" name="password" th:value="${userDTO.password}">
 
                     <div class="form-group">
+                        <a type="button" class="btn btn-light btn-block" th:href="@{/admin/history/user/{id}(id=${userId})}" th:text="#{user.profile.history}"></a>
+                    </div>
+
+                    <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" th:text="#{form.save}"></button>
                     </div>
+                    
                 </form>
             </article>
         </div>
