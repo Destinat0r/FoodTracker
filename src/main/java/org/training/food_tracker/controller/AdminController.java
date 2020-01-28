@@ -111,18 +111,10 @@ public class AdminController {
         log.debug("Getting user by id");
         User user = userService.findById(id);
 
-        log.debug("Getting userDays");
-        List<Day> daysOfUser = dayService.getAllDaysByUser(user);
-
-        model.addAttribute("daysOfUser", daysOfUser);
-        try {
-            model.addAttribute("userDTO", userService.getUserDTOById(id));
-        } catch (UserNotFoundException e) {
-            model.addAttribute("userId", id);
-            log.error("Failed to found history of user with id {}", id, e);
-            return "../public/error/no_such_user";
-        }
-        model.addAttribute("userId", id);
+        model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
+        model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("dailyNorm", user.getBiometrics().getDailyNorm());
 
         return "admin/user_history";
     }
