@@ -11,12 +11,10 @@
 <div th:insert="~{user/navbar :: nb}"></div>
 
 <div class="container" id="first">
-        <!--<h3 th:inline="text">[[#{hello}]], [[${#httpServletRequest.remoteUser}]]!</h3>-->
 
-    <hr>
-    <div class="row justify-content-center bottom-tables">
-        <div class="col">
-            <div class="card card-body mb-2">
+    <div class="row justify-content-center">
+        <div class="col col-7">
+            <div class="card card-body mb-2 bottom-tables">
                 <h2 th:text="#{food.personal}"></h2>
 
                 <form th:action="@{/user/add}" method="post" class="needs-validation" role="form" th:object="${food}" novalidate>
@@ -106,7 +104,7 @@
     </div>
 
     <div class="row">
-        <div class="col col-6 col-centered">
+        <div class="col col-6 col-centered bottom-tables">
             <div class="card card-body" id="commonFood">
                 <h2 th:text="#{food.common}"></h2>
                 <table class="table table-striped border-dark">
