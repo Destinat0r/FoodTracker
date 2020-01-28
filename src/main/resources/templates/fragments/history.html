@@ -12,19 +12,20 @@
 <div class="container" th:fragment="event_table">
     <div class="row">
         <div class="col col-6 col-centered">
-            <div th:if="${#lists.isEmpty(eventDTOsPacks)}" class="text-center">
+            <div th:if="${#lists.isEmpty(daysOfUser)}" class="text-center">
                 <h2>No history yet</h2>
             </div>
-            <div th:if="${not #lists.isEmpty(eventDTOsPacks)}">
+            <div th:if="${not #lists.isEmpty(daysOfUser)}">
                 <h1 align="center" th:text="${userName}"></h1>
 
                 <div class="card card-body">
                 <table>
-                    <tr class="list-group" th:each="eventDTOsPack : ${eventDTOsPacks}">
+                    <tr class="list-group" th:each="day : ${daysOfUser}">
 
-                            <div class="alert" th:classappend="${eventDTOsPack.normExceeded} ? 'alert-danger'">
+<!--                            <div class="alert" th:classappend="${eventDTOsPack.normExceeded} ? 'alert-danger'">-->
+                            <div>
                                 <!--th:text="${eventDTOsPack.normExceeded} ? 'NORM EXCEEDED'">-->   
-                                <h5 class="list-group-item text-center" th:text="${eventDTOsPack.date}"></h5>
+                                <h5 class="list-group-item text-center" th:text="${day.date}"></h5>
                             </div>
 
                             <table class="table table-striped">
@@ -36,16 +37,16 @@
                                     <th th:text="#{history.total_calories}"></th>
                                 </tr>
                                 </thead>
-                                <tr th:each="event : ${eventDTOsPack.eventsOfTheDay}">
-                                    <td th:text="${event.timestamp.toLocalTime()}"></td>
-                                    <td th:text="${event.foodName}"></td>
-                                    <td th:text="${event.foodAmount}"></td>
-                                    <td th:text="${event.totalCalories}"></td>
+                                <tr th:each="food : ${day.consumedFoods}">
+                                    <td th:text="${food.time}"></td>
+                                    <td th:text="${food.name}"></td>
+                                    <td th:text="${food.amount}"></td>
+                                    <td th:text="${food.totalCalories}"></td>
                                 </tr>
                             </table>
                         <hr>
-                            <h5 th:text="#{history.total_calories} + ' ' + ${eventDTOsPack.totalCalories}"></h5>
-                            <h5 th:text="${eventDTOsPack.normExceeded} ? #{history.exceeded_calories} + ' ' + ${eventDTOsPack.exceededCalories}"></h5>
+                            <h5 th:text="#{history.total_calories} + ' ' + ${day.totalCalories}"></h5>
+<!--                            <h5 th:text="#{history.exceeded_calories} + ' ' + ${day.exceededCalories}"></h5>-->
                         <hr class="style-seven">
                     </tr>
                 </table>
