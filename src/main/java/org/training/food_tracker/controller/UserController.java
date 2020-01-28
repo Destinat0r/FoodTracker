@@ -129,6 +129,7 @@ public class UserController {
         model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
         model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
         model.addAttribute("userName", user.getUsername());
+        model.addAttribute("dailyNorm", user.getBiometrics().getDailyNorm());
         return "user/history";
     }
 
@@ -177,7 +178,6 @@ public class UserController {
     }
 
     private void updateUser(User user, UserDTO userDTO) {
-        user.setEmail(userDTO.getEmail());
         user.setFullName(userDTO.getFullName());
         user.setNationalName(userDTO.getNationalName());
 
