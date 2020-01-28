@@ -41,7 +41,7 @@ public class AdminController {
     }
 
     @GetMapping("/main")
-    public String getMain(Model model) {
+    public String getMain() {
         return "admin/index";
     }
 
