@@ -49,7 +49,11 @@ public class DayService {
         foods.sort((food1, food2) -> (food2.getTime().toSecondOfDay() - food1.getTime().toSecondOfDay()));
     }
 
-    public Map<Day, ConsumeStatsDTO> mapDaysToConsumeStats(List<Day> days) {
+    public Map<Day, ConsumeStatsDTO> getDaysToConsumeStatsForUser(User user) {
+        return mapDaysToConsumeStats(getAllDaysByUser(user));
+    }
+
+    private Map<Day, ConsumeStatsDTO> mapDaysToConsumeStats(List<Day> days) {
         Map<Day, ConsumeStatsDTO> dayToConsumeStats = new LinkedHashMap<>();
         days.forEach(day -> dayToConsumeStats.put(day, getConsumeStatsForDay(day)));
         return dayToConsumeStats;
