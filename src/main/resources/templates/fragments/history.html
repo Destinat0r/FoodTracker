@@ -23,8 +23,7 @@
                     <tr class="list-group" th:each="day : ${daysAndStats}">
 
                             <div class="alert" th:classappend="${day.value.DailyNormExceeded} ? 'alert-danger'">
-                            <div>
-                                <!--th:text="${eventDTOsPack.normExceeded} ? 'NORM EXCEEDED'">-->   
+                                <!--th:text="${eventDTOsPack.normExceeded} ? 'NORM EXCEEDED'">-->
                                 <h5 class="list-group-item text-center" th:text="${day.key.date}"></h5>
                             </div>
 
