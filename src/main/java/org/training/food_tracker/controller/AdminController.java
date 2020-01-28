@@ -111,10 +111,10 @@ public class AdminController {
         log.debug("Getting user by id");
         User user = userService.findById(id);
 
-        log.debug("Getting eventDTOsPacks");
-        List<Day> userDays = dayService.getAllDaysByUser(user);
+        log.debug("Getting userDays");
+        List<Day> daysOfUser = dayService.getAllDaysByUser(user);
 
-        model.addAttribute("userDays", userDays);
+        model.addAttribute("daysOfUser", daysOfUser);
         try {
             model.addAttribute("userDTO", userService.getUserDTOById(id));
         } catch (UserNotFoundException e) {
