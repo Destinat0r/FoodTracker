@@ -95,7 +95,7 @@
                     <tbody>
 
                     <tr th:each="consumedFood : ${currentDay.consumedFoods}">
-                        <td th:text="${consumedFood.food}"></td>
+                        <td th:text="${consumedFood.name}"></td>
                         <td th:text="${consumedFood.amount}"></td>
                         <td th:text="${consumedFood.totalCalories}"></td>
                     </tr>
