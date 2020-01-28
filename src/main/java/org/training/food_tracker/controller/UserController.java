@@ -100,8 +100,7 @@ public class UserController {
     @PostMapping(value = "/use", params = "consume")
     public String consume(
             @Valid FoodDTO foodDTO,
-            BindingResult bindingResult,
-            Model model) {
+            BindingResult bindingResult) {
 
         log.debug("Obtained foodDTO from client: {} ", foodDTO);
 
