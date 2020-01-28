@@ -125,16 +125,14 @@ public class UserController {
         return "redirect:/user/main";
     }
 
-//    @GetMapping("/history")
-//    public String getHistory(Model model) {
-//
-//        User user = ControllerUtils.getPrincipal();
-//        List<EventDTOsPack> eventDTOsPacks = consumedFoodService.getEventDTOsPacksByUserId(user.getId());
-//
-//        model.addAttribute("eventDTOsPacks", eventDTOsPacks);
-//        model.addAttribute("userName", user.getUsername());
-//        return "user/history";
-//    }
+    @GetMapping("/history")
+    public String getHistory(Model model) {
+        User user = ControllerUtils.getPrincipal();
+
+        model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
+        model.addAttribute("userName", user.getUsername());
+        return "user/history";
+    }
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
