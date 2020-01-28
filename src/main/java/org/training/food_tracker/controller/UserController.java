@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -123,13 +124,17 @@ public class UserController {
 
     @GetMapping("/history")
     public String getHistory(Model model) {
-        User user = ControllerUtils.getPrincipal();
+        User user = ContextUtils.getPrincipal();
 
-        model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
-        model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
+        addDaysAndStatsModelAttributes(model, user);
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("dailyNorm", user.getBiometrics().getDailyNorm());
         return "user/history";
+    }
+
+    @Transactional void addDaysAndStatsModelAttributes(Model model, User user) {
+        model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
+        model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
     }
 
     @GetMapping("/profile")
@@ -166,10 +171,10 @@ public class UserController {
             return "user/profile";
         }
 
+        updateUser(currentUser, userDTO);
+
         log.debug("updating biometrics");
         biometricService.update(userDTO);
-
-        updateUser(currentUser, userDTO);
 
         log.debug("Updating user");
         userService.update(userDTO);
