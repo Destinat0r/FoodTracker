@@ -9,8 +9,6 @@ import org.training.food_tracker.model.ConsumedFood;
 import org.training.food_tracker.model.Day;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.DayRepo;
-import org.training.food_tracker.repo.exceptions.DayNotFoundException;
-import org.training.food_tracker.utils.ContextUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -54,7 +52,7 @@ public class DayService {
     }
 
     public List<Day> getAllDaysByUser(User user) {
-        return dayRepo.findAllByUser(user);
+        return dayRepo.findAllByUserOrderByDateDesc(user);
     }
 
     public BigDecimal getTotalCaloriesOfDay(Day day) {

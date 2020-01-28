@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface DayRepo extends JpaRepository<Day, Long> {
 
     Optional<Day> findByUserAndDate(User user, LocalDate date);
-    List<Day> findAllByUser(User user);
+    List<Day> findAllByUserOrderByDateDesc(User user);
 }
