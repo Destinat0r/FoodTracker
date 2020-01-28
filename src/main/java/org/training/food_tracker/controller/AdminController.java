@@ -82,9 +82,7 @@ public class AdminController {
     }
 
     @PostMapping("/user/update/")
-    public String updateUser(
-        @Valid UserDTO userDTO,
-        BindingResult bindingResult) {
+    public String updateUser(@Valid UserDTO userDTO, BindingResult bindingResult) {
 
             Long id = userDTO.getId();
             log.debug("Updating user {} with id {}", userDTO, id);
@@ -109,7 +107,15 @@ public class AdminController {
         log.debug("Getting history of user with id: {}", id);
 
         log.debug("Getting user by id");
-        User user = userService.findById(id);
+
+        User user;
+
+        try {
+            user = userService.findById(id);
+        } catch (UserNotFoundException e) {
+            log.error("User not found by id: {}", id, e);
+            return "../public/error/no_such_user";
+        }
 
         model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
         model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
