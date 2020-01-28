@@ -13,15 +13,12 @@ import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.Day;
 import org.training.food_tracker.model.User;
-import org.training.food_tracker.repo.exceptions.FoodNotFoundException;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
 import org.training.food_tracker.services.*;
 import org.training.food_tracker.utils.ContextUtils;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Log4j2
@@ -79,7 +76,7 @@ public class UserController {
         model.addAttribute("currentDay", currentDay);
 
         log.debug("getting consumedStatsDTO");
-        model.addAttribute("consumedStatsDTO", dayService.getDayStatsForUser(user, currentDay));
+        model.addAttribute("consumedStatsDTO", dayService.getConsumeStatsForDay(currentDay));
 
         return "user/main";
     }

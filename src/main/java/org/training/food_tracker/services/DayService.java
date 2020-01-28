@@ -12,9 +12,7 @@ import org.training.food_tracker.repo.DayRepo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Log4j2
@@ -51,6 +49,12 @@ public class DayService {
         foods.sort((food1, food2) -> (food2.getTime().toSecondOfDay() - food1.getTime().toSecondOfDay()));
     }
 
+    public Map<Day, ConsumeStatsDTO> mapDaysToConsumeStats(List<Day> days) {
+        Map<Day, ConsumeStatsDTO> dayToConsumeStats = new LinkedHashMap<>();
+        days.forEach(day -> dayToConsumeStats.put(day, getConsumeStatsForDay(day)));
+        return dayToConsumeStats;
+    }
+
     public List<Day> getAllDaysByUser(User user) {
         return dayRepo.findAllByUserOrderByDateDesc(user);
     }
@@ -63,10 +67,10 @@ public class DayService {
         return totalCalories;
     }
 
-    public ConsumeStatsDTO getDayStatsForUser(User user, Day day) {
+    public ConsumeStatsDTO getConsumeStatsForDay(Day day) {
         log.debug("Getting day statistics for user");
 
-        BigDecimal userDailyNorm = user.getBiometrics().getDailyNorm();
+        BigDecimal userDailyNorm = day.getUser().getBiometrics().getDailyNorm();
         log.debug("User's daily norm {}", userDailyNorm);
 
         BigDecimal currentDayTotalCalories = day.getTotalCalories();
