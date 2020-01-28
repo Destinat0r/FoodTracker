@@ -24,13 +24,11 @@ import java.util.stream.Collectors;
 public class FoodService {
 
     private FoodRepo foodRepo;
-    private EventService eventService;
     private ConsumedFoodService consumedFoodService;
 
     @Autowired
-    public FoodService(FoodRepo foodRepo, EventService eventService, ConsumedFoodService consumedFoodService) {
+    public FoodService(FoodRepo foodRepo, ConsumedFoodService consumedFoodService) {
         this.foodRepo = foodRepo;
-        this.eventService = eventService;
         this.consumedFoodService = consumedFoodService;
     }
 
@@ -87,29 +85,12 @@ public class FoodService {
         return foodRepo.findAllCommon().stream().map(this::foodToFoodDTO).collect(Collectors.toList());
     }
 
-    public ConsumedStatsDTO getConsumedStatsForUserAndDate(User user, LocalDate date) {
-        BigDecimal caloriesConsumed = getConsumedCaloriesForToday(user.getId(), date);
-        boolean isDailyNormExceeded = getUserDailyNorm().compareTo(caloriesConsumed) < 0;
-        BigDecimal exceededCalories = isDailyNormExceeded ?
-                                              caloriesConsumed.subtract(getUserDailyNorm()) : new BigDecimal(0.0);
-
-        return ConsumedStatsDTO.builder()
-                       .caloriesConsumed(caloriesConsumed)
-                       .isDailyNormExceeded(isDailyNormExceeded)
-                       .exceededCalories(exceededCalories)
-                       .build();
-    }
-
     public void remove(Food food) {
         foodRepo.delete(food);
     }
 
     private BigDecimal getUserDailyNorm() {
         return ContextUtils.getPrincipal().getBiometrics().getDailyNorm();
-    }
-
-    private BigDecimal getConsumedCaloriesForToday(Long userId, LocalDate date) {
-        return eventService.getTotalConsumedCaloriesByUserIdAndDate(userId, date);
     }
 
     private FoodDTO foodToFoodDTO(Food food) {

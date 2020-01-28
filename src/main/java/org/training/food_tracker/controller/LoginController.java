@@ -2,7 +2,6 @@ package org.training.food_tracker.controller;
 
 import org.training.food_tracker.model.Role;
 import org.training.food_tracker.model.User;
-import org.training.food_tracker.repo.EventRepo;
 import org.training.food_tracker.services.UserService;
 import org.training.food_tracker.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
 
     private UserService userService;
-    private EventRepo eventRepo;
 
     @Autowired
-    public LoginController(UserService userService, EventRepo eventRepo) {
+    public LoginController(UserService userService) {
         this.userService = userService;
-        this.eventRepo = eventRepo;
     }
 
     @PreAuthorize("isAuthenticated()")
