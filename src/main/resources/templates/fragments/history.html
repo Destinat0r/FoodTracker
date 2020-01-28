@@ -12,20 +12,20 @@
 <div class="container" th:fragment="event_table">
     <div class="row">
         <div class="col col-6 col-centered">
-            <div th:if="${#lists.isEmpty(daysOfUser)}" class="text-center">
+            <div th:if="${#lists.isEmpty(daysAndStats)}" class="text-center">
                 <h2>No history yet</h2>
             </div>
-            <div th:if="${not #lists.isEmpty(daysOfUser)}">
+            <div th:if="${not #lists.isEmpty(daysAndStats)}">
                 <h1 align="center" th:text="${userName}"></h1>
 
                 <div class="card card-body">
                 <table>
-                    <tr class="list-group" th:each="day : ${daysOfUser}">
+                    <tr class="list-group" th:each="day : ${daysAndStats}">
 
-<!--                            <div class="alert" th:classappend="${eventDTOsPack.normExceeded} ? 'alert-danger'">-->
+                            <div class="alert" th:classappend="${day.value.DailyNormExceeded} ? 'alert-danger'">
                             <div>
                                 <!--th:text="${eventDTOsPack.normExceeded} ? 'NORM EXCEEDED'">-->   
-                                <h5 class="list-group-item text-center" th:text="${day.date}"></h5>
+                                <h5 class="list-group-item text-center" th:text="${day.key.date}"></h5>
                             </div>
 
                             <table class="table table-striped">
@@ -37,7 +37,7 @@
                                     <th th:text="#{history.total_calories}"></th>
                                 </tr>
                                 </thead>
-                                <tr th:each="food : ${day.consumedFoods}">
+                                <tr th:each="food : ${day.key.consumedFoods}">
                                     <td th:text="${food.time}"></td>
                                     <td th:text="${food.name}"></td>
                                     <td th:text="${food.amount}"></td>
@@ -45,8 +45,9 @@
                                 </tr>
                             </table>
                         <hr>
-                            <h5 th:text="#{history.total_calories} + ' ' + ${day.totalCalories}"></h5>
-<!--                            <h5 th:text="#{history.exceeded_calories} + ' ' + ${day.exceededCalories}"></h5>-->
+                            <h5 th:text="#{user.daily_norm} + ' ' + ${dailyNorm}"></h5>
+                            <h5 th:text="#{history.total_calories} + ' ' + ${day.key.totalCalories}"></h5>
+                            <h5 th:text="#{history.exceeded_calories} + ' ' + ${day.value.exceededCalories}"></h5>
                         <hr class="style-seven">
                     </tr>
                 </table>
