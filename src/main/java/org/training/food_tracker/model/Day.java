@@ -1,6 +1,8 @@
 package org.training.food_tracker.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,7 +23,8 @@ public class Day {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "day",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "day",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ConsumedFood> consumedFoods;
 
     @Column(name = "total_calories")
