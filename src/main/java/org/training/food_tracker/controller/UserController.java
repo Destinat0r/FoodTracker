@@ -126,6 +126,7 @@ public class UserController {
     public String getHistory(Model model) {
         User user = ControllerUtils.getPrincipal();
 
+        model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
         model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
         model.addAttribute("userName", user.getUsername());
         return "user/history";
