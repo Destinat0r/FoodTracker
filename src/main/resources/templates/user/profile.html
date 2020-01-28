@@ -39,7 +39,7 @@
                                 <span th:if="${usernameError}" class="text-danger" th:text="${usernameError}"></span>
                                 <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}"
                                        th:value="${userDTO.email} ? ${userDTO.email} :  ''"
-                                       th:classappend="${#fields.hasErrors('userDTO.email')} ? 'error-input' : ''"/>
+                                       th:classappend="${#fields.hasErrors('userDTO.email')} ? 'error-input' : ''" readonly="readonly"/>
                             </div>
                         </div>
                     </div>
