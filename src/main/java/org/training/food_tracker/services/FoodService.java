@@ -2,7 +2,6 @@ package org.training.food_tracker.services;
 
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
-import org.training.food_tracker.dto.ConsumedStatsDTO;
 import org.training.food_tracker.model.*;
 import org.training.food_tracker.repo.FoodRepo;
 import org.training.food_tracker.dto.FoodDTO;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

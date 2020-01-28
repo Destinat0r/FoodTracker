@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.training.food_tracker.dto.ConsumedStatsDTO;
+import org.training.food_tracker.dto.ConsumeStatsDTO;
 import org.training.food_tracker.model.ConsumedFood;
 import org.training.food_tracker.model.Day;
 import org.training.food_tracker.model.User;
@@ -63,7 +63,7 @@ public class DayService {
         return totalCalories;
     }
 
-    public ConsumedStatsDTO getDayStatsForUser(User user, Day day) {
+    public ConsumeStatsDTO getDayStatsForUser(User user, Day day) {
         log.debug("Getting day statistics for user");
 
         BigDecimal userDailyNorm = user.getBiometrics().getDailyNorm();
@@ -82,7 +82,7 @@ public class DayService {
         }
         log.debug("exceeded calories: {}", exceededCalories);
 
-        return ConsumedStatsDTO.builder()
+        return ConsumeStatsDTO.builder()
                        .caloriesConsumed(currentDayTotalCalories)
                        .isDailyNormExceeded(isNormExceeded)
                        .exceededCalories(exceededCalories)
