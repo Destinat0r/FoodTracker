@@ -62,8 +62,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User findById(Long id) {
-        return userRepo.findById(id).get();
+    public User findById(Long id) throws UserNotFoundException {
+        return userRepo.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     public List<User> findAll() {
@@ -88,10 +88,6 @@ public class UserService implements UserDetailsService {
         return updatedRows;
     }
 
-    public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
-        return userToUserDTO(findByUsername(username).orElseThrow(UserNotFoundException::new));
-    }
-
     public User userDTOtoUser(UserDTO userDTO) {
         return User.builder()
                .username(userDTO.getUsername())
@@ -101,10 +97,6 @@ public class UserService implements UserDetailsService {
                .role(Role.USER)
                .password(userDTO.getPassword())
                .build();
-    }
-
-    public Optional<User> findByUsername(String username) {
-        return userRepo.findByUsername(username);
     }
 
     public UserDTO getCurrentUserDTO() {
