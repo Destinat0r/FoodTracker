@@ -7,7 +7,7 @@
     <Appenders>
 
         <Console name="console-log" target="SYSTEM_OUT" follow="true">
-            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss} [%-5level] %c{1} - %msg%n%throwable}{FATAL=white, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %highlight{[%-5level]}{FATAL=white, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue} %c{1} - %msg%n%throwable"/>
         </Console>
 
         <RollingFile name="trace-log" fileName="${log-path}/trace.log"
