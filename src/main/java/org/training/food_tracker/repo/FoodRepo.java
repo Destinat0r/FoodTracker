@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface FoodRepo extends JpaRepository<Food, Long> {
-    List<Food> findByOwnerOrderByIdDesc(User user);
+    List<Food> findAllByOwnerOrderByIdDesc(User user);
 
     Optional<Food> findById(Long id);
 
