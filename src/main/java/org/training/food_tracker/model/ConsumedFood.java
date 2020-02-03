@@ -23,7 +23,7 @@ public class ConsumedFood {
     @JoinColumn(name="day_id", nullable=false)
     private Day day;
 
-    @Column(name = "food", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "amount")
