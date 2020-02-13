@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title th:text="#{user.registration}"></title>
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: nb}"></div>
+<div class="empty">.</div>
+<div class="container container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{user.registration}"></h1>
+        </div>
+    </div>
+
+    <form th:action="@{/registration}" method="post" class="needs-validation" novalidate>
+
+        <div class="form-group row field">
+            <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.username')}" class="help-block" th:errors="*{userDTO.username}"></span>
+                <span th:if="${usernameError}" class="text-danger" th:text="${usernameError}"></span>
+                <input type="text" class="form-control" maxlength="32" th:field="*{userDTO.username}" th:placeholder="#{user.username}"
+                       th:value="${userDTO.username} ? ${userDTO.username} :  ''"
+                       th:classappend="${#fields.hasErrors('userDTO.username')} ? 'error-input' : ''"/>
+            </div>
+        </div>
+
+        <div class="form-group row field">
+            <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.email')}" class="help-block" th:errors="*{userDTO.email}"></span>
+                <span th:if="${usernameError}" class="text-danger" th:text="${usernameError}"></span>
+                <input type="email" name="email" value="" class="form-control" th:placeholder="#{user.email}"
+                       th:value="${userDTO.email} ? ${userDTO.email} :  ''"
+                       th:classappend="${#fields.hasErrors('userDTO.email')} ? 'error-input' : ''"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
+            <div class="col-sm-6 field" >
+                <span th:if="${#fields.hasErrors('userDTO.fullName')}" class="help-block" th:errors="*{userDTO.fullName}"></span>
+                <input type="text" name="fullName" value="" class="form-control" th:placeholder="#{user.full_name}"
+                       th:value="${userDTO.fullName} ? ${userDTO.fullName} :  ''"
+                       th:classappend="${#fields.hasErrors('userDTO.fullName')} ? 'error-input' : ''"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.nationalName')}" class="help-block" th:errors="*{userDTO.nationalName}"></span>
+                <input type="text" name="nationalName" value="" class="form-control" th:placeholder="#{user.national_name}"
+                       th:value="${userDTO.nationalName} ? ${userDTO.nationalName} :  ''"
+                       th:classappend="${#fields.hasErrors('userDTO.nationalName')} ? 'error-input' : ''"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.age}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.age')}" class="help-block" th:errors="*{userDTO.age}"></span>
+                <input type="number" name="age" value="" class="form-control" th:placeholder="#{user.age}"
+                       th:value="${userDTO.age} ? ${userDTO.age} :  ''"
+                       th:classappend="${#fields.hasErrors('userDTO.age')} ? 'error-input' : ''"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.sex}"></label>
+            <div class="col-sm-6 field">
+                <select id="sex" name="sex">
+                    <option th:object="${userDTO}" th:each="sexOpt : ${T(org.training.food_tracker.model.Sex).values()}"
+                            th:value="${sexOpt}" th:text="${sexOpt}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.weight}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.weight')}" class="help-block" th:errors="*{userDTO.weight}"></span>
+                <input type="number" name="weight" min="1" value="" class="form-control" th:placeholder="#{user.weight}"
+                       th:value="${userDTO.weight} ? ${userDTO.weight} :  ''"
+                       th:classappend="${#fields.hasErrors('userDTO.weight')} ? 'error-input' : ''"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.height}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.nationalName')}" class="help-block" th:errors="*{userDTO.nationalName}"></span>
+                <input type="number" name="height" min="1" value="" class="form-control" th:placeholder="#{user.height}"
+                       th:value="${userDTO.height} ? ${userDTO.height} :  ''"
+                       th:classappend="${#fields.hasErrors('userDTO.weight')} ? 'error-input' : ''"/>
+            </div>
+        </div>
+
+
+        <div class="form-group row field">
+            <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.lifestyle}"></label>
+            <div class="col-sm-6 field">
+                <select id="lifestyle" name="lifestyle">
+                    <option th:each="lifestyleOpt : ${T(org.training.food_tracker.model.Lifestyle).values()}"
+                            th:value="${lifestyleOpt}" th:text="${lifestyleOpt}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row field">
+            <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.password')}" class="help-block" th:errors="*{userDTO.password}"></span>
+                <input type="password" name="password" class="form-control" th:placeholder="#{user.password}"
+                       th:classappend="${#fields.hasErrors('userDTO.password')} ? 'error-input' : ''"/>
+                <span th:if="${passwordsDontMatch}" th:text="#{user.password.dontmatch}"></span>
+            </div>
+        </div>
+
+        <div class="form-group row field">
+            <label class="col-sm-2 col-form-label" th:text="#{user.сonfirm_password}"></label>
+            <div class="col-sm-6 field">
+                <span th:if="${#fields.hasErrors('userDTO.password')}" class="help-block" th:errors="*{userDTO.password}"></span>
+                <input type="password" name="passwordConfirm" class="form-control" th:placeholder="#{user.сonfirm_password}" required/>
+                <span th:if="${passwordsDontMatch}" th:text="#{user.password.dontmatch}"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+    </form>
+
+</div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+<!--<script th:src="@{/js/form_validator.js}"></script>-->
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: nb}"></div>
+<div class="container container mt-5">
+<form th:action="@{/update}" method="post" th:object="${user}" novalidate>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.username}"></label>
+        <p th:text="${user.username}"></p>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
+        <div class="col-sm-6">
+            <input type="email" name="email" th:value="${user.email}" class="form-control" placeholder="Email" required/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.full_name}"></label>
+        <div class="col-sm-6">
+            <input type="text" name="fullName" value="" class="form-control" placeholder="Full name" required/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.national_name}"></label>
+        <div class="col-sm-6">
+            <input type="text" name="nationalName" value="" class="form-control" placeholder="National name" required/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.age}"></label>
+        <div class="col-sm-6">
+            <input type="datetime-local" name="age" value="" class="form-control" placeholder="Age" required/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="sex" class="col-sm-2 col-form-label" th:text="#{user.biometrics.sex}"></label>
+        <div class="col-sm-6">
+            <select id="sex" name="sex">
+                <option th:each="sexOpt : ${T(all.that.matters.model.Sex).values()}"
+                        th:value="${sexOpt}" th:text="${sexOpt}"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.weight}"></label>
+        <div class="col-sm-6">
+            <input type="number" name="weight" value="" class="form-control" placeholder="Weight" required/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.height}"></label>
+        <div class="col-sm-6">
+            <input type="number" name="height" value="" class="form-control" placeholder="Height" required/>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="lifestyle" class="col-sm-2 col-form-label" th:text="#{user.biometrics.lifestyle}"></label>
+        <div class="col-sm-6">
+            <select id="lifestyle" name="lifestyle">
+                <option th:each="lifestyleOpt : ${T(all.that.matters.model.Lifestyle).values()}"
+                        th:value="${lifestyleOpt}" th:text="${lifestyleOpt}"></option>
+            </select>
+        </div>
+    </div>
+    <div sec:au>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"th:text="#{user.password}"></label>
+            <div class="col-sm-6">
+                <input type="password" name="password" class="form-control" placeholder="Password" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{user.biometrics.сonfirm_password}"></label>
+            <div class="col-sm-6">
+                <input type="password" name="passwordConfirm" class="form-control" placeholder="Retype Password" required/>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2" th:text="#{form.save}"></button>
+</form>
+</div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<title th:text="#{greeting}"></title>
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: nb}"></div>
+<div class="empty">1</div>
+<div class="container container mt-5 custom-centered" id="first">
+    <div th:if="${param.error}" th:inline="text">
+            [[#{login.invalid}]]
+    </div>
+    <div th:if="${param.logout}" th:inline="text">
+        [[#{login.logout}]]
+    </div>
+
+    <form th:action="@{/login}" role="form" method="post" class="">
+        <div class="form-group">
+            <label for="username" th:text="#{user.username}"></label>
+            <input type="text" id="username" name="username" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="password" th:text="#{user.password}"></label>
+            <input type="password" id="password" name="password" class="form-control"/>
+        </div>
+        <div><button type="submit" class="btn btn-success" th:text="#{user.sign_in}"></button></div>
+    </form>
+        <a href="/registration" th:text="#{user.registration}"></a>
+</div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+</body>
+</html>

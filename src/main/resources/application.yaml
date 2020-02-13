@@ -1,0 +1,26 @@
+server:
+  port: 7777
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/food_tracker
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 321
+
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+logging:
+  config: classpath:log4j2-spring.xml
+  file:
+    path: logs
+  level:
+    org.training.food_tracker: debug

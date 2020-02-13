@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" media="screen" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div th:fragment="nb" class="fixed-top">
+    <div class="jumbotron clearfix text-center" style="margin-bottom:0">
+        <a id="jubmolink" th:href="@{/}">
+            <div class="thumbnail">
+                <h1 th:text="#{navbar.title}"></h1>
+            </div>
+        </a>
+    </div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nb">
+<div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" th:text="#{language}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="?lang=en">En</a>
+                    <a class="dropdown-item" href="?lang=uk">Ua</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</nav>
+</div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+</body>
+</html>

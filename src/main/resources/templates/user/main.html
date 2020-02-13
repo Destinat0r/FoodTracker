@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>[[#{user.main.user}]] [[${#httpServletRequest.remoteUser}]]</title>
+</head>
+<body>
+<div th:insert="~{user/navbar :: nb}"></div>
+
+<div class="container" id="first">
+
+    <div class="row justify-content-center">
+        <div class="col col-7">
+            <div class="card card-body mb-2 bottom-tables">
+                <h2 th:text="#{food.personal}"></h2>
+
+                <form th:action="@{/user/add}" method="post" class="needs-validation" role="form" th:object="${food}" novalidate>
+                    <div class="form-row">
+
+
+                        <div class="col-6">
+                            <input type="text" id="name" name="name" th:placeholder="#{food.name}" th:required="true" class="form-control" required/>
+                        </div>
+
+                        <div class="col">
+                            <input type="number" step="1" min="1" th:required="true" name="totalCalories" th:value="${food.totalCalories}" id="calories"
+                                   class="form-control" th:placeholder="#{food.calories}" pattern="\d+" required/>
+                        </div>
+
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+                        </div>
+                    </div>
+                </form>
+
+                <table class="table table-bordered table-responsive-md table-striped text-center" th:object="${usersFoodDTOs}">
+                    <thead class="border-dark">
+                    <col width="130">
+                    <col width="150">
+                    <tr>
+                        <th th:text="#{food.table.name}"></th>
+                        <th th:text="#{food.table.calories}"></th>
+                        <th th:text="#{food.amount}"></th>
+                    </tr>
+                    </thead>
+                    <tr th:each="userFood : ${usersFoodDTOs}">
+
+
+                        <td><span th:text="${userFood.name}"></span></td>
+                        <form class="form-inline needs-validation" role="form" th:action="@{/user/use}" th:object="${userFood}" method="post">
+                            <td th:text="${userFood.totalCalories}"></td>
+                            <input type="hidden" name="totalCalories" th:value="${userFood.totalCalories}" >
+                            <td>
+                                <div class="form-group">
+                                    <input type="hidden" name="name" th:value="${userFood.name}" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="number" name="amount" th:required="true" maxlength="2" size="4" value="1" min="0.5" step="0.5" class="form-control input-digit">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <button type="submit" name="consume" class="btn btn-success btn-sm form-control" th:text="#{user.consume}"></button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <button type="submit" name="delete"
+                                            class="btn btn-danger btn-sm form-control" th:text="#{user.food.delete}"></button>
+                                </div>
+                            </td>
+                            </form>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body" id="consumed">
+                <h2 th:text="#{food.consumed_today}"></h2>
+                <table class="table table-striped border-dark" th:object="${currentDay}">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{food.table.name}"></th>
+                        <th scope="col" th:text="#{food.amount}"></th>
+                        <th scope="col" th:text="#{food.total_calories}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="consumedFood : ${currentDay.consumedFoods}">
+                        <td th:text="${consumedFood.name}"></td>
+                        <td th:text="${consumedFood.amount}"></td>
+                        <td th:text="${consumedFood.totalCalories}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-6 col-centered bottom-tables">
+            <div class="card card-body" id="commonFood">
+                <h2 th:text="#{food.common}"></h2>
+                <table class="table table-striped border-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{food.table.name}"></th>
+                        <th scope="col" th:text="#{food.table.calories}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="nextFood : ${allCommonFood}">
+                        <td><span th:text="${nextFood.name}" ></span></td>
+                        <td th:text="${nextFood.totalCalories}"></td>
+                        <td>
+                            <form th:action="@{/user/add}" method="post" th:object="${nextFood}" novalidate>
+                                <input type="hidden" name="name" th:value="${nextFood.name}">
+                                <input type="hidden" name="totalCalories" th:value="${nextFood.totalCalories}">
+                                <button type="submit" class="btn btn-primary mb-2" th:text="#{form.add}"></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id="bottom-navbar">
+    <div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
+        <a class="collapse navbar-collapse text-center" id="navbarNav">
+            <li class="nav-item">
+                <a th:inline="text">[[${#httpServletRequest.remoteUser}]]</a>
+            </li>
+            <li class="nav-item">
+                <a th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></a>
+            </li>
+            <li class="nav-item">
+                <a th:text="#{user.consumed_today} + ': ' + ${consumedStatsDTO.caloriesConsumed}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="card-footer" id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}"
+                     th:text="#{user.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}" ></a>
+            </li>
+        </a>
+    </div>
+</nav>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+<script th:src="@{/js/form_validator.js}"></script>
+<script>
+    function unfold() {
+        var x = document.getElementById("commonFood");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <title>[[#{history.of}]] [[${#httpServletRequest.remoteUser}]]</title>
+</head>
+<body>
+<div th:insert="~{admin/navbar :: nb}"></div>
+
+<div class="container" th:fragment="event_table">
+    <div class="row">
+        <div class="col col-6 col-centered">
+            <div th:if="${#lists.isEmpty(daysAndStats)}" class="text-center">
+                <h2>No history yet</h2>
+            </div>
+            <div th:if="${not #lists.isEmpty(daysAndStats)}">
+                <h1 align="center" th:text="${userName}"></h1>
+
+                <div class="card card-body">
+                <table>
+                    <tr class="list-group" th:each="day : ${daysAndStats}">
+
+                            <div class="alert" th:classappend="${day.value.DailyNormExceeded} ? 'alert-danger'">
+                                <!--th:text="${eventDTOsPack.normExceeded} ? 'NORM EXCEEDED'">-->
+                                <h5 class="list-group-item text-center" th:text="${day.key.date}"></h5>
+                            </div>
+
+                            <table class="table table-striped">
+                                <thead class="border-dark">
+                                <tr>
+                                    <th th:text="#{history.time}"></th>
+                                    <th th:text="#{history.food_name}"></th>
+                                    <th th:text="#{history.amount}"></th>
+                                    <th th:text="#{history.total_calories}"></th>
+                                </tr>
+                                </thead>
+                                <tr th:each="food : ${day.key.consumedFoods}">
+                                    <td th:text="${food.time}"></td>
+                                    <td th:text="${food.name}"></td>
+                                    <td th:text="${food.amount}"></td>
+                                    <td th:text="${food.totalCalories}"></td>
+                                </tr>
+                            </table>
+                        <hr>
+                            <h5 th:text="#{user.daily_norm} + ' ' + ${dailyNorm}"></h5>
+                            <h5 th:text="#{history.total_calories} + ' ' + ${day.key.totalCalories}"></h5>
+                            <h5 th:text="#{history.exceeded_calories} + ' ' + ${day.value.exceededCalories}"></h5>
+                        <hr class="style-seven">
+                    </tr>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="~{fragments/common :: jsLinks}"></div>
+</body>
+</html>
