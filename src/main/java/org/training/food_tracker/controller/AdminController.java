@@ -7,10 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.training.food_tracker.dto.BiometricsDTO;
+import org.training.food_tracker.dto.DTOConverter;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
+import org.training.food_tracker.model.Food;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
+import org.training.food_tracker.services.BiometricService;
+import org.training.food_tracker.services.DayService;
+import org.training.food_tracker.services.FoodService;
+import org.training.food_tracker.services.UserService;
 import org.training.food_tracker.services.defaults.BiometricServiceDefault;
 import org.training.food_tracker.services.defaults.DayServiceDefault;
 import org.training.food_tracker.services.defaults.FoodServiceDefault;
@@ -25,18 +32,18 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private FoodServiceDefault foodServiceDefault;
-    private UserServiceDefault userServiceDefault;
-    private BiometricServiceDefault biometricServiceDefault;
-    private DayServiceDefault dayServiceDefault;
+    private FoodService foodService;
+    private UserService userService;
+    private BiometricService biometricService;
+    private DayService dayService;
 
     @Autowired
-    public AdminController(FoodServiceDefault foodServiceDefault, UserServiceDefault userServiceDefault, BiometricServiceDefault biometricServiceDefault,
-            DayServiceDefault dayServiceDefault) {
-        this.foodServiceDefault = foodServiceDefault;
-        this.userServiceDefault = userServiceDefault;
-        this.biometricServiceDefault = biometricServiceDefault;
-        this.dayServiceDefault = dayServiceDefault;
+    public AdminController(FoodService foodService, UserService userService, BiometricService biometricService,
+            DayServiceDefault dayService) {
+        this.foodService = foodService;
+        this.userService = userService;
+        this.biometricService = biometricService;
+        this.dayService = dayService;
     }
 
     @GetMapping("/main")
@@ -47,22 +54,23 @@ public class AdminController {
     @GetMapping("/food_list")
     public String getFoodList(Model model) {
         log.debug("loading food...");
-        List<FoodDTO> allFood = foodServiceDefault.findAllCommonInDtos();
+        List<FoodDTO> allFood = DTOConverter.foodsToFoodDTOs(foodService.findAllCommon());
+
         model.addAttribute("allFood", allFood);
         model.addAttribute("food", new FoodDTO());
         return "admin/food_list";
     }
 
     @PostMapping("/food/add")
-    public String addToCommonFood(@Valid FoodDTO food) {
-        log.debug("Obtained entered food {}, adding to DB", food);
-        foodServiceDefault.add(food);
+    public String addToCommonFood(@Valid FoodDTO foodDTO) {
+        log.debug("Obtained entered food {}, adding to DB", foodDTO);
+        foodService.create(DTOConverter.foodDTOtoFood(foodDTO));
         return "redirect:/admin/food_list";
     }
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        model.addAttribute("users", userServiceDefault.findAll());
+        model.addAttribute("users", userService.findAll());
         return "admin/users";
     }
 
@@ -70,7 +78,8 @@ public class AdminController {
     public String getUserProfile(@RequestParam Long id, Model model) {
         log.debug("Getting user with id: {}", id);
         try {
-            model.addAttribute("userDTO", userServiceDefault.getUserDTOById(id));
+            UserDTO userDTO = DTOConverter.userToUserDTO(userService.findById(id));
+            model.addAttribute("userDTO", userDTO);
             model.addAttribute("userId", id);
         } catch (UserNotFoundException e) {
             model.addAttribute("message", e.getMessage());
@@ -81,22 +90,27 @@ public class AdminController {
     }
 
     @PostMapping("/user/update/")
-    public String updateUser(@Valid UserDTO userDTO, BindingResult bindingResult) {
+    public String updateUser(
+            @Valid UserDTO userDTO,
+            BindingResult userBindingResult,
+            @Valid BiometricsDTO biometricsDTO,
+            BindingResult biometricsBindingResult
+    ) {
 
             Long id = userDTO.getId();
             log.debug("Updating user {} with id {}", userDTO, id);
 
-            if (bindingResult.hasErrors()) {
-                log.warn("Errors in input: {}", bindingResult.getAllErrors());
+            if (userBindingResult.hasErrors() || biometricsBindingResult.hasErrors()) {
+                log.warn("Errors in input: {}", userBindingResult.getAllErrors());
                 log.warn(" Redirecting back to profile");
                 return "user/profile";
             }
 
             log.debug("updating biometrics");
-            biometricServiceDefault.update(userDTO);
+            biometricService.update(DTOConverter.biometricsDTOtoBiometrics(biometricsDTO));
 
             log.debug("Updating user");
-            userServiceDefault.update(userDTO);
+            userService.update(DTOConverter.userDTOtoUser(userDTO));
 
             return "redirect:/admin/user?id=" + id;
     }
@@ -110,16 +124,15 @@ public class AdminController {
         User user;
 
         try {
-            user = userServiceDefault.findById(id);
+            user = userService.findById(id);
         } catch (UserNotFoundException e) {
             log.error("User not found by id: {}", id, e);
             return "../public/error/no_such_user";
         }
 
-        model.addAttribute("daysAndStats" , dayServiceDefault.getDaysToConsumeStatsForUser(user));
-        model.addAttribute("daysOfUser", dayServiceDefault.getAllDaysByUser(user));
+        model.addAttribute("dayDTOs", DTOConverter.daysToDaysDTOs(dayService.getAllDaysByUser(user)));
         model.addAttribute("userName", user.getUsername());
-        model.addAttribute("dailyNorm", user.getBiometrics().getDailyNorm());
+        model.addAttribute("dailyNorm", user.getDailyNormCalories());
 
         return "admin/user_history";
     }
