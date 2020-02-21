@@ -2,10 +2,14 @@ package org.training.food_tracker.controller;
 
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.training.food_tracker.dto.BiometricsDTO;
+import org.training.food_tracker.dto.DTOConverter;
 import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.UserExistsException;
+import org.training.food_tracker.services.BiometricService;
+import org.training.food_tracker.services.UserService;
 import org.training.food_tracker.services.defaults.BiometricServiceDefault;
 import org.training.food_tracker.services.defaults.UserServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +29,13 @@ import javax.validation.Valid;
 @Controller
 public class RegistrationController {
 
-    private UserServiceDefault userServiceDefault;
-    private BiometricServiceDefault biometricServiceDefault;
+    private UserService userService;
+    private BiometricService biometricService;
 
     @Autowired
-    public RegistrationController(UserServiceDefault userServiceDefault, BiometricServiceDefault biometricServiceDefault) {
-        this.userServiceDefault = userServiceDefault;
-        this.biometricServiceDefault = biometricServiceDefault;
+    public RegistrationController(UserService userService, BiometricService biometricService) {
+        this.userService = userService;
+        this.biometricService = biometricService;
     }
 
     @GetMapping("/registration")
@@ -44,10 +48,12 @@ public class RegistrationController {
     public String addUser(
             @RequestParam("passwordConfirm") String passwordConfirm,
             @Valid UserDTO userDTO,
-            BindingResult bindingResult,
+            BindingResult userBindingResult,
+            @Valid BiometricsDTO biometricsDTO,
+            BindingResult biometricsBindingResult,
             Model model) {
 
-        if (bindingResult.hasErrors()) {
+        if (userBindingResult.hasErrors() || biometricsBindingResult.hasErrors()) {
             return "registration";
         }
 
@@ -56,19 +62,18 @@ public class RegistrationController {
             return "registration";
         }
 
-        User user = userServiceDefault.userDTOtoUser(userDTO);
-        Biometrics biometrics = biometricServiceDefault.userDTOtoBiometrics(userDTO);
-
-        biometrics.setDailyNorm();
+        User user = DTOConverter.userDTOtoUser(userDTO);
+        Biometrics biometrics = DTOConverter.biometricsDTOtoBiometrics(biometricsDTO);
+        user.setDailyNormCalories(userService.calculateDailyNormCalories(biometrics));
 
         try {
             log.debug("Creating and setting biometrics to user");
-            biometricServiceDefault.create(biometrics);
+            biometricService.create(biometrics);
             user.setBiometrics(biometrics);
             biometrics.setOwner(user);
 
             log.debug("Creating user");
-            userServiceDefault.create(user);
+            userService.create(user);
         } catch (UserExistsException e) {
             model.addAttribute("usernameError", "Such username or email already exists!");
             log.error("Failed to create the user", e);

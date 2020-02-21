@@ -82,16 +82,22 @@ public class DTOConverter {
         return exceededCalories.compareTo(new BigDecimal(0)) > 0;
     }
 
-    private static BigDecimal findExceededCalories(BigDecimal totalCalories, BigDecimal dailyNorm) {
-        return dailyNorm.compareTo(totalCalories) > 0 ? new BigDecimal(0) : totalCalories.subtract(dailyNorm);
+    public static User userDTOtoUser(UserDTO userDTO) {
+        return User.builder()
+                       .firstName(userDTO.getFirstName())
+                       .lastName(userDTO.getLastName())
+                       .email(userDTO.getEmail())
+                       .password(userDTO.getPassword())
+                       .build();
     }
 
-    private static BigDecimal sumTotalCalories(List<ConsumedFood> foodDTOs) {
-        BigDecimal sum = new BigDecimal(0);
-
-        for (ConsumedFood food : foodDTOs) {
-            sum = sum.add(food.getTotalCalories());
-        }
-        return sum;
+    public static Biometrics biometricsDTOtoBiometrics(BiometricsDTO biometricsDTO) {
+        return Biometrics.builder()
+                       .age(biometricsDTO.getAge())
+                       .height(biometricsDTO.getHeight())
+                       .weight(biometricsDTO.getWeight())
+                       .lifestyle(Lifestyle.valueOf(biometricsDTO.getLifestyle()))
+                       .sex(Sex.valueOf(biometricsDTO.getSex()))
+                       .build();
     }
 }
