@@ -2,13 +2,12 @@ package org.training.food.tracker.services.defaults;
 
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.training.food.tracker.model.Food;
 import org.training.food.tracker.model.User;
 import org.training.food.tracker.repo.FoodRepo;
-import org.training.food_tracker.model.*;
 import org.training.food.tracker.services.FoodService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

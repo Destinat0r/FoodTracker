@@ -1,12 +1,12 @@
 package org.training.food.tracker.repo;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
-import org.training.food.tracker.model.User;
-import org.training.food.tracker.model.Biometrics;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.training.food.tracker.model.Biometrics;
+import org.training.food.tracker.model.User;
 
 import java.math.BigDecimal;
 import java.util.Optional;

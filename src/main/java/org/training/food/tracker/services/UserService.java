@@ -1,9 +1,9 @@
 package org.training.food.tracker.services;
 
+import org.training.food.tracker.model.Biometrics;
 import org.training.food.tracker.model.User;
 import org.training.food.tracker.repo.exceptions.UserExistsException;
 import org.training.food.tracker.repo.exceptions.UserNotFoundException;
-import org.training.food.tracker.model.Biometrics;
 
 import java.math.BigDecimal;
 import java.util.List;

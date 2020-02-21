@@ -3,7 +3,6 @@ package org.training.food.tracker.dto;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.training.food.tracker.model.*;
-import org.training.food_tracker.model.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

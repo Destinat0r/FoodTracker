@@ -3,7 +3,6 @@ package org.training.food.tracker.dto;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 
 @Getter

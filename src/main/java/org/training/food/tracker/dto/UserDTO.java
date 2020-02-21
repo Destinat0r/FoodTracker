@@ -1,11 +1,14 @@
 package org.training.food.tracker.dto;
 
-import org.training.food.tracker.model.Role;
-import org.training.food.tracker.model.Lifestyle;
-import org.training.food.tracker.model.Sex;
 import lombok.*;
+import org.training.food.tracker.model.Lifestyle;
+import org.training.food.tracker.model.Role;
+import org.training.food.tracker.model.Sex;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter

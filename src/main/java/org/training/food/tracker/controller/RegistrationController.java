@@ -2,14 +2,6 @@ package org.training.food.tracker.controller;
 
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
-import org.training.food.tracker.dto.UserDTO;
-import org.training.food.tracker.model.User;
-import org.training.food.tracker.repo.exceptions.UserExistsException;
-import org.training.food.tracker.services.BiometricService;
-import org.training.food.tracker.services.UserService;
-import org.training.food.tracker.dto.BiometricsDTO;
-import org.training.food.tracker.dto.DTOConverter;
-import org.training.food.tracker.model.Biometrics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.training.food.tracker.dto.BiometricsDTO;
+import org.training.food.tracker.dto.DTOConverter;
+import org.training.food.tracker.dto.UserDTO;
+import org.training.food.tracker.model.Biometrics;
+import org.training.food.tracker.model.User;
+import org.training.food.tracker.repo.exceptions.UserExistsException;
+import org.training.food.tracker.services.BiometricService;
+import org.training.food.tracker.services.UserService;
 
 import javax.validation.Valid;
 

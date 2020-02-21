@@ -1,7 +1,7 @@
 package org.training.food.tracker.services;
 
-import org.training.food.tracker.model.User;
 import org.training.food.tracker.model.Biometrics;
+import org.training.food.tracker.model.User;
 
 import java.util.Optional;
 

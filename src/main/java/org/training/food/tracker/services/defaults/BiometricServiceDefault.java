@@ -1,11 +1,11 @@
 package org.training.food.tracker.services.defaults;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.training.food.tracker.model.Biometrics;
 import org.training.food.tracker.model.User;
 import org.training.food.tracker.repo.BiometricRepo;
 import org.training.food.tracker.services.BiometricService;
-import org.training.food.tracker.model.Biometrics;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
