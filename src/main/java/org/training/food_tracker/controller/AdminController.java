@@ -9,13 +9,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.training.food_tracker.dto.FoodDTO;
 import org.training.food_tracker.dto.UserDTO;
-import org.training.food_tracker.model.Day;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
-import org.training.food_tracker.services.BiometricService;
-import org.training.food_tracker.services.DayService;
-import org.training.food_tracker.services.FoodService;
-import org.training.food_tracker.services.UserService;
+import org.training.food_tracker.services.defaults.BiometricServiceDefault;
+import org.training.food_tracker.services.defaults.DayServiceDefault;
+import org.training.food_tracker.services.defaults.FoodServiceDefault;
+import org.training.food_tracker.services.defaults.UserServiceDefault;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,18 +25,18 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private FoodService foodService;
-    private UserService userService;
-    private BiometricService biometricService;
-    private DayService dayService;
+    private FoodServiceDefault foodServiceDefault;
+    private UserServiceDefault userServiceDefault;
+    private BiometricServiceDefault biometricServiceDefault;
+    private DayServiceDefault dayServiceDefault;
 
     @Autowired
-    public AdminController(FoodService foodService, UserService userService, BiometricService biometricService,
-            DayService dayService) {
-        this.foodService = foodService;
-        this.userService = userService;
-        this.biometricService = biometricService;
-        this.dayService = dayService;
+    public AdminController(FoodServiceDefault foodServiceDefault, UserServiceDefault userServiceDefault, BiometricServiceDefault biometricServiceDefault,
+            DayServiceDefault dayServiceDefault) {
+        this.foodServiceDefault = foodServiceDefault;
+        this.userServiceDefault = userServiceDefault;
+        this.biometricServiceDefault = biometricServiceDefault;
+        this.dayServiceDefault = dayServiceDefault;
     }
 
     @GetMapping("/main")
@@ -48,7 +47,7 @@ public class AdminController {
     @GetMapping("/food_list")
     public String getFoodList(Model model) {
         log.debug("loading food...");
-        List<FoodDTO> allFood = foodService.findAllCommonInDtos();
+        List<FoodDTO> allFood = foodServiceDefault.findAllCommonInDtos();
         model.addAttribute("allFood", allFood);
         model.addAttribute("food", new FoodDTO());
         return "admin/food_list";
@@ -57,13 +56,13 @@ public class AdminController {
     @PostMapping("/food/add")
     public String addToCommonFood(@Valid FoodDTO food) {
         log.debug("Obtained entered food {}, adding to DB", food);
-        foodService.add(food);
+        foodServiceDefault.add(food);
         return "redirect:/admin/food_list";
     }
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("users", userServiceDefault.findAll());
         return "admin/users";
     }
 
@@ -71,7 +70,7 @@ public class AdminController {
     public String getUserProfile(@RequestParam Long id, Model model) {
         log.debug("Getting user with id: {}", id);
         try {
-            model.addAttribute("userDTO", userService.getUserDTOById(id));
+            model.addAttribute("userDTO", userServiceDefault.getUserDTOById(id));
             model.addAttribute("userId", id);
         } catch (UserNotFoundException e) {
             model.addAttribute("message", e.getMessage());
@@ -94,10 +93,10 @@ public class AdminController {
             }
 
             log.debug("updating biometrics");
-            biometricService.update(userDTO);
+            biometricServiceDefault.update(userDTO);
 
             log.debug("Updating user");
-            userService.update(userDTO);
+            userServiceDefault.update(userDTO);
 
             return "redirect:/admin/user?id=" + id;
     }
@@ -111,14 +110,14 @@ public class AdminController {
         User user;
 
         try {
-            user = userService.findById(id);
+            user = userServiceDefault.findById(id);
         } catch (UserNotFoundException e) {
             log.error("User not found by id: {}", id, e);
             return "../public/error/no_such_user";
         }
 
-        model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
-        model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
+        model.addAttribute("daysAndStats" , dayServiceDefault.getDaysToConsumeStatsForUser(user));
+        model.addAttribute("daysOfUser", dayServiceDefault.getAllDaysByUser(user));
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("dailyNorm", user.getBiometrics().getDailyNorm());
 

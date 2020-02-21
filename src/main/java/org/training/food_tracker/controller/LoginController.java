@@ -2,7 +2,7 @@ package org.training.food_tracker.controller;
 
 import org.training.food_tracker.model.Role;
 import org.training.food_tracker.model.User;
-import org.training.food_tracker.services.UserService;
+import org.training.food_tracker.services.defaults.UserServiceDefault;
 import org.training.food_tracker.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class LoginController {
 
-    private UserService userService;
+    private UserServiceDefault userServiceDefault;
 
     @Autowired
-    public LoginController(UserService userService) {
-        this.userService = userService;
+    public LoginController(UserServiceDefault userServiceDefault) {
+        this.userServiceDefault = userServiceDefault;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -52,7 +52,7 @@ public class LoginController {
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user) {
-        userService.save(user);
+        userServiceDefault.save(user);
         return "redirect:/users";
     }
 }

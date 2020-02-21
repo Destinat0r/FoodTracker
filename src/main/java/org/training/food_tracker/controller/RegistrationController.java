@@ -6,8 +6,8 @@ import org.training.food_tracker.dto.UserDTO;
 import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.UserExistsException;
-import org.training.food_tracker.services.BiometricService;
-import org.training.food_tracker.services.UserService;
+import org.training.food_tracker.services.defaults.BiometricServiceDefault;
+import org.training.food_tracker.services.defaults.UserServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +25,13 @@ import javax.validation.Valid;
 @Controller
 public class RegistrationController {
 
-    private UserService userService;
-    private BiometricService biometricService;
+    private UserServiceDefault userServiceDefault;
+    private BiometricServiceDefault biometricServiceDefault;
 
     @Autowired
-    public RegistrationController(UserService userService, BiometricService biometricService) {
-        this.userService = userService;
-        this.biometricService = biometricService;
+    public RegistrationController(UserServiceDefault userServiceDefault, BiometricServiceDefault biometricServiceDefault) {
+        this.userServiceDefault = userServiceDefault;
+        this.biometricServiceDefault = biometricServiceDefault;
     }
 
     @GetMapping("/registration")
@@ -56,19 +56,19 @@ public class RegistrationController {
             return "registration";
         }
 
-        User user = userService.userDTOtoUser(userDTO);
-        Biometrics biometrics = biometricService.userDTOtoBiometrics(userDTO);
+        User user = userServiceDefault.userDTOtoUser(userDTO);
+        Biometrics biometrics = biometricServiceDefault.userDTOtoBiometrics(userDTO);
 
         biometrics.setDailyNorm();
 
         try {
             log.debug("Creating and setting biometrics to user");
-            biometricService.create(biometrics);
+            biometricServiceDefault.create(biometrics);
             user.setBiometrics(biometrics);
             biometrics.setOwner(user);
 
             log.debug("Creating user");
-            userService.create(user);
+            userServiceDefault.create(user);
         } catch (UserExistsException e) {
             model.addAttribute("usernameError", "Such username or email already exists!");
             log.error("Failed to create the user", e);

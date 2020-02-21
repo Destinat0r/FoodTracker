@@ -15,9 +15,16 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
-    @Transactional
     @Modifying
-    @Query(value = "UPDATE users SET full_name = ?2, national_name = ?3 WHERE id = ?1",
-            nativeQuery = true)
-    int updateById(Long id, String fullName, String nationalName);
+    @Query(value = "UPDATE users SET username = ?2, "
+                                  + "password = ?3, "
+                                  + "first_name = ?4, "
+                                  + "last_name = ?5, "
+                                  + "email = ?6, "
+                                  + "role = ?7, "
+                                  + "daily_norm_calories = ?8 WHERE id = ?1", nativeQuery = true)
+    User updateById(Long id, String username, String password, String firstName, String lastName, String email,
+            String role, BigDecimal dailyNormCalories);
+
+
 }

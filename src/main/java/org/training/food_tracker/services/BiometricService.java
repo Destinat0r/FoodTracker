@@ -1,61 +1,19 @@
 package org.training.food_tracker.services;
 
-import org.training.food_tracker.dto.UserDTO;
-import org.training.food_tracker.model.Sex;
-import org.training.food_tracker.repo.BiometricRepo;
 import org.training.food_tracker.model.Biometrics;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.training.food_tracker.model.User;
 
-import java.math.BigDecimal;
+import java.util.Optional;
 
-@Service
-public class BiometricService {
-    private BiometricRepo biometricRepo;
+public interface BiometricService {
+    void create(Biometrics biometrics);
 
-    @Autowired
-    public BiometricService(BiometricRepo biometricRepo) {
-        this.biometricRepo = biometricRepo;
-    }
+    Optional<Biometrics> findById(Long id);
 
-    public void create(Biometrics biometrics) {
-        biometricRepo.save(biometrics);
-    }
+    Biometrics findByOwner(User user);
 
-    public int update(UserDTO userDTO) {
-        return biometricRepo.updateByOwnerId(
-                userDTO.getId(),
-                userDTO.getAge(),
-                userDTO.getSex().toString(),
-                userDTO.getWeight(),
-                userDTO.getHeight(),
-                userDTO.getLifestyle().toString(),
-                calculateDailyNorm(userDTO));
-    }
+    Biometrics update(Biometrics biometrics);
 
-    private BigDecimal calculateDailyNorm(UserDTO userDTO) {
-        if (userDTO.getSex() == Sex.MALE) {
-            return (new BigDecimal(66.5)
-                            .add(new BigDecimal(13.75).multiply(userDTO.getWeight()))
-                            .add(new BigDecimal(5.003).multiply(userDTO.getHeight()))
-                            .subtract(new BigDecimal(6.755).multiply(userDTO.getAge())))
-                           .multiply(userDTO.getLifestyle().getCoefficient());
-        }
-        return (new BigDecimal(655.1)
-                        .add(new BigDecimal(9.563).multiply(userDTO.getWeight()))
-                        .add(new BigDecimal(1.850).multiply(userDTO.getHeight()))
-                        .subtract(new BigDecimal(4.676).multiply(userDTO.getAge())))
-                       .multiply(userDTO.getLifestyle().getCoefficient());
-    }
-
-    public Biometrics userDTOtoBiometrics(UserDTO userDTO) {
-        return Biometrics.builder()
-                       .age(userDTO.getAge())
-                       .weight(userDTO.getWeight())
-                       .height(userDTO.getHeight())
-                       .sex(userDTO.getSex())
-                       .lifestyle(userDTO.getLifestyle())
-                       .dailyNorm(userDTO.getDailyNorm())
-                       .build();
-    }
+    void delete(Biometrics biometrics);
 }
+

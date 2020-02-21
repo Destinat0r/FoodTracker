@@ -27,6 +27,8 @@ public interface FoodRepo extends JpaRepository<Food, Long> {
     List<Food> findAllCommonExcludingPersonalByUserId(Long userId);
 
     @Transactional
-    void removeByNameAndOwner(String foodName, User user);
+    void deleteByNameAndOwner(String foodName, User user);
 
+    @Query(value = "DELETE FROM food WHERE name = ?1 AND user_id IS NULL")
+    void deleteCommonFoodByName(String foodName);
 }

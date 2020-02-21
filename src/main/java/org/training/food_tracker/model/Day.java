@@ -30,6 +30,12 @@ public class Day {
     @Column(name = "calories_consumed")
     private BigDecimal caloriesConsumed;
 
+    @Column(name = "is_daily_norm_exceeded")
+    private boolean isDailyNormExceeded;
+
+    @Column(name = "exceeded_calories")
+    private BigDecimal exceededCalories;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

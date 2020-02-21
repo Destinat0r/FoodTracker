@@ -1,7 +1,7 @@
 package org.training.food_tracker.config;
 
 import org.training.food_tracker.model.Role;
-import org.training.food_tracker.services.UserService;
+import org.training.food_tracker.services.defaults.UserServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private PasswordEncoder passwordEncoder;
-    private UserService userService;
+    private UserServiceDefault userServiceDefault;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -27,8 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUserServiceDefault(UserServiceDefault userServiceDefault) {
+        this.userServiceDefault = userServiceDefault;
     }
 
     @Bean
@@ -54,6 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userServiceDefault).passwordEncoder(passwordEncoder);
     }
 }

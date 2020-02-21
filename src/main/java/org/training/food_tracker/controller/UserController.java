@@ -15,7 +15,10 @@ import org.training.food_tracker.model.Biometrics;
 import org.training.food_tracker.model.Day;
 import org.training.food_tracker.model.User;
 import org.training.food_tracker.repo.exceptions.UserNotFoundException;
-import org.training.food_tracker.services.*;
+import org.training.food_tracker.services.defaults.BiometricServiceDefault;
+import org.training.food_tracker.services.defaults.DayServiceDefault;
+import org.training.food_tracker.services.defaults.FoodServiceDefault;
+import org.training.food_tracker.services.defaults.UserServiceDefault;
 import org.training.food_tracker.utils.ContextUtils;
 
 import javax.validation.Valid;
@@ -28,29 +31,29 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private FoodService foodService;
-    private DayService dayService;
-    private UserService userService;
-    private BiometricService biometricService;
+    private FoodServiceDefault foodServiceDefault;
+    private DayServiceDefault dayServiceDefault;
+    private UserServiceDefault userServiceDefault;
+    private BiometricServiceDefault biometricServiceDefault;
 
     @Autowired
-    public void setFoodService(FoodService foodService) {
-        this.foodService = foodService;
+    public void setFoodServiceDefault(FoodServiceDefault foodServiceDefault) {
+        this.foodServiceDefault = foodServiceDefault;
     }
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUserServiceDefault(UserServiceDefault userServiceDefault) {
+        this.userServiceDefault = userServiceDefault;
     }
 
     @Autowired
-    public void setDayService(DayService dayService) {
-        this.dayService = dayService;
+    public void setDayServiceDefault(DayServiceDefault dayServiceDefault) {
+        this.dayServiceDefault = dayServiceDefault;
     }
 
     @Autowired
-    public void setBiometricService(BiometricService biometricService) {
-        this.biometricService = biometricService;
+    public void setBiometricServiceDefault(BiometricServiceDefault biometricServiceDefault) {
+        this.biometricServiceDefault = biometricServiceDefault;
     }
 
     @GetMapping("/main")
@@ -58,26 +61,26 @@ public class UserController {
         log.debug("loading user's main");
 
         User user = ContextUtils.getPrincipal();
-        UserDTO userDTO = userService.getCurrentUserDTO();
+        UserDTO userDTO = userServiceDefault.getCurrentUserDTO();
 
         log.debug("setting allCommonFood");
-        model.addAttribute("allCommonFood", foodService.findAllCommonExcludingPersonalByUserIdInDTO(user.getId()));
+        model.addAttribute("allCommonFood", foodServiceDefault.findAllCommonExcludingPersonalByUserIdInDTO(user.getId()));
 
         model.addAttribute("food", new FoodDTO());
 
         log.debug("setting usersFoodDTOs");
-        model.addAttribute("usersFoodDTOs", foodService.findAllByOwnerInDTOs(user));
+        model.addAttribute("usersFoodDTOs", foodServiceDefault.findAllByOwnerInDTOs(user));
 
         log.debug("setting userDTO {}", userDTO);
         model.addAttribute("userDTO", userDTO);
 
         log.debug("getting current day");
-        Day currentDay = dayService.getCurrentDayOfUser(user);
+        Day currentDay = dayServiceDefault.getCurrentDayOfUser(user);
 
         model.addAttribute("currentDay", currentDay);
 
         log.debug("getting consumedStatsDTO");
-        model.addAttribute("consumedStatsDTO", dayService.getConsumeStatsForDay(currentDay));
+        model.addAttribute("consumedStatsDTO", dayServiceDefault.getConsumeStatsForDay(currentDay));
 
         return "user/main";
     }
@@ -86,7 +89,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
 
-        List<FoodDTO> allFood = foodService.findAllCommonInDtos();
+        List<FoodDTO> allFood = foodServiceDefault.findAllCommonInDtos();
         model.addAttribute("allFood", allFood);
 
         return "food_list";
@@ -94,7 +97,7 @@ public class UserController {
 
     @PostMapping("/add")
     public String add(FoodDTO userFoodDTO) {
-        foodService.add(userFoodDTO);
+        foodServiceDefault.add(userFoodDTO);
         return "redirect:/user/main";
     }
 
@@ -110,7 +113,7 @@ public class UserController {
         }
 
         log.debug("Registering consumption");
-        foodService.registerConsumption(foodDTO);
+        foodServiceDefault.registerConsumption(foodDTO);
 
         return "redirect:/user/main";
     }
@@ -118,7 +121,7 @@ public class UserController {
     @PostMapping(value = "/use", params = "delete")
     public String delete(@ModelAttribute("userFood") FoodDTO food) {
 
-        foodService.removeByNameAndUserId(food.getName(), ContextUtils.getPrincipal());
+        foodServiceDefault.removeByNameAndUserId(food.getName(), ContextUtils.getPrincipal());
         return "redirect:/user/main";
     }
 
@@ -133,8 +136,8 @@ public class UserController {
     }
 
     @Transactional void addDaysAndStatsModelAttributes(Model model, User user) {
-        model.addAttribute("daysAndStats" , dayService.getDaysToConsumeStatsForUser(user));
-        model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
+        model.addAttribute("daysAndStats" , dayServiceDefault.getDaysToConsumeStatsForUser(user));
+        model.addAttribute("daysOfUser", dayServiceDefault.getAllDaysByUser(user));
     }
 
     @GetMapping("/profile")
@@ -143,7 +146,7 @@ public class UserController {
 
         UserDTO userDTO = null;
         try {
-            userDTO = userService.getUserDTOById(ContextUtils.getPrincipal().getId());
+            userDTO = userServiceDefault.getUserDTOById(ContextUtils.getPrincipal().getId());
         } catch (UserNotFoundException e) {
             log.error("User with not found ",  e);
         }
@@ -174,10 +177,10 @@ public class UserController {
         updateUser(currentUser, userDTO);
 
         log.debug("updating biometrics");
-        biometricService.update(userDTO);
+        biometricServiceDefault.update(userDTO);
 
         log.debug("Updating user");
-        userService.update(userDTO);
+        userServiceDefault.update(userDTO);
         return "redirect:/user/profile";
     }
 
