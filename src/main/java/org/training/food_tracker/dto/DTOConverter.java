@@ -31,8 +31,9 @@ public class DTOConverter {
                        .age(biometrics.getAge())
                        .height(biometrics.getHeight())
                        .weight(biometrics.getWeight())
-                       .lifestyle(biometrics.getLifestyle().toString())
-                       .sex(biometrics.getSex().toString()).build();
+                       .lifestyle(biometrics.getLifestyle())
+                       .sex(biometrics.getSex())
+                       .build();
     }
 
     public static FoodDTO foodToFoodDTO(Food food) {
@@ -96,8 +97,15 @@ public class DTOConverter {
                        .age(biometricsDTO.getAge())
                        .height(biometricsDTO.getHeight())
                        .weight(biometricsDTO.getWeight())
-                       .lifestyle(Lifestyle.valueOf(biometricsDTO.getLifestyle()))
-                       .sex(Sex.valueOf(biometricsDTO.getSex()))
+                       .lifestyle(biometricsDTO.getLifestyle())
+                       .sex(biometricsDTO.getSex())
+                       .build();
+    }
+
+    public static Food foodDTOtoFood(FoodDTO foodDTO) {
+        return Food.builder()
+                       .name(foodDTO.getName())
+                       .calories(foodDTO.getTotalCalories())
                        .build();
     }
 }
