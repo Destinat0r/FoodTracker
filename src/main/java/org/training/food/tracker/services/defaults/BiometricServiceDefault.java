@@ -31,7 +31,14 @@ public class BiometricServiceDefault implements BiometricService {
     }
 
     @Override public Biometrics update(Biometrics biometrics) {
-        return biometricRepo.update(biometrics);
+        return biometricRepo.update(
+                biometrics.getId(),
+                biometrics.getAge(),
+                biometrics.getSex().toString(),
+                biometrics.getWeight(),
+                biometrics.getHeight(),
+                biometrics.getLifestyle().toString()
+        );
     }
 
     @Override public void delete(Biometrics biometrics) {

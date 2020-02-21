@@ -29,6 +29,6 @@ public interface FoodRepo extends JpaRepository<Food, Long> {
     @Transactional
     void deleteByNameAndOwner(String foodName, User user);
 
-    @Query(value = "DELETE FROM food WHERE name = ?1 AND user_id IS NULL")
+    @Query(value = "DELETE FROM food WHERE name = ?1 AND user_id IS NULL", nativeQuery = true)
     void deleteCommonFoodByName(String foodName);
 }

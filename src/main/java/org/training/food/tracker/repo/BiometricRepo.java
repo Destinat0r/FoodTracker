@@ -18,13 +18,11 @@ public interface BiometricRepo extends JpaRepository<Biometrics, Long> {
     @Modifying
     @Query(value = "UPDATE biometrics SET age = ?2, sex = ?3, weight = ?4, height = ?5, lifestyle = ?6 "
                            + "WHERE user_id = ?1", nativeQuery = true)
-    int updateByOwnerId(Long id, BigDecimal age, String sex, BigDecimal weight, BigDecimal height, String lifestyle);
+    Biometrics update(Long id, BigDecimal age, String sex, BigDecimal weight, BigDecimal height, String lifestyle);
 
     Optional<Biometrics> findById(Long id);
 
     Biometrics findByOwner(User owner);
-
-    Biometrics update(Biometrics biometrics);
 
     void delete(Biometrics biometrics);
 }

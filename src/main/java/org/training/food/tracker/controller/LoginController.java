@@ -9,17 +9,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.training.food.tracker.model.Role;
 import org.training.food.tracker.model.User;
+import org.training.food.tracker.services.UserService;
 import org.training.food.tracker.services.defaults.UserServiceDefault;
 import org.training.food.tracker.utils.ContextUtils;
 
 @Controller
 public class LoginController {
 
-    private UserServiceDefault userServiceDefault;
+    private UserService userService;
 
     @Autowired
-    public LoginController(UserServiceDefault userServiceDefault) {
-        this.userServiceDefault = userServiceDefault;
+    public LoginController(UserService userService) {
+        this.userService = userService;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -52,7 +53,7 @@ public class LoginController {
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user) {
-        userServiceDefault.save(user);
+        userService.update(user);
         return "redirect:/users";
     }
 }
