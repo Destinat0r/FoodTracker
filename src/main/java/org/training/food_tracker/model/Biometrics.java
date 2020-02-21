@@ -39,32 +39,6 @@ public class Biometrics {
     @Enumerated(EnumType.STRING)
     private Lifestyle lifestyle;
 
-    @Column(name = "norm", nullable = false)
-    private BigDecimal dailyNorm;
-
-    /**
-     * Total energy expenditure calculation using Harris–Benedict equation
-     * @return daily norm of calories
-     */
-    public BigDecimal calculateDailyNorm() {
-        if (this.sex == Sex.MALE) {
-            return (new BigDecimal(66.5)
-                            .add(new BigDecimal(13.75).multiply(weight))
-                            .add(new BigDecimal(5.003).multiply(height))
-                            .subtract(new BigDecimal(6.755).multiply(age)))
-                           .multiply(lifestyle.getCoefficient());
-        }
-        return (new BigDecimal(655.1)
-                        .add(new BigDecimal(9.563).multiply(weight))
-                        .add(new BigDecimal(1.850).multiply(height))
-                        .subtract(new BigDecimal(4.676).multiply(age)))
-                       .multiply(lifestyle.getCoefficient());
-    }
-
-    public void setDailyNorm() {
-        this.dailyNorm = calculateDailyNorm().setScale(2, BigDecimal.ROUND_HALF_DOWN);
-    }
-
     public void setId(Long id) {
         this.id = id;
     }

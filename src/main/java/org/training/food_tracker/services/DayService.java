@@ -38,7 +38,7 @@ public class DayService {
         Day newDay = Day.builder()
                          .date(LocalDate.now())
                          .consumedFoods(new ArrayList<>())
-                         .totalCalories(new BigDecimal(0))
+                         .caloriesConsumed(new BigDecimal(0))
                          .user(user)
                          .build();
         dayRepo.save(newDay);
@@ -77,7 +77,7 @@ public class DayService {
         BigDecimal userDailyNorm = day.getUser().getBiometrics().getDailyNorm();
         log.debug("User's daily norm {}", userDailyNorm);
 
-        BigDecimal currentDayTotalCalories = day.getTotalCalories();
+        BigDecimal currentDayTotalCalories = day.getCaloriesConsumed();
         log.debug("Current day total calories: {}", currentDayTotalCalories);
         boolean isNormExceeded = false;
         BigDecimal exceededCalories;

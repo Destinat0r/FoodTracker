@@ -27,8 +27,8 @@ public class Day {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ConsumedFood> consumedFoods;
 
-    @Column(name = "total_calories")
-    private BigDecimal totalCalories;
+    @Column(name = "calories_consumed")
+    private BigDecimal caloriesConsumed;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -36,10 +36,6 @@ public class Day {
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
-
-    public void addCalories(BigDecimal calories) {
-        totalCalories = totalCalories.add(calories);
-    }
 
     @Override public String toString() {
         return "Day{" + "id=" + id + ", consumedFoods=" + consumedFoods + '}';

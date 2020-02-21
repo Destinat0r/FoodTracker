@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -36,25 +37,25 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-//    @Email(message = "Email is not correct")
+    @Email(message = "Email is not correct")
     @NotBlank(message = "Email cannot be empty")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "Name cannot be empty")
-    @Column(name = "fullName", nullable = false)
-    private String fullName;
+    @NotBlank(message = "First name cannot be empty")
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-    @NotBlank(message = "National name cannot be empty")
-    @Column(name = "national_name", nullable = false)
-    private String nationalName;
+    @NotBlank(message = "Last name cannot be empty")
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "owner")
     @JoinColumn(name = "biometrics_id")
     private Biometrics biometrics;
 
-    @Column(name = "active", nullable = false)
-    private boolean active;
+    @Column(name = "daily_norm_calories", nullable = false)
+    private BigDecimal dailyNormCalories;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -77,6 +78,6 @@ public class User implements UserDetails {
     }
 
     @Override public boolean isEnabled() {
-        return isActive();
+        return true;
     }
 }
