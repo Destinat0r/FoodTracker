@@ -28,13 +28,13 @@ public class UserDTO {
 //    @Size(min = 4, max = 32, message = "{userDTO.constraints.password.size}")
     private String password;
 
-    @NotBlank(message = "{userDTO.constraints.full_name.not_blank}")
+    @NotBlank(message = "{userDTO.constraints.first-name.not_blank}")
 //    @Size(min = 2, max = 32, message = "{userDTO.constraints.full_name.size}")
-    private String fullName;
+    private String firstName;
 
-    @NotBlank(message = "{userDTO.constraints.national_name.not_blank}")
+    @NotBlank(message = "{userDTO.constraints.last-name.not_blank}")
 //    @Size(min = 2, max = 32, message = "{userDTO.constraints.national_name.size}")
-    private String nationalName;
+    private String lastName;
 
     @NotBlank(message = "{userDTO.constraints.email.not_blank}")
 //    @Email(message = "{userDTO.constraints.email.size}")
