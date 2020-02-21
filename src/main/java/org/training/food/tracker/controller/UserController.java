@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.training.food.tracker.dto.DTOConverter;
 import org.training.food.tracker.dto.FoodDTO;
 import org.training.food.tracker.dto.UserDTO;
-import org.training.food.tracker.model.Biometrics;
-import org.training.food.tracker.model.Day;
-import org.training.food.tracker.model.User;
+import org.training.food.tracker.model.*;
 import org.training.food.tracker.repo.exceptions.UserNotFoundException;
+import org.training.food.tracker.services.*;
 import org.training.food.tracker.services.defaults.BiometricServiceDefault;
 import org.training.food.tracker.services.defaults.DayServiceDefault;
 import org.training.food.tracker.services.defaults.FoodServiceDefault;
@@ -25,6 +25,7 @@ import org.training.food.tracker.services.defaults.UserServiceDefault;
 import org.training.food.tracker.utils.ContextUtils;
 
 import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.List;
 
 @Slf4j
@@ -34,29 +35,35 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private FoodServiceDefault foodServiceDefault;
-    private DayServiceDefault dayServiceDefault;
-    private UserServiceDefault userServiceDefault;
-    private BiometricServiceDefault biometricServiceDefault;
+    private FoodService foodService;
+    private DayService dayService;
+    private UserService userService;
+    private ConsumedFoodService consumedFoodService;
+    private BiometricService biometricService;
 
     @Autowired
-    public void setFoodServiceDefault(FoodServiceDefault foodServiceDefault) {
-        this.foodServiceDefault = foodServiceDefault;
+    public void setFoodService(FoodServiceDefault foodService) {
+        this.foodService = foodService;
     }
 
     @Autowired
-    public void setUserServiceDefault(UserServiceDefault userServiceDefault) {
-        this.userServiceDefault = userServiceDefault;
+    public void setUserService(UserServiceDefault userService) {
+        this.userService = userService;
     }
 
     @Autowired
-    public void setDayServiceDefault(DayServiceDefault dayServiceDefault) {
-        this.dayServiceDefault = dayServiceDefault;
+    public void setDayService(DayServiceDefault dayService) {
+        this.dayService = dayService;
     }
 
     @Autowired
-    public void setBiometricServiceDefault(BiometricServiceDefault biometricServiceDefault) {
-        this.biometricServiceDefault = biometricServiceDefault;
+    public void setBiometricService(BiometricServiceDefault biometricService) {
+        this.biometricService = biometricService;
+    }
+
+    @Autowired
+    public void setConsumedFoodService(ConsumedFoodService consumedFoodService) {
+        this.consumedFoodService = consumedFoodService;
     }
 
     @GetMapping("/main")
@@ -64,26 +71,26 @@ public class UserController {
         log.debug("loading user's main");
 
         User user = ContextUtils.getPrincipal();
-        UserDTO userDTO = userServiceDefault.getCurrentUserDTO();
+        UserDTO userDTO = DTOConverter.userToUserDTO(user);
 
         log.debug("setting allCommonFood");
-        model.addAttribute("allCommonFood", foodServiceDefault.findAllCommonExcludingPersonalByUserIdInDTO(user.getId()));
+        List<FoodDTO> allCommonFoodDTOs = DTOConverter.foodsToFoodDTOs(foodService.findAllCommonExcludingPersonalByUserId(user.getId()));
+        model.addAttribute("allCommonFoodDTOs", allCommonFoodDTOs);
 
-        model.addAttribute("food", new FoodDTO());
+
+        model.addAttribute("foodDTO", new FoodDTO());
 
         log.debug("setting usersFoodDTOs");
-        model.addAttribute("usersFoodDTOs", foodServiceDefault.findAllByOwnerInDTOs(user));
+        List<FoodDTO> usersFoodDTOs = DTOConverter.foodsToFoodDTOs(foodService.findAllByOwner(user));
+        model.addAttribute("usersFoodDTOs", usersFoodDTOs);
 
         log.debug("setting userDTO {}", userDTO);
         model.addAttribute("userDTO", userDTO);
 
         log.debug("getting current day");
-        Day currentDay = dayServiceDefault.getCurrentDayOfUser(user);
+        Day currentDay = dayService.getCurrentDayOfUser(user);
 
         model.addAttribute("currentDay", currentDay);
-
-        log.debug("getting consumedStatsDTO");
-        model.addAttribute("consumedStatsDTO", dayServiceDefault.getConsumeStatsForDay(currentDay));
 
         return "user/main";
     }
@@ -91,16 +98,16 @@ public class UserController {
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllFoods(Model model) {
-
-        List<FoodDTO> allFood = foodServiceDefault.findAllCommonInDtos();
-        model.addAttribute("allFood", allFood);
+        List<FoodDTO> allFoodDTOs = DTOConverter.foodsToFoodDTOs(foodService.findAllCommon());
+        model.addAttribute("allFood", allFoodDTOs);
 
         return "food_list";
     }
 
     @PostMapping("/add")
     public String add(FoodDTO userFoodDTO) {
-        foodServiceDefault.add(userFoodDTO);
+        Food foodToAdd = DTOConverter.foodDTOtoFood(userFoodDTO);
+        foodService.create(foodToAdd);
         return "redirect:/user/main";
     }
 
@@ -115,16 +122,27 @@ public class UserController {
             return "main";
         }
 
+        ConsumedFood consumedFood = buildConsumedFood(foodDTO);
+
         log.debug("Registering consumption");
-        foodServiceDefault.registerConsumption(foodDTO);
+        consumedFoodService.registerConsumption(consumedFood);
 
         return "redirect:/user/main";
+    }
+
+    private ConsumedFood buildConsumedFood(@Valid FoodDTO foodDTO) {
+        return ConsumedFood.builder()
+                                            .name(foodDTO.getName())
+                                            .amount(foodDTO.getAmount())
+                                            .time(LocalTime.now())
+                                            .totalCalories(foodDTO.getTotalCalories())
+                                            .build();
     }
 
     @PostMapping(value = "/use", params = "delete")
     public String delete(@ModelAttribute("userFood") FoodDTO food) {
 
-        foodServiceDefault.removeByNameAndUserId(food.getName(), ContextUtils.getPrincipal());
+        foodService.deleteByNameAndUserId(food.getName(), ContextUtils.getPrincipal());
         return "redirect:/user/main";
     }
 
@@ -134,25 +152,24 @@ public class UserController {
 
         addDaysAndStatsModelAttributes(model, user);
         model.addAttribute("userName", user.getUsername());
-        model.addAttribute("dailyNorm", user.getBiometrics().getDailyNorm());
+        model.addAttribute("dailyNorm", user.getDailyNormCalories());
         return "user/history";
     }
 
-    @Transactional void addDaysAndStatsModelAttributes(Model model, User user) {
-        model.addAttribute("daysAndStats" , dayServiceDefault.getDaysToConsumeStatsForUser(user));
-        model.addAttribute("daysOfUser", dayServiceDefault.getAllDaysByUser(user));
+    private void addDaysAndStatsModelAttributes(Model model, User user) {
+        model.addAttribute("daysOfUser", dayService.getAllDaysByUser(user));
     }
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
         log.debug("Getting profile page");
 
-        UserDTO userDTO = null;
-        try {
-            userDTO = userServiceDefault.getUserDTOById(ContextUtils.getPrincipal().getId());
-        } catch (UserNotFoundException e) {
-            log.error("User with not found ",  e);
-        }
+        UserDTO userDTO = DTOConverter.userToUserDTO(ContextUtils.getPrincipal());
+//        try {
+//            userDTO = userService.getUserById(ContextUtils.getPrincipal().getId());
+//        } catch (UserNotFoundException e) {
+//            log.error("User with not found ",  e);
+//        }
         log.debug("Got userDTO from context with id {}", userDTO.getId());
         model.addAttribute("userDTO", userDTO);
 
@@ -166,11 +183,6 @@ public class UserController {
 
         User currentUser = ContextUtils.getPrincipal();
 
-        Long userId = currentUser.getId();
-
-        userDTO.setId(userId);
-        log.debug("Updating user {} with id {}", userDTO, userId);
-
         if (bindingResult.hasErrors()) {
             log.warn("Errors in input: {}", bindingResult.getAllErrors());
             log.warn(" Redirecting back to profile");
@@ -180,16 +192,16 @@ public class UserController {
         updateUser(currentUser, userDTO);
 
         log.debug("updating biometrics");
-        biometricServiceDefault.update(userDTO);
+        biometricService.update(currentUser.getBiometrics());
 
         log.debug("Updating user");
-        userServiceDefault.update(userDTO);
+        userService.update(currentUser);
         return "redirect:/user/profile";
     }
 
     private void updateUser(User user, UserDTO userDTO) {
-        user.setFullName(userDTO.getFullName());
-        user.setNationalName(userDTO.getNationalName());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
 
         Biometrics biometrics = user.getBiometrics();
 
@@ -198,6 +210,5 @@ public class UserController {
         biometrics.setWeight(userDTO.getWeight());
         biometrics.setSex(userDTO.getSex());
         biometrics.setLifestyle(userDTO.getLifestyle());
-        biometrics.setDailyNorm();
     }
 }
