@@ -85,6 +85,7 @@ public class DTOConverter {
 
     public static User userDTOtoUser(UserDTO userDTO) {
         return User.builder()
+                       .username(userDTO.getUsername())
                        .firstName(userDTO.getFirstName())
                        .lastName(userDTO.getLastName())
                        .email(userDTO.getEmail())
