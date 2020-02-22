@@ -51,15 +51,15 @@ public class DayServiceDefault implements DayService {
         foods.sort((food1, food2) -> (food2.getTime().toSecondOfDay() - food1.getTime().toSecondOfDay()));
     }
 
-    @Override public void updateDay(Day day, ConsumedFood consumedFood) {
-
-            log.debug("updateDay() :: adding calories ");
-            addConsumedCalories(day, consumedFood.getTotalCalories());
-
-            log.debug("updateDay() :: calories of the day after update {}", day.getCaloriesConsumed());
-            setExceededCaloriesIfAny(day);
-            dayRepo.update(day);
-    }
+//    @Override public void updateDay(Day day, ConsumedFood consumedFood) {
+//
+//            log.debug("updateDay() :: adding calories ");
+//            addConsumedCalories(day, consumedFood.getTotalCalories());
+//
+//            log.debug("updateDay() :: calories of the day after update {}", day.getCaloriesConsumed());
+//            setExceededCaloriesIfAny(day);
+//            dayRepo.update(day);
+//    }
 
     private void addConsumedCalories(Day day, BigDecimal calories) {
         day.setCaloriesConsumed(day.getCaloriesConsumed().add(calories));

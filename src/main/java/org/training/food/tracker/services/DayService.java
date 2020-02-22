@@ -13,5 +13,5 @@ public interface DayService {
 
     List<Day> getAllDaysByUser(User user);
 
-    void updateDay(Day day, ConsumedFood consumedFood);
+//    void updateDay(Day day, ConsumedFood consumedFood);
 }

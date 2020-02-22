@@ -14,5 +14,5 @@ public interface DayRepo extends JpaRepository<Day, Long> {
 
     Optional<Day> findByUserAndDate(User user, LocalDate date);
     List<Day> findAllByUserOrderByDateDesc(User user);
-    void update(Day day);
+//    void update(Day day);
 }
