@@ -182,12 +182,14 @@ public class UserController {
     @PostMapping("/update")
     public String update(
             @Valid UserDTO userDTO,
-            BindingResult bindingResult) {
+            BindingResult userBindingResult,
+            @Valid BiometricsDTO biometricsDTO,
+            BindingResult biometricsBindingResult) {
 
         User currentUser = ContextUtils.getPrincipal();
 
-        if (bindingResult.hasErrors()) {
-            log.warn("Errors in input: {}", bindingResult.getAllErrors());
+        if (userBindingResult.hasErrors() || biometricsBindingResult.hasErrors()) {
+            log.warn("Errors in input: {}", userBindingResult.getAllErrors());
             log.warn(" Redirecting back to profile");
             return "user/profile";
         }
@@ -195,7 +197,7 @@ public class UserController {
         updateUser(currentUser, userDTO);
 
         log.debug("updating biometrics");
-        biometricService.update(currentUser.getBiometrics());
+        biometricService.update(DTOConverter.biometricsDTOtoBiometrics(biometricsDTO));
 
         log.debug("Updating user");
         userService.update(currentUser);
