@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.food.tracker.model.Biometrics;
 import org.training.food.tracker.model.Role;
 import org.training.food.tracker.model.Sex;
@@ -67,6 +68,7 @@ public class UserServiceDefault implements UserService, UserDetailsService {
         return userRepo.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
+    @Transactional
     @Override public User findByUsername(String username) throws UserNotFoundException {
         return userRepo.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }

@@ -2,6 +2,7 @@ package org.training.food.tracker.services.defaults;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.food.tracker.model.Biometrics;
 import org.training.food.tracker.model.User;
 import org.training.food.tracker.repo.BiometricRepo;
@@ -26,6 +27,7 @@ public class BiometricServiceDefault implements BiometricService {
         return biometricRepo.findById(id);
     }
 
+    @Transactional
     @Override public Biometrics findByOwner(User owner) {
         return biometricRepo.findByOwner(owner);
     }
