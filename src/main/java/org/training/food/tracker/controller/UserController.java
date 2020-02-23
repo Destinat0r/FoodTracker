@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.training.food.tracker.dto.DTOConverter;
-import org.training.food.tracker.dto.DayDTO;
-import org.training.food.tracker.dto.FoodDTO;
-import org.training.food.tracker.dto.UserDTO;
+import org.training.food.tracker.dto.*;
 import org.training.food.tracker.model.*;
 import org.training.food.tracker.repo.exceptions.UserNotFoundException;
 import org.training.food.tracker.services.*;
@@ -165,15 +162,20 @@ public class UserController {
     public String getProfile(Model model) {
         log.debug("Getting profile page");
 
-        UserDTO userDTO = DTOConverter.userToUserDTO(ContextUtils.getPrincipal());
-//        try {
-//            userDTO = userService.getUserById(ContextUtils.getPrincipal().getId());
-//        } catch (UserNotFoundException e) {
-//            log.error("User with not found ",  e);
-//        }
-        log.debug("Got userDTO from context with id {}", userDTO.getId());
-        model.addAttribute("userDTO", userDTO);
+        Biometrics biometrics;
+        User user;
+        try {
+            user = userService.findByUsername(ContextUtils.getPrincipal().getUsername());
+            biometrics = biometricService.findByOwner(user);
+        } catch (UserNotFoundException e) {
+            log.error("User with not found ",  e);
+            return "../public/error/no_such_user";
+        }
+        UserDTO userDTO = DTOConverter.userToUserDTO(user);
+        BiometricsDTO biometricsDTO = DTOConverter.biometricsToBiometricsDTO(biometrics);
 
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("biometricsDTO", biometricsDTO);
         return "user/profile";
     }
 
