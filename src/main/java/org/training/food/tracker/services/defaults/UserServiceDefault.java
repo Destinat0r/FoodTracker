@@ -77,6 +77,7 @@ public class UserServiceDefault implements UserService, UserDetailsService {
         return userRepo.findAll();
     }
 
+    @Transactional
     @Override public int update(User user) {
         return userRepo.update(
                 user.getId(),

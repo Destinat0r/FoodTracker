@@ -32,8 +32,9 @@ public class BiometricServiceDefault implements BiometricService {
         return biometricRepo.findByOwner(owner);
     }
 
-    @Override public int update(Biometrics biometrics) {
-        return biometricRepo.update(
+    @Transactional
+    @Override public void update(Biometrics biometrics) {
+        biometricRepo.update(
                 biometrics.getId(),
                 biometrics.getAge(),
                 biometrics.getSex().toString(),
