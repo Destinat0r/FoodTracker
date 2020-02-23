@@ -46,20 +46,20 @@
 
                     <div class="form-row">
                         <div class="col form-group">
-                            <label th:text="#{user.full_name}"></label>
+                            <label th:text="#{user.first-name}"></label>
                             <div>
                                 <span th:if="${#fields.hasErrors('userDTO.fullName')}" class="help-block" th:errors="*{userDTO.fullName}"></span>
-                                <input type="text" name="fullName" value="" class="form-control" th:placeholder="#{user.full_name}"
+                                <input type="text" name="fullName" value="" class="form-control" th:placeholder="#{user.first-name}"
                                        th:value="${userDTO.fullName} ? ${userDTO.fullName} :  ''"
                                        th:classappend="${#fields.hasErrors('userDTO.fullName')} ? 'error-input' : ''"/>
                             </div>
                         </div>
 
                         <div class="col form-group">
-                            <label th:text="#{user.national_name}"></label>
+                            <label th:text="#{user.last-name}"></label>
                             <div>
                                 <span th:if="${#fields.hasErrors('userDTO.nationalName')}" class="help-block" th:errors="*{userDTO.nationalName}"></span>
-                                <input type="text" name="nationalName" value="" class="form-control" th:placeholder="#{user.national_name}"
+                                <input type="text" name="nationalName" value="" class="form-control" th:placeholder="#{user.last-name}"
                                        th:value="${userDTO.nationalName} ? ${userDTO.nationalName} :  ''"
                                        th:classappend="${#fields.hasErrors('userDTO.nationalName')} ? 'error-input' : ''"/>
                             </div>

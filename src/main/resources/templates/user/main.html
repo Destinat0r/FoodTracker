@@ -17,7 +17,7 @@
             <div class="card card-body mb-2 bottom-tables">
                 <h2 th:text="#{food.personal}"></h2>
 
-                <form th:action="@{/user/add}" method="post" class="needs-validation" role="form" th:object="${food}" novalidate>
+                <form th:action="@{/user/add}" method="post" class="needs-validation" role="form" th:object="${foodDTO}" novalidate>
                     <div class="form-row">
 
 
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="col">
-                            <input type="number" step="1" min="1" th:required="true" name="totalCalories" th:value="${food.totalCalories}" id="calories"
+                            <input type="number" step="1" min="1" th:required="true" name="totalCalories" th:value="${foodDTO.totalCalories}" id="calories"
                                    class="form-control" th:placeholder="#{food.calories}" pattern="\d+" required/>
                         </div>
 
@@ -82,7 +82,7 @@
         <div class="col">
             <div class="card card-body" id="consumed">
                 <h2 th:text="#{food.consumed_today}"></h2>
-                <table class="table table-striped border-dark" th:object="${currentDay}">
+                <table class="table table-striped border-dark" th:object="${currentDayDTO}">
                     <thead>
                     <tr>
                         <th scope="col" th:text="#{food.table.name}"></th>
@@ -92,10 +92,10 @@
                     </thead>
                     <tbody>
 
-                    <tr th:each="consumedFood : ${currentDay.consumedFoods}">
-                        <td th:text="${consumedFood.name}"></td>
-                        <td th:text="${consumedFood.amount}"></td>
-                        <td th:text="${consumedFood.totalCalories}"></td>
+                    <tr th:each="consumedFoodDTO : ${currentDayDTO.consumedFoodDTOs}">
+                        <td th:text="${consumedFoodDTO.name}"></td>
+                        <td th:text="${consumedFoodDTO.amount}"></td>
+                        <td th:text="${consumedFoodDTO.totalCalories}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -144,11 +144,11 @@
                 <a th:text="#{user.daily_norm} + ': ' + ${userDTO.dailyNorm}"></a>
             </li>
             <li class="nav-item">
-                <a th:text="#{user.consumed_today} + ': ' + ${consumedStatsDTO.caloriesConsumed}"></a>
+                <a th:text="#{user.consumed_today} + ': ' + ${currentDayDTO.caloriesConsumed}"></a>
             </li>
             <li class="nav-item">
-                <a class="card-footer" id="exceeded" th:if="${consumedStatsDTO.dailyNormExceeded}"
-                     th:text="#{user.exceeded} + ' ' + ${consumedStatsDTO.exceededCalories}" ></a>
+                <a class="card-footer" id="exceeded" th:if="${currentDayDTO.isDailyNormExceeded()}"
+                     th:text="#{user.exceeded} + ' ' + ${currentDayDTO.exceededCalories}" ></a>
             </li>
         </a>
     </div>
