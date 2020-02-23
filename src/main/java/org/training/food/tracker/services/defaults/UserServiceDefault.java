@@ -77,8 +77,8 @@ public class UserServiceDefault implements UserService, UserDetailsService {
         return userRepo.findAll();
     }
 
-    @Override public User update(User user) {
-        return userRepo.updateById(
+    @Override public int update(User user) {
+        return userRepo.update(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),

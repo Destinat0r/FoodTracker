@@ -14,7 +14,7 @@ public interface BiometricService {
 
     Biometrics findByOwner(User user);
 
-    Biometrics update(Biometrics biometrics);
+    int update(Biometrics biometrics);
 
     void delete(Biometrics biometrics);
 }

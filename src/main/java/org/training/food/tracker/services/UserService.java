@@ -19,7 +19,7 @@ public interface UserService {
 
     List<User> findAll();
 
-    User update(User user);
+    int update(User user);
 
     BigDecimal calculateDailyNormCalories(Biometrics biometrics);
 }
