@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.training.food.tracker.dto.DTOConverter;
+import org.training.food.tracker.dto.DayDTO;
 import org.training.food.tracker.dto.FoodDTO;
 import org.training.food.tracker.dto.UserDTO;
 import org.training.food.tracker.model.*;
@@ -88,9 +89,9 @@ public class UserController {
         model.addAttribute("userDTO", userDTO);
 
         log.debug("getting current day");
-        Day currentDay = dayService.getCurrentDayOfUser(user);
+        DayDTO currentDayDTO = DTOConverter.dayToDayDTO(dayService.getCurrentDayOfUser(user));
 
-        model.addAttribute("currentDay", currentDay);
+        model.addAttribute("currentDayDTO", currentDayDTO);
 
         return "user/main";
     }
