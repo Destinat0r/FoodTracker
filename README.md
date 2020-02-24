@@ -8,5 +8,5 @@ Requirements:
 
 #### **How to install**
 - clone project
-- run `mvn clean tomcat7:run` in command line tool
+- run `mvn clean spring-boot:run` in command line tool
 - open `localhost:8080` in web browser
